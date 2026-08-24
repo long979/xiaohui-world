@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>小慧的世界</title>
+<style>
+  :root{
+    --bg:#fff6f0;
+    --card:#ffffff;
+    --ink:#6e4f5b;
+    --soft:#b69aa4;
+    --rose:#f08ca6;
+    --rose-l:#ffe3ea;
+    --peach:#ffb98a;
+    --peach-l:#ffefe0;
+    --mint:#7fc8a9;
+    --mint-l:#dff4e8;
+    --lav:#a88fd4;
+    --lav-l:#ede5f9;
+    --sun:#f5b25d;
+    --sun-l:#fff3dc;
+    --line:#f6e6e6;
+    --nav-h:60px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);
+    max-width:480px;margin:0 auto;position:relative;
+    padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);
+    overflow-x:hidden;
+  }
+  .blob{position:fixed;border-radius:50%;filter:blur(40px);opacity:.5;z-index:0;pointer-events:none}
+  .b1{width:220px;height:220px;background:#ffd9e2;top:-60px;right:-60px}
+  .b2{width:180px;height:180px;background:#ffe9d2;top:320px;left:-70px}
+  .b3{width:200px;height:200px;background:#dff4e8;bottom:120px;right:-80px}
+  .tw{position:fixed;z-index:0;pointer-events:none;opacity:.35;font-size:16px}
+  .main{position:relative;z-index:1;padding:16px 14px 8px}
+
+  /* 顶部小屋 */
+  .hero{
+    background:linear-gradient(135deg,#f08ca6,#ffb98a);
+    border-radius:26px;padding:22px 20px 20px;color:#fff;
+    box-shadow:0 10px 26px rgba(240,140,166,.28);position:relative;overflow:hidden;
+  }
+  .hero::after{content:"🌷";position:absolute;right:18px;top:14px;font-size:34px;opacity:.85;transform:rotate(12deg)}
+  .hero .hello{font-family:"KaiTi","STKaiti","楷体",serif;font-size:26px;font-weight:700;letter-spacing:1px}
+  .hero .line{font-size:12px;opacity:.92;margin-top:8px;letter-spacing:1px}
+  .hero .motto{font-size:13px;opacity:.95;margin-top:14px;font-family:"KaiTi","STKaiti","楷体",serif}
+
+  .stitle{
+    display:flex;align-items:center;gap:8px;
+    font-family:"KaiTi","STKaiti","楷体",serif;font-size:16px;font-weight:700;
+    margin:22px 2px 12px;letter-spacing:1px;
+  }
+  .stitle::before{content:"";width:4px;height:16px;border-radius:4px;background:linear-gradient(#f08ca6,#ffb98a);transform:rotate(-4deg)}
+
+  .card{background:var(--card);border-radius:22px;padding:16px;box-shadow:0 6px 20px rgba(240,140,166,.08);border:1px solid var(--line);margin-bottom:14px}
+  .ctitle{font-size:13px;font-weight:700;color:var(--rose);letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+  .csub{font-size:11px;color:var(--soft);margin-top:3px}
+
+  /* 今日状态 */
+  .moods{display:flex;gap:10px;margin-top:12px}
+  .mood{flex:1;padding:10px 4px;border-radius:16px;border:1.5px solid var(--line);background:#fff;font-size:13px;color:var(--ink);cursor:pointer;font-family:inherit;transition:.2s}
+  .mood.sel{background:linear-gradient(135deg,#f08ca6,#ffb98a);border-color:transparent;color:#fff;box-shadow:0 4px 12px rgba(240,140,166,.3)}
+  .stat-row{display:flex;gap:10px;margin-top:14px}
+  .stat{flex:1;background:#fff8f4;border-radius:16px;padding:10px 12px}
+  .slabel{font-size:12px;color:var(--soft);font-weight:600}
+  .stars{margin-top:6px;font-size:22px;line-height:1;display:flex;gap:2px}
+  .star{cursor:pointer;color:#e5c3c3;transition:.15s}
+  .star.on{color:#f5b25d;text-shadow:0 0 6px rgba(245,178,93,.35)}
+  .motiv{text-align:center;font-size:12px;color:#b98b97;margin:2px 0 4px;font-family:"KaiTi","STKaiti","楷体",serif;letter-spacing:1px}
+
+  /* 目标成长 */
+  .grow{background:var(--card);border-radius:20px;padding:14px;margin-bottom:12px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(240,140,166,.06)}
+  .grow-head{display:flex;align-items:center;gap:8px}
+  .g-emoji{width:34px;height:34px;border-radius:12px;background:var(--rose-l);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .g-name{font-size:15px;font-weight:700;flex:1}
+  .g-pct{font-size:14px;font-weight:700;color:var(--rose)}
+  .g-stage{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .g-tree{font-size:30px;line-height:1}
+  .g-stage-t{font-size:12px;color:var(--soft)}
+  .g-bar{height:8px;border-radius:8px;background:#f7ecec;margin-top:8px;overflow:hidden}
+  .g-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#9fe0c0,#7fc8a9);transition:width .4s}
+  .g-ctl{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+  .g-ctl button{width:32px;height:32px;border-radius:50%;border:none;background:var(--rose-l);font-size:14px;cursor:pointer;color:#c96d88}
+  .g-ctl button:active{transform:scale(.92)}
+
+  /* 小记 */
+  .jfield{margin-bottom:12px}
+  .jlabel{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px}
+  textarea{width:100%;border:1.5px dashed #f0d3d3;border-radius:14px;padding:10px 12px;font-size:16px;font-family:"KaiTi","STKaiti","楷体",serif;color:var(--ink);background:#fffaf7;resize:none;outline:none;min-height:56px;line-height:1.6}
+  textarea:focus{border-color:var(--rose);background:#fff}
+  .save-btn{width:100%;padding:12px;border:none;border-radius:16px;background:linear-gradient(135deg,#f08ca6,#ffb98a);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(240,140,166,.3)}
+  .save-btn:active{transform:scale(.98)}
+  .saved-tip{text-align:center;font-size:12px;color:var(--mint);margin-top:8px;height:16px}
+  .jhist{margin-top:4px}
+  .jh{background:#fffaf7;border-radius:14px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--line)}
+  .jh-date{font-size:11px;color:var(--rose);font-weight:600}
+  .jh-txt{font-size:13px;color:var(--ink);margin-top:3px}
+  .empty{text-align:center;color:#d3bcbc;font-size:12px;padding:16px 0}
+
+  /* 计划 */
+  .plan-input-row{display:flex;gap:8px;margin-bottom:12px}
+  .plan-input-row input{flex:1;border:1.5px dashed #f0d3d3;border-radius:14px;padding:10px 12px;font-size:16px;outline:none;background:#fffaf7;color:var(--ink)}
+  .plan-input-row input:focus{border-color:var(--mint);background:#fff}
+  .plan-add{width:44px;border:none;border-radius:14px;background:linear-gradient(135deg,#7fc8a9,#9fe0c0);color:#fff;font-size:20px;cursor:pointer}
+  .plan{border-radius:16px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);cursor:pointer;box-shadow:0 2px 8px rgba(127,200,169,.08)}
+  .plan.done{background:var(--mint-l);border-color:transparent}
+  .plan.done .p-text{text-decoration:line-through;color:#7fb89d}
+  .p-check{font-size:16px}
+  .p-text{flex:1;font-size:14px;word-break:break-word}
+  .p-del{border:none;background:none;color:#d8b6b6;font-size:14px;cursor:pointer;padding:2px 4px}
+  .plan-count{font-size:12px;color:var(--soft);margin-bottom:8px}
+  .h-title{font-size:13px;font-weight:700;margin:18px 2px 10px;display:flex;align-items:center;gap:6px}
+  .habits{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .habit{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:10px 2px;cursor:pointer;text-align:center;transition:.2s}
+  .habit.on{background:var(--peach-l);border-color:#ffcfae}
+  .habit .h-e{font-size:22px;display:block}
+  .habit .h-t{font-size:11px;display:block;margin-top:2px;color:var(--ink)}
+  .habit .h-s{font-size:10px;display:block;margin-top:2px;color:var(--soft)}
+  .habit.on .h-s{color:var(--peach)}
+
+  /* 关于我 */
+  .name-card{display:flex;align-items:center;gap:12px}
+  .name-card span{font-size:14px;font-weight:700;white-space:nowrap}
+  .name-card input{flex:1;border:1.5px dashed #e8cfe3;border-radius:14px;padding:10px 12px;font-size:16px;outline:none;background:#fdf9fb;color:var(--ink);text-align:center}
+  .about-stats{text-align:center;font-size:12px;color:var(--soft);margin:2px 0 14px;line-height:1.8}
+  .about-stats b{color:var(--rose)}
+  .about-card{border-radius:20px;padding:14px;margin-bottom:12px;border:1px solid var(--line)}
+  .about-card.goal{background:#fff5f7}
+  .about-card.interest{background:#fff7ef}
+  .about-card.strength{background:#f1faf4}
+  .about-card.dream{background:#f7f2fc}
+  .ac-head{font-family:"KaiTi","STKaiti","楷体",serif;font-size:15px;font-weight:700;margin-bottom:8px}
+  .about-card textarea{background:rgba(255,255,255,.7);border-color:transparent}
+
+  /* 健康 */
+  .health-card{background:linear-gradient(180deg,#f4fbf6,#ffffff);border-radius:20px;padding:14px;margin-bottom:12px;border:1px solid var(--line)}
+  .h-label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+  .h-val{font-size:22px;font-weight:700;color:var(--mint);margin:6px 0;font-family:"KaiTi","STKaiti","楷体",serif}
+  .stepper{display:flex;align-items:center;gap:12px;margin-top:6px}
+  .stepper button{width:34px;height:34px;border-radius:50%;border:none;background:var(--mint-l);font-size:16px;cursor:pointer;color:#4f9d7f}
+  .h-note{font-size:11px;color:var(--soft);margin-top:8px;line-height:1.7}
+  .toggle-btn{width:100%;padding:12px;border:none;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;background:var(--mint-l);color:#4f9d7f;margin-top:10px}
+  .toggle-btn.on{background:var(--mint);color:#fff}
+  .period-box{background:#fff;border-radius:14px;padding:12px;margin-top:8px;border:1px solid var(--line)}
+  .period-box input{width:100%;border:1px dashed #e8cfe3;border-radius:12px;padding:8px;font-size:15px;outline:none;color:var(--ink)}
+  .period-info{font-size:12px;color:var(--ink);margin-top:8px;line-height:1.8;background:var(--sun-l);border-radius:12px;padding:10px;text-align:center}
+  .period-info b{color:var(--sun);font-size:14px}
+
+  /* AI伴 */
+  #chatWrap{position:relative;padding-bottom:64px}
+  #chatBody{max-height:calc(100vh - 340px);min-height:260px;overflow-y:auto;padding:4px 2px 8px}
+  .msg{max-width:82%;padding:10px 13px;border-radius:18px;font-size:14px;line-height:1.7;margin-bottom:10px;white-space:pre-wrap;word-break:break-word;animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .msg.me{margin-left:auto;background:linear-gradient(135deg,#f08ca6,#ffb98a);color:#fff;border-bottom-right-radius:6px}
+  .msg.bot{background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:6px;box-shadow:0 2px 8px rgba(240,140,166,.06)}
+  .chat-empty{text-align:center;color:#d3bcbc;font-size:13px;padding:40px 10px;line-height:2}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .chip{border:1.5px solid var(--rose-l);background:#fff;color:#c96d88;border-radius:20px;padding:6px 12px;font-size:12px;cursor:pointer}
+  .chip:active{background:var(--rose-l)}
+  #aiInputBar{position:fixed;left:0;right:0;bottom:var(--nav-h);max-width:480px;margin:0 auto;z-index:20;display:flex;gap:8px;padding:10px 14px;background:rgba(255,246,240,.94);backdrop-filter:blur(8px)}
+  #aiInputBar input{flex:1;border:1.5px solid var(--line);border-radius:20px;padding:11px 14px;font-size:16px;outline:none;background:#fff;color:var(--ink)}
+  #aiInputBar input:focus{border-color:var(--rose)}
+  #aiSend{width:44px;border:none;border-radius:50%;background:linear-gradient(135deg,#f08ca6,#ffb98a);color:#fff;font-size:16px;cursor:pointer}
+  .ai-hint{text-align:center;font-size:11px;color:var(--soft);padding:8px 0 2px}
+
+  /* 导航 */
+  .nav{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:30}
+  .tab{flex:1;text-align:center;padding:8px 0 6px;font-size:10px;color:var(--soft);background:none;border:none;cursor:pointer;font-family:inherit;transition:.2s}
+  .tab .ico{font-size:20px;display:block;margin-bottom:2px;transition:.2s}
+  .tab.active{color:var(--rose);font-weight:700}
+  .tab.active .ico{transform:translateY(-2px) scale(1.12)}
+  .panel{display:none}
+  .panel.active{display:block;animation:pop .25s ease}
+  .footer{text-align:center;font-size:11px;color:#d8c2c2;padding:10px 0 4px;font-family:"KaiTi","STKaiti","楷体",serif}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div class="tw" style="top:120px;left:12px">✨</div>
+<div class="tw" style="top:240px;right:14px">🍀</div>
+<div class="tw" style="top:520px;left:16px">🌷</div>
+<div class="tw" style="top:680px;right:16px">☁️</div>
+
+<div class="main">
+  <!-- 小屋 -->
+  <div class="panel active" id="p-home">
+    <div class="hero">
+      <div class="hello" id="hello">早上好，小慧 🌸</div>
+      <div class="line" id="todayLine"></div>
+      <div class="motto" id="motto"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">🌤 今日心情</div>
+      <div class="csub">点一下告诉我你的状态</div>
+      <div class="moods" id="moods"></div>
+      <div class="stat-row">
+        <div class="stat"><div class="slabel">💗 身体状态</div><div class="stars" id="st-body"></div></div>
+        <div class="stat"><div class="slabel">⚡ 能量值</div><div class="stars" id="st-energy"></div></div>
+      </div>
+    </div>
+    <div class="motiv" id="motiv"></div>
+
+    <div class="stitle">🎯 我的人生方向</div>
+    <div id="goals"></div>
+    <div class="footer">欢迎回到小慧的世界 🌷</div>
+  </div>
+
+  <!-- 小记 -->
+  <div class="panel" id="p-journal">
+    <div class="stitle">📔 今日小记</div>
+    <div class="card">
+      <div class="jfield"><div class="jlabel">今天发生</div><textarea id="j-now" placeholder="今天有什么新鲜事？"></textarea></div>
+      <div class="jfield"><div class="jlabel">我的想法</div><textarea id="j-think" placeholder="此刻在想些什么？"></textarea></div>
+      <div class="jfield"><div class="jlabel">今天值得记录</div><textarea id="j-record" placeholder="一件小事也值得被记住 ✨"></textarea></div>
+      <button class="save-btn" id="jSave">记好啦 💌</button>
+      <div class="saved-tip" id="savedTip"></div>
+    </div>
+    <div class="stitle">📖 最近的小记</div>
+    <div class="jhist" id="journalHist"></div>
+  </div>
+
+  <!-- 计划 -->
+  <div class="panel" id="p-plan">
+    <div class="stitle">🌱 我的计划</div>
+    <div class="card">
+      <div class="plan-input-row">
+        <input id="planInput" placeholder="写下一个小目标……">
+        <button class="plan-add" id="planAdd">＋</button>
+      </div>
+      <div class="plan-count" id="planCount"></div>
+      <div id="planList"></div>
+    </div>
+    <div class="card">
+      <div class="h-title">💧 每日小习惯 · 打卡</div>
+      <div class="habits" id="habitList"></div>
+      <div class="h-note">连起来的日子会变成小星星 ⭐ 加油呀</div>
+    </div>
+  </div>
+
+  <!-- 健康 -->
+  <div class="panel" id="p-health">
+    <div class="stitle">🏥 健康小屋</div>
+    <div class="health-card">
+      <div class="h-label">😴 睡眠</div>
+      <div class="h-val" id="sleepVal">—</div>
+      <div class="stepper"><button id="sleepMinus">−</button><span>昨晚睡了多久</span><button id="sleepPlus">＋</button></div>
+    </div>
+    <div class="health-card">
+      <div class="h-label">🏃 运动</div>
+      <div class="h-val" id="exMin">0 分钟</div>
+      <div class="stepper"><button id="exMinus">−</button><span>今天动了多久</span><button id="exPlus">＋</button></div>
+      <button class="toggle-btn" id="exBtn">🏃 今天运动啦</button>
+    </div>
+    <div class="health-card">
+      <div class="h-label">🎀 生理周期</div>
+      <div class="period-box">
+        <input type="date" id="periodDate">
+        <div class="stepper"><button id="cycleMinus">−</button><span>周期天数 <b id="cycleVal">28</b> 天</span><button id="cyclePlus">＋</button></div>
+        <div class="period-info" id="periodInfo"></div>
+      </div>
+    </div>
+    <div class="health-card">
+      <div class="h-label">⚡ 今天的能量</div>
+      <div class="stars" id="st-energy2" style="font-size:26px"></div>
+      <div class="h-note">今天也要好好照顾自己呀，健康小屋会一直陪着你 💗</div>
+    </div>
+  </div>
+
+  <!-- 关于我 -->
+  <div class="panel" id="p-about">
+    <div class="stitle">💖 关于我</div>
+    <div class="card name-card">
+      <span>我的名字</span>
+      <input id="nameInput" placeholder="怎么称呼你">
+    </div>
+    <div class="about-stats" id="aboutStats"></div>
+    <div id="aboutFields"></div>
+  </div>
+
+  <!-- AI伴 -->
+  <div class="panel" id="p-ai">
+    <div class="stitle">🤖 暖暖 · AI小伙伴</div>
+    <div id="chatWrap">
+      <div id="chatBody"></div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="ai-hint">想找真人AI深聊？回到微信找我就行呀 💬</div>
+  </div>
+</div>
+
+<div id="aiInputBar">
+  <input id="chatInput" placeholder="和暖暖说说话……">
+  <button id="aiSend">➤</button>
+</div>
+
+<nav class="nav" id="nav">
+  <button class="tab active" data-tab="home"><span class="ico">🏠</span>小屋</button>
+  <button class="tab" data-tab="journal"><span class="ico">📔</span>小记</button>
+  <button class="tab" data-tab="plan"><span class="ico">🌱</span>计划</button>
+  <button class="tab" data-tab="health"><span class="ico">🏥</span>健康</button>
+  <button class="tab" data-tab="about"><span class="ico">💖</span>关于我</button>
+  <button class="tab" data-tab="ai"><span class="ico">🤖</span>AI伴</button>
+</nav>
+
+<script>
+const MOODS=[{k:'happy',e:'😊',t:'开心'},{k:'calm',e:'😐',t:'平静'},{k:'low',e:'😔',t:'低落'}];
+const HABITS=[{k:'water',e:'💧',t:'喝水'},{k:'sleep',e:'😴',t:'早睡'},{k:'move',e:'🚶',t:'运动'},{k:'read',e:'📖',t:'阅读'},{k:'skin',e:'🧴',t:'护肤'}];
+const DEFAULTS_GOALS=[
+  {e:'🎯',name:'事业成长',p:60},
+  {e:'📚',name:'学习成长',p:40},
+  {e:'💪',name:'身体管理',p:70},
+  {e:'💰',name:'财富目标',p:30}
+];
+const MOTIV=['今天也要对自己温柔一点呀','慢慢来，比较快','你已经做得很好了','小树在长，好事在发生','先照顾好自己，再照顾世界','允许自己休息一下，没关系的'];
+const CHIPS=['今天过得怎么样？','帮我总结这个月','我最近是不是偏离目标？'];
+
+function ls(key,def){try{const v=localStorage.getItem(key);return v===null?def:JSON.parse(v);}catch(e){return def;}}
+function ss(key,val){localStorage.setItem(key,JSON.stringify(val));}
+function esc(s){return (s===null||s===undefined?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function pad(n){return String(n).padStart(2,'0');}
+function fmt(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function today(){return fmt(new Date());}
+function parseYMD(s){const a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);}
+function dateNDaysAgo(n){const d=new Date();d.setDate(d.getDate()-n);return d;}
+
+function greeting(){
+  const h=new Date().getHours();
+  if(h>=5&&h<11)return '早上好';
+  if(h>=11&&h<13)return '中午好';
+  if(h>=13&&h<18)return '下午好';
+  if(h>=18&&h<23)return '晚上好';
+  return '夜深了';
+}
+function treeStage(p){
+  if(p>=75)return {e:'🌳',t:'已经长成大树啦，真好呀'};
+  if(p>=50)return {e:'🪴',t:'正在长成小树，继续浇灌'};
+  if(p>=25)return {e:'🌿',t:'刚发出新芽，很有希望'};
+  return {e:'🌱',t:'还是一颗小种子，慢慢来'};
+}
+
+/* 导航 */
+function bindNav(){
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const t=b.dataset.tab;
+    document.getElementById('p-'+t).classList.add('active');
+    if(t==='journal')renderJournal();
+    if(t==='plan')renderPlans();
+    if(t==='health')renderHealth();
+    if(t==='about')renderAbout();
+    if(t==='ai')renderChat();
+  }));
+}
+
+/* 首页 */
+function renderHome(){
+  const name=ls('xh.name','小慧');
+  const d=new Date();
+  document.getElementById('hello').textContent=greeting()+'，'+name+' 🌸';
+  document.getElementById('todayLine').textContent=(d.getMonth()+1)+'月'+d.getDate()+'日 · 星期'+'日一二三四五六'[d.getDay()];
+  document.getElementById('motto').textContent='这里是属于你的地方 💗';
+  document.getElementById('motiv').textContent=MOTIV[d.getDate()%MOTIV.length];
+
+  const cur=ls('xh.mood.'+today(),null);
+  const mEl=document.getElementById('moods');
+  mEl.innerHTML=MOODS.map(m=>`<button class="mood${cur===m.k?' sel':''}" data-k="${m.k}">${m.e} ${m.t}</button>`).join('');
+  mEl.querySelectorAll('.mood').forEach(b=>b.addEventListener('click',()=>{ss('xh.mood.'+today(),b.dataset.k);renderHome();}));
+
+  bindStars('st-body','xh.body.'+today());
+  bindStars('st-energy','xh.energy.'+today());
+
+  const gs=ls('xh.goals',DEFAULTS_GOALS);
+  document.getElementById('goals').innerHTML=gs.map((g,i)=>{
+    const s=treeStage(g.p);
+    return `<div class="grow">
+      <div class="grow-head"><span class="g-emoji">${g.e}</span><div class="g-name">${esc(g.name)}</div><span class="g-pct">${g.p}%</span></div>
+      <div class="g-stage"><span class="g-tree">${s.e}</span><span class="g-stage-t">${s.t}</span></div>
+      <div class="g-bar"><div class="g-fill" style="width:${g.p}%"></div></div>
+      <div class="g-ctl"><button data-i="${i}" data-d="-5">−</button><button data-i="${i}" data-d="5">＋</button></div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('.g-ctl button').forEach(b=>b.addEventListener('click',()=>{
+    const a=ls('xh.goals',DEFAULTS_GOALS);const i=+b.dataset.i;const dd=+b.dataset.d;
+    a[i].p=Math.max(0,Math.min(100,a[i].p+dd));ss('xh.goals',a);renderHome();
+  }));
+}
+function starsHTML(value,max){
+  let h='';
+  for(let i=1;i<=max;i++)h+=`<span class="star${i<=value?' on':''}" data-v="${i}">${i<=value?'⭐':'☆'}</span>`;
+  return h;
+}
+function bindStars(id,key){
+  const el=document.getElementById(id);
+  el.innerHTML=starsHTML(ls(key,0),5);
+  el.onclick=e=>{
+    const s=e.target.closest('.star');if(!s)return;
+    ss(key,+s.dataset.v);renderHome();renderHealth();
+  };
+}
+
+/* 小记 */
+function renderJournal(){
+  const j=ls('xh.journal.'+today(),{now:'',think:'',record:''});
+  document.getElementById('j-now').value=j.now||'';
+  document.getElementById('j-think').value=j.think||'';
+  document.getElementById('j-record').value=j.record||'';
+  const hist=[];
+  for(let i=0;i<90;i++){
+    const ds=fmt(dateNDaysAgo(i));
+    const x=ls('xh.journal.'+ds,null);
+    if(x&&(x.now||x.think||x.record))hist.push({date:ds,first:(x.now||x.think||x.record).slice(0,36)});
+  }
+  document.getElementById('journalHist').innerHTML=hist.length?hist.map(h=>`<div class="jh"><div class="jh-date">${h.date}</div><div class="jh-txt">${esc(h.first)}</div></div>`).join(''):'<div class="empty">还没有写过小记，今天试着写一笔吧 ✍️</div>';
+  document.querySelectorAll('#j-now,#j-think,#j-record').forEach(t=>t.oninput=()=>{
+    const o=ls('xh.journal.'+today(),{now:'',think:'',record:''});
+    o[t.id.slice(2)]=t.value;ss('xh.journal.'+today(),o);
+  });
+  document.getElementById('jSave').onclick=()=>{
+    document.getElementById('savedTip').textContent='已记好啦 ✨ 明天回来看看会很温暖';
+    setTimeout(()=>{document.getElementById('savedTip').textContent='';},2600);
+    renderJournal();
+  };
+}
+
+/* 计划 */
+function renderPlans(){
+  const pl=ls('xh.plans',[]);
+  const done=pl.filter(p=>p.done).length;
+  document.getElementById('planCount').textContent=pl.length?`完成 ${done}/${pl.length} · 慢慢来 🌱`:'';
+  document.getElementById('planList').innerHTML=pl.length?pl.map((p,i)=>`<div class="plan${p.done?' done':''}" data-i="${i}"><span class="p-check">${p.done?'✅':'🌸'}</span><span class="p-text">${esc(p.text)}</span><button class="p-del" data-i="${i}">✕</button></div>`).join(''):'<div class="empty">本周还没有计划，先写一个小目标吧 🌱</div>';
+  document.querySelectorAll('.plan').forEach(r=>r.addEventListener('click',e=>{
+    if(e.target.classList.contains('p-del'))return;
+    const i=+r.dataset.i;const a=ls('xh.plans',[]);a[i].done=!a[i].done;ss('xh.plans',a);renderPlans();
+  }));
+  document.querySelectorAll('.p-del').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();const i=+b.dataset.i;const a=ls('xh.plans',[]);a.splice(i,1);ss('xh.plans',a);renderPlans();
+  }));
+  document.getElementById('planAdd').onclick=addPlan;
+  document.getElementById('planInput').onkeydown=e=>{if(e.key==='Enter')addPlan();};
+  renderHabits();
+}
+function addPlan(){
+  const inp=document.getElementById('planInput');
+  const t=inp.value.trim();if(!t)return;
+  const a=ls('xh.plans',[]);a.push({text:t,done:false});ss('xh.plans',a);
+  inp.value='';renderPlans();
+}
+function habitStreak(k){
+  let n=0;const d=new Date();
+  while(true){
+    const ds=fmt(d);
+    if(ls('xh.habits.'+ds,[]).includes(k)){n++;d.setDate(d.getDate()-1);}else break;
+  }
+  return n;
+}
+function renderHabits(){
+  const todayArr=ls('xh.habits.'+today(),[]);
+  document.getElementById('habitList').innerHTML=HABITS.map(h=>{
+    const on=todayArr.includes(h.k);
+    return `<button class="habit${on?' on':''}" data-k="${h.k}"><span class="h-e">${h.e}</span><span class="h-t">${h.t}</span><span class="h-s">连${habitStreak(h.k)}天</span></button>`;
+  }).join('');
+  document.querySelectorAll('.habit').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.k;let a=ls('xh.habits.'+today(),[]);
+    if(a.includes(k))a=a.filter(x=>x!==k);else a.push(k);
+    ss('xh.habits.'+today(),a);renderPlans();
+  }));
+}
+
+/* 健康 */
+function renderHealth(){
+  const d=today();
+  const sleep=ls('xh.sleep.'+d,null);
+  const ex=ls('xh.exercise.'+d,{done:false,min:0});
+  const per=ls('xh.period',{last:'',cycle:28});
+
+  document.getElementById('sleepVal').textContent=sleep==null?'—':sleep+' 小时';
+  document.getElementById('exMin').textContent=ex.min+' 分钟';
+  const exBtn=document.getElementById('exBtn');
+  exBtn.textContent=ex.done?'✅ 今天运动啦':'🏃 今天运动啦';
+  exBtn.classList.toggle('on',!!ex.done);
+
+  const sleepSet=v=>{ss('xh.sleep.'+d,v);renderHealth();};
+  document.getElementById('sleepMinus').onclick=()=>sleepSet(Math.max(0,(sleep==null?7:sleep)-1));
+  document.getElementById('sleepPlus').onclick=()=>sleepSet(Math.min(12,(sleep==null?7:sleep)+1));
+  document.getElementById('exMinus').onclick=()=>{ex.min=Math.max(0,ex.min-5);ss('xh.exercise.'+d,ex);renderHealth();};
+  document.getElementById('exPlus').onclick=()=>{ex.min=Math.min(300,ex.min+5);ss('xh.exercise.'+d,ex);renderHealth();};
+  exBtn.onclick=()=>{ex.done=!ex.done;ss('xh.exercise.'+d,ex);renderHealth();};
+
+  document.getElementById('periodDate').value=per.last;
+  document.getElementById('cycleVal').textContent=per.cycle+' 天';
+  const pi=document.getElementById('periodInfo');
+  if(per.last){
+    const nxt=parseYMD(per.last);nxt.setDate(nxt.getDate()+per.cycle);
+    const left=Math.round((nxt-parseYMD(today()))/86400000);
+    const when=left>0?`还有 <b>${left}</b> 天，提前备好小包呀 🎀`:(left===0?'就是今天，好好休息 🎀':'已经来啦，记得照顾好自己 🎀');
+    pi.innerHTML=`上次：${per.last}<br>下次预计：${fmt(nxt)}<br>${when}`;
+  }else{
+    pi.innerHTML='记录一下上次来的时间，我帮你记着 🎀';
+  }
+  document.getElementById('periodDate').onchange=e=>{
+    const c=ls('xh.period',{last:'',cycle:28});
+    c.last=e.target.value;ss('xh.period',c);renderHealth();
+  };
+  const cycleSet=v=>{const c=ls('xh.period',{last:'',cycle:28});c.cycle=Math.max(15,Math.min(45,v));ss('xh.period',c);renderHealth();};
+  document.getElementById('cycleMinus').onclick=()=>cycleSet(per.cycle-1);
+  document.getElementById('cyclePlus').onclick=()=>cycleSet(per.cycle+1);
+
+  bindStars('st-energy2','xh.energy.'+today());
+}
+
+/* 关于我 */
+function renderAbout(){
+  const name=ls('xh.name','小慧');
+  document.getElementById('nameInput').value=name;
+  document.getElementById('nameInput').oninput=e=>{ss('xh.name',e.target.value.trim()||'小慧');renderHome();};
+
+  const start=ls('xh.startdate',today());
+  const days=Math.max(1,Math.round((parseYMD(today())-parseYMD(start))/86400000)+1);
+  let jc=0,hc=0;
+  for(let i=0;i<180;i++){
+    const ds=fmt(dateNDaysAgo(i));
+    const j=ls('xh.journal.'+ds,null);
+    if(j&&(j.now||j.think||j.record))jc++;
+    if(ls('xh.habits.'+ds,[]).length>0)hc++;
+  }
+  document.getElementById('aboutStats').innerHTML=`这是我们相遇的第 <b>${days}</b> 天<br>写过 <b>${jc}</b> 篇小记 · 打卡过 <b>${hc}</b> 天`;
+
+  const FIELDS=[['goal','我的目标','🎯'],['interest','我的兴趣','✨'],['strength','我的优势','💪'],['dream','我的梦想','🌙']];
+  const ab=ls('xh.about',{goal:'',interest:'',strength:'',dream:''});
+  document.getElementById('aboutFields').innerHTML=FIELDS.map(([k,label,e])=>`<div class="about-card ${k}"><div class="ac-head">${e} ${label}</div><textarea class="about-input" data-k="${k}" placeholder="写点什么……">${esc(ab[k]||'')}</textarea></div>`).join('');
+  document.querySelectorAll('.about-input').forEach(t=>t.addEventListener('input',()=>{
+    const o=ls('xh.about',{goal:'',interest:'',strength:'',dream:''});
+    o[t.dataset.k]=t.value;ss('xh.about',o);
+  }));
+}
+
+/* AI伴 */
+function renderChat(){
+  const msgs=ls('xh.chat',[]);
+  const body=document.getElementById('chatBody');
+  body.innerHTML=msgs.length?msgs.map(m=>`<div class="msg ${m.role}">${esc(m.text)}</div>`).join(''):'<div class="chat-empty">你好呀，我是暖暖 🌸<br>想聊什么都可以，我一直在这儿</div>';
+  body.scrollTop=body.scrollHeight;
+  document.getElementById('chips').innerHTML=CHIPS.map(c=>`<button class="chip" data-c="${esc(c)}">${c}</button>`).join('');
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>sendMsg(c.dataset.c)));
+}
+function sendMsg(text){
+  const t=(text||'').trim();if(!t)return;
+  const msgs=ls('xh.chat',[]);
+  msgs.push({role:'me',text:t});
+  msgs.push({role:'bot',text:botReply(t)});
+  ss('xh.chat',msgs.slice(-60));
+  renderChat();
+}
+function currentMoodText(){
+  const m=ls('xh.mood.'+today(),null);
+  const hit=MOODS.find(x=>x.k===m);
+  return hit?hit.t:'';
+}
+function goalOverview(){
+  const gs=ls('xh.goals',DEFAULTS_GOALS);
+  let n=0;
+  const lines=gs.map(g=>{if(g.p>=50)n++;return `${g.e}${esc(g.name)}：${g.p}% ${treeStage(g.p).e}`;}).join('\n');
+  return '你现在的四棵小树：\n'+lines+'\n'+(n>=3?'已经照顾得很好了，保持节奏呀！':'小树都是一点点长的，这周我们先给最矮的那棵多浇点水？💧');
+}
+function monthSummary(){
+  const d=new Date();
+  const ym=d.getFullYear()+'-'+pad(d.getMonth()+1);
+  const dim=d.getDate();
+  let days=0;const rec=[];
+  for(let dd=1;dd<=dim;dd++){
+    const ds=ym+'-'+pad(dd);
+    const j=ls('xh.journal.'+ds,null);
+    if(j&&(j.now||j.think||j.record)){days++;if(j.record)rec.push(j.record);}
+  }
+  const gs=ls('xh.goals',DEFAULTS_GOALS);
+  let s=`这个月到现在，你记了 ${days} 篇小记。`;
+  if(rec.length){
+    const last=rec.slice(-3).map(r=>'· '+r).join('\n');
+    s+='\n\n值得记住的事：\n'+last;
+  }
+  s+='\n\n四棵小树现在的状态：\n'+gs.map(g=>`${g.e}${esc(g.name)}：${g.p}%`).join('\n');
+  s+='\n\n这个月的你，一直在努力长大呀。下个月，我继续陪你。🌳';
+  return s;
+}
+function botReply(t){
+  if(!t)return '我在呢～你想和我说点什么呀？';
+  const m=currentMoodText();
+  if(/你好|哈喽|hi|嗨|在吗|hello/.test(t))return '你好呀小慧，我在呢～今天有什么想和我聊的？';
+  if(/心情不好|难过|不开心|低落|烦|难受|伤心|哭/.test(t))return '抱抱你，小慧。心情不好的时候不用硬撑，先喝口温水，或者站起来走走。愿意的话跟我说说发生了什么，我在听。💗';
+  if(/累|疲惫|好困|没精神|睡不好/.test(t))return '辛苦了呀。身体发出信号的时候要听它的，今晚早点睡好不好？明天又是元气满满的一天。🌙';
+  if(/偏离|没完成|不想做|拖延|放弃|没动力/.test(t))return '没关系的，小慧。目标不是用来绑架自己的，慢慢来反而走得远。我陪你看看——\n'+goalOverview();
+  if(/总结|这个月|回顾/.test(t))return monthSummary();
+  if(/目标/.test(t))return goalOverview();
+  if(/谢谢|辛苦|晚安|再见/.test(t))return '不用谢呀，能陪着你我就很开心啦。🍀';
+  if(/想你了|爱你|喜欢你/.test(t))return '嘻嘻，我也一直在这儿陪着你呀。🌸';
+  if(/怎么样/.test(t))return m?`我看到你今天的心情是「${m}」呢。不管是什么，都值得被温柔对待。想跟我多聊聊今天的事吗？`:'我今天很好呀～不过我更想知道你的今天怎么样，要不要先去「小记」里记一笔？📔';
+  return '嗯嗯，我在听呢。你今天过得怎么样？可以跟我说说，或者去「小记」里记下来，明天回来看会很温暖。🌷';
+}
+
+function bindAI(){
+  document.getElementById('aiSend').onclick=()=>sendMsg(document.getElementById('chatInput').value);
+  document.getElementById('chatInput').onkeydown=e=>{if(e.key==='Enter'){sendMsg(document.getElementById('chatInput').value);document.getElementById('chatInput').value='';}};
+}
+
+function init(){
+  if(!localStorage.getItem('xh.startdate'))ss('xh.startdate',today());
+  if(!localStorage.getItem('xh.goals'))ss('xh.goals',DEFAULTS_GOALS);
+  bindNav();bindAI();
+  renderHome();renderJournal();renderPlans();renderHealth();renderAbout();renderChat();
+}
+init();
+</script>
+</body>
+</html>
