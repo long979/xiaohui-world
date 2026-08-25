@@ -203,6 +203,8 @@
   .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 40%,transparent 45%,rgba(10,6,30,.56) 100%)}
   .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,240,200,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
   @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-24px);opacity:.8}}
+.xn{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:6px;overflow-x:auto;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(16,10,40,0),rgba(14,8,36,.86));backdrop-filter:blur(10px);scrollbar-width:none;white-space:nowrap}.xn::-webkit-scrollbar{display:none}.xn a{flex-shrink:0;text-decoration:none;font-family:PingFang SC,Microsoft YaHei,sans-serif;font-size:11px;color:#d8cff0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 13px;letter-spacing:.5px;transition:all .2s}.xn a.here{background:rgba(244,200,106,.18);border-color:rgba(244,200,106,.45);color:#ffeec4}.arrival{bottom:60px !important}.xn-pad{height:64px}
+.garden,.village,.forest,.creation,.skyarch{cursor:pointer;transition:transform .2s}.garden:active,.village:active,.forest:active,.creation:active,.skyarch:active{transform:scale(.97)}
 </style>
 </head>
 <body>
@@ -219,8 +221,8 @@
     <div class="nebula n1"></div><div class="nebula n2"></div>
     <div class="aplanet ap1"></div><div class="aplanet ap2"></div>
     <div class="cloud cl1"></div><div class="cloud cl2"></div>
-    <div class="skyarch gate"><div class="g-f"></div><div class="g-p"></div></div>
-    <div class="skyarch council">
+    <div class="skyarch gate" onclick="location.href='map.html'"><div class="g-f"></div><div class="g-p"></div></div>
+    <div class="skyarch council" onclick="location.href='council.html'">
       <div class="cf-halo"></div><div class="cf-table"></div><div class="cf-core"></div>
       <div class="cf-tiers"><div class="cf-tier cf-t1"></div><div class="cf-tier cf-t2"></div><div class="cf-tier cf-t3"></div></div>
     </div>
@@ -256,7 +258,7 @@
   <div class="meridian md1"></div><div class="meridian md2"></div><div class="meridian md3"></div><div class="meridian md4"></div><div class="meridian md5"></div><div class="meridian md6"></div>
 
   <!-- 东方·未来生态花园 -->
-  <div class="garden">
+  <div class="garden" onclick="location.href='garden.html'">
     <div class="gd-pond"><span class="gdl" style="left:9px;top:6px"></span><span class="gdl" style="right:11px;bottom:3px;animation-delay:1.3s"></span></div>
     <div class="gd-tree"><div class="cr"><span class="ltl lt-l1"></span><span class="ltl lt-l2"></span><span class="ltl lt-l3"></span><span class="ltl g lt-l4"></span></div><div class="tk"></div></div>
     <div class="gd-h"><div class="gdw"></div></div>
@@ -265,7 +267,7 @@
   </div>
 
   <!-- 西方·数字生命聚落 -->
-  <div class="village">
+  <div class="village" onclick="location.href='village.html'">
     <div class="vl-court"><span class="vc" style="top:14px;left:27px"></span><span class="vc" style="bottom:10px;left:13px;animation-delay:1.2s"></span></div>
     <div class="vl-tower"><span class="vb"></span><span class="vs" style="top:15px;left:12px">✦</span><span class="vs" style="top:40px;right:10px;animation-delay:1.5s">✦</span><span class="vs" style="top:62px;left:20px;animation-delay:2.3s">✦</span></div>
     <div class="vl-float vl-f1"><span class="vlw" style="top:7px;left:14px"></span></div>
@@ -277,7 +279,7 @@
   </div>
 
   <!-- 北方·发光森林 -->
-  <div class="forest">
+  <div class="forest" onclick="location.href='forest.html'">
     <div class="fs-t fs-a"><div class="fs-c"></div><div class="fs-tk"></div></div>
     <div class="fs-t fs-b"><div class="fs-c"></div><div class="fs-tk"></div></div>
     <div class="fs-t fs-c2"><div class="fs-c"></div><div class="fs-tk"></div></div>
@@ -290,7 +292,7 @@
   </div>
 
   <!-- 南方·建设中的未来城市 -->
-  <div class="creation">
+  <div class="creation" onclick="location.href='creation.html'">
     <div class="cr-bld b1"></div><div class="cr-bld b2"></div><div class="cr-bld b3"></div><div class="cr-bld b4"></div><div class="cr-bld b5"></div><div class="cr-bld b6"></div>
     <span class="cr-scaff" style="left:30px;height:62px"></span>
     <span class="cr-scaff" style="left:92px;height:52px"></span>
@@ -325,5 +327,6 @@
   <div class="fg-spore" style="width:30px;height:30px;left:36%;top:93%;filter:blur(3px);animation-delay:6s"></div>
   <div class="vignette"></div>
 </div>
+<nav class="xn"><a class="xnl" href="index.html">🌌 入口</a><a class="xnl" href="map.html">🗺️ 地图</a><a class="xnl here" href="planet.html">✨ 广场</a><a class="xnl" href="creator.html">👑 档案</a><a class="xnl" href="garden.html">🌱 花园</a><a class="xnl" href="village.html">🏠 居民村</a><a class="xnl" href="forest.html">🌲 森林</a><a class="xnl" href="creation.html">🏗️ 创造</a><a class="xnl" href="council.html">🪐 圆桌</a></nav><div class="xn-pad"></div>
 </body>
 </html>
