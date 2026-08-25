@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 创造大陆</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0e0722;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 天空 ===== */
+  .sky{position:absolute;left:0;right:0;top:0;height:46%;background:linear-gradient(180deg,#0c0520 0%,#1b0d3c 18%,#2e1548 38%,#4a2a5c 58%,#6b4660 78%,#8a5c62 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3.6s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 10px rgba(255,238,196,.9)}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(50px);opacity:.32;animation:drift 18s ease-in-out infinite alternate}
+  .nebula.n1{width:300px;height:170px;background:#4a2a80;left:-2%;top:0%}
+  .nebula.n2{width:260px;height:150px;background:#7a4258;right:0%;top:12%;animation-delay:6s;opacity:.22}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(28px)}}
+  .cloud{position:absolute;background:rgba(255,250,240,.1);border-radius:60px;filter:blur(1px);animation:driftcloud 20s ease-in-out infinite alternate;z-index:3}
+  @keyframes driftcloud{from{transform:translateX(0)}to{transform:translateX(22px)}}
+  .cl1{width:100px;height:15px;left:4%;top:46%}
+  .cl2{width:64px;height:11px;right:8%;top:56%;animation-delay:6s;opacity:.7}
+  .gate{position:absolute;left:9%;top:8%;width:56px;height:74px;opacity:.4;z-index:4}
+  .gate .gf{position:absolute;left:50%;top:0;transform:translateX(-50%);width:50px;height:70px;border-radius:50%;border:3.5px solid rgba(255,238,196,.4);box-shadow:0 0 14px rgba(255,238,196,.16),inset 0 0 10px rgba(255,238,196,.1);animation:gateglow 8s ease-in-out infinite}
+  .gate .gp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36px;height:54px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.34),rgba(255,230,160,.08));box-shadow:inset 0 0 14px rgba(255,238,196,.34)}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 9px rgba(255,238,196,.1),inset 0 0 8px rgba(255,238,196,.08)}50%{box-shadow:0 0 24px rgba(255,238,196,.32),inset 0 0 16px rgba(255,238,196,.22)}}
+
+  /* ===== 大陆大地 ===== */
+  .horizon{position:absolute;left:0;right:0;top:45.5%;height:3px;background:linear-gradient(90deg,transparent,rgba(230,200,170,.5),transparent);box-shadow:0 0 20px rgba(230,200,170,.4);z-index:3}
+  .ground{position:absolute;left:-12%;right:-12%;top:46%;bottom:-12%;background:linear-gradient(180deg,#5c585c 0%,#6c6860 18%,#7e7864 38%,#8c8066 56%,#7a6e5a 76%,#5e544c 100%);border-radius:50% 50% 0 0/22% 22% 0 0;z-index:2;box-shadow:inset 0 40px 70px rgba(255,220,180,.1)}
+  .ground::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(2px 2px at 18% 24%,rgba(255,255,255,.12),transparent),radial-gradient(2px 2px at 44% 16%,rgba(255,255,255,.09),transparent),radial-gradient(2px 2px at 66% 26%,rgba(255,255,255,.1),transparent),radial-gradient(2px 2px at 84% 20%,rgba(255,255,255,.08),transparent)}
+
+  /* ===== 主街（建设大道） ===== */
+  .avenue{position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);width:42%;height:50%;clip-path:polygon(36% 0,64% 0,95% 100%,5% 100%);background:linear-gradient(180deg,rgba(255,238,196,.5),rgba(255,238,196,.03));box-shadow:0 0 28px rgba(255,230,160,.16);z-index:3}
+  .avenue .ae{position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(255,244,214,.85),rgba(255,238,196,.06));box-shadow:0 0 10px rgba(255,230,160,.5)}
+  .avenue .ae-l{left:42%}.avenue .ae-r{right:42%}
+  .avenue .ad{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 9px 4px rgba(255,255,255,.8);animation:tw 3s ease-in-out infinite}
+
+  /* ===== 未来建筑（不同阶段） ===== */
+  .cbd{position:absolute;z-index:4}
+  /* 完成的建筑（发光） */
+  .cbd .bd{position:absolute;bottom:0;background:linear-gradient(180deg,rgba(255,236,196,.85),rgba(200,150,100,.35));clip-path:polygon(0 0,100% 0,94% 100%,6% 100%);box-shadow:0 0 16px rgba(255,225,160,.5)}
+  .cbd .bd.blue{background:linear-gradient(180deg,rgba(200,196,255,.85),rgba(138,106,208,.35));box-shadow:0 0 16px rgba(160,140,230,.5)}
+  .cbd .bd.green{background:linear-gradient(180deg,rgba(190,240,210,.85),rgba(110,190,150,.35));box-shadow:0 0 16px rgba(150,220,180,.5)}
+  .cbd .bd.violet{background:linear-gradient(180deg,rgba(230,220,255,.85),rgba(160,130,220,.35));box-shadow:0 0 16px rgba(190,160,240,.5)}
+  .cbd .win{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff3c0;box-shadow:0 0 9px 3px rgba(255,230,140,.8);animation:tw 3s ease-in-out infinite}
+  /* 施工脚手架（半透明格子） */
+  .cbd .scaff{position:absolute;bottom:0;width:2px;background:repeating-linear-gradient(180deg,rgba(255,255,255,.45) 0 6px,transparent 6px 10px);opacity:.6}
+  .cbd .scaff2{position:absolute;top:0;bottom:0;width:100%;background:repeating-linear-gradient(90deg,transparent 0 8px,rgba(255,255,255,.18) 8px 10px),repeating-linear-gradient(180deg,transparent 0 8px,rgba(255,255,255,.18) 8px 10px);opacity:.5}
+  /* 光塔吊 */
+  .crane{position:absolute;z-index:4}
+  .cr-arm{position:absolute;bottom:0;width:3px;background:linear-gradient(180deg,rgba(255,238,196,.8),rgba(200,170,130,.3));box-shadow:0 0 8px rgba(255,230,160,.4)}
+  .cr-beam{position:absolute;height:3px;background:linear-gradient(90deg,rgba(255,238,196,.8),rgba(255,238,196,.1));box-shadow:0 0 8px rgba(255,230,160,.4)}
+  .cr-light{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.85);animation:tw 2.4s ease-in-out infinite}
+  /* 地基光点（在建中的楼） */
+  .cbd .base{position:absolute;bottom:0;left:0;right:0;height:8px;background:linear-gradient(180deg,rgba(255,238,196,.3),rgba(255,238,196,.05));box-shadow:0 0 14px rgba(255,230,160,.3)}
+  .cbd .basedot{position:absolute;bottom:8px;width:4px;height:4px;border-radius:50%;background:#fff3c0;box-shadow:0 0 8px 3px rgba(255,230,140,.8);animation:tw 2.6s ease-in-out infinite}
+
+  /* ===== 楼群布局 ===== */
+  /* 远处（地平线上） */
+  .cb1{left:6%;top:38%;width:52px;height:90px}
+  .cb1 .bd{left:0;width:24px;height:70px;background:linear-gradient(180deg,rgba(200,196,255,.7),rgba(138,106,208,.3))}
+  .cb1 .bd.b2{left:28px;width:18px;height:52px;background:linear-gradient(180deg,rgba(255,236,196,.6),rgba(200,150,100,.25))}
+  .cb2{right:8%;top:40%;width:60px;height:100px}
+  .cb2 .bd{left:0;width:28px;height:80px;background:linear-gradient(180deg,rgba(190,240,210,.65),rgba(110,190,150,.28))}
+  .cb2 .bd.b2{left:32px;width:20px;height:58px;background:linear-gradient(180deg,rgba(230,220,255,.65),rgba(160,130,220,.28))}
+  .cb3{left:34%;top:40%;width:46px;height:84px;transform:scale(.85)}
+  .cb3 .bd{left:0;width:22px;height:64px;background:linear-gradient(180deg,rgba(255,236,196,.65),rgba(200,150,100,.28))}
+  .cb3 .bd.b2{left:24px;width:16px;height:46px;background:linear-gradient(180deg,rgba(200,196,255,.6),rgba(138,106,208,.26))}
+  .cb4{right:32%;top:42%;width:40px;height:72px;transform:scale(.8)}
+  .cb4 .bd{left:0;width:20px;height:56px;background:linear-gradient(180deg,rgba(230,220,255,.6),rgba(160,130,220,.26))}
+  .cb4 .bd.b2{left:22px;width:14px;height:40px;background:linear-gradient(180deg,rgba(190,240,210,.55),rgba(110,190,150,.24))}
+  /* 中景（建设中） */
+  .cb5{left:16%;top:52%;width:60px;height:110px}
+  .cb5 .bd{left:0;width:30px;height:88px}
+  .cb5 .scaff2{left:34px;width:24px;height:74px}
+  .cb6{right:18%;top:54%;width:64px;height:116px}
+  .cb6 .bd{left:0;width:26px;height:70px}
+  .cb6 .scaff{left:30px;height:86px}
+  .cb6 .scaff2{left:34px;width:28px;height:86px}
+  .cb7{left:40%;top:50%;width:56px;height:100px;transform:scale(.9)}
+  .cb7 .bd{left:0;width:28px;height:78px;background:linear-gradient(180deg,rgba(200,196,255,.7),rgba(138,106,208,.3))}
+  .cb7 .scaff{left:32px;height:64px}
+  /* 近景（正在打地基） */
+  .cb8{left:8%;top:66%;width:60px;height:70px}
+  .cb8 .base{width:56px}
+  .cb8 .bd{left:0;width:34px;height:44px}
+  .cb9{right:10%;top:64%;width:64px;height:74px}
+  .cb9 .base{width:60px}
+  .cb9 .scaff{left:40px;height:52px}
+  .cb9 .bd{left:0;width:22px;height:36px;background:linear-gradient(180deg,rgba(230,220,255,.65),rgba(160,130,220,.28))}
+
+  /* ===== 光塔吊 ===== */
+  .crane1{left:24%;top:52%;width:70px;height:120px}
+  .crane1 .cr-arm{left:50%;transform:translateX(-50%);height:120px}
+  .crane1 .cr-beam{left:10px;top:0;width:70px;transform:rotate(12deg)}
+  .crane1 .cr-light{left:56px;top:-3px}
+  .crane2{right:28%;top:50%;width:60px;height:100px;transform:scale(.85)}
+  .crane2 .cr-arm{left:50%;transform:translateX(-50%);height:100px}
+  .crane2 .cr-beam{left:8px;top:0;width:60px;transform:rotate(-14deg)}
+  .crane2 .cr-light{left:4px;top:-3px;animation-delay:1.2s}
+
+  /* 街道灯 */
+  .lamp{position:absolute;z-index:5}
+  .lp-stem{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:30px;background:linear-gradient(180deg,rgba(255,238,196,.6),rgba(200,170,130,.2));border-radius:2px}
+  .lp-glow{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 65%);box-shadow:0 0 16px 7px rgba(255,220,140,.6);animation:tw 3s ease-in-out infinite}
+
+  .gfl{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 11px 4px rgba(255,200,140,.7);animation:tw 3.2s ease-in-out infinite;z-index:5}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(255,220,140,.35),0 2px 20px rgba(30,20,60,.6)}
+  .title .poem{font-family:var(--kai);font-size:11.5px;color:rgba(255,246,232,.92);margin-top:9px;line-height:2;letter-spacing:1px;text-shadow:0 1px 12px rgba(40,20,60,.6)}
+  .title .poem b{color:var(--gold-l)}
+  .arrival{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:12;font-size:11px;color:rgba(255,244,224,.9);letter-spacing:2px;text-shadow:0 1px 10px rgba(40,20,60,.6);animation:tw 3.6s ease-in-out infinite}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 38%,transparent 46%,rgba(8,6,26,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,235,205,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:7%;top:10%"></span>
+    <span class="star" style="left:24%;top:6%"></span>
+    <span class="star s-big" style="left:42%;top:14%"></span>
+    <span class="star" style="left:58%;top:8%"></span>
+    <span class="star" style="left:76%;top:16%"></span>
+    <span class="star" style="left:90%;top:9%"></span>
+    <span class="star" style="left:16%;top:32%"></span>
+    <span class="star" style="left:66%;top:36%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+    <div class="cloud cl1"></div><div class="cloud cl2"></div>
+    <div class="gate"><div class="gf"></div><div class="gp"></div></div>
+  </div>
+
+  <div class="horizon"></div>
+  <div class="ground"></div>
+
+  <!-- 建设大道 -->
+  <div class="avenue">
+    <span class="ae ae-l"></span><span class="ae ae-r"></span>
+    <span class="ad" style="left:48%;top:4%"></span>
+    <span class="ad" style="left:47%;top:36%;animation-delay:1.2s"></span>
+    <span class="ad" style="left:49%;top:68%;animation-delay:2.4s"></span>
+  </div>
+
+  <!-- 楼群 -->
+  <div class="cbd cb1"><div class="bd"></div><div class="bd b2"></div><span class="win" style="left:6px;top:14px"></span><span class="win" style="right:10px;top:26px;animation-delay:1.2s"></span></div>
+  <div class="cbd cb2"><div class="bd"></div><div class="bd b2"></div><span class="win" style="left:8px;top:18px"></span><span class="win" style="right:6px;top:34px;animation-delay:1.6s"></span></div>
+  <div class="cbd cb3"><div class="bd"></div><div class="bd b2"></div><span class="win" style="left:5px;top:12px"></span></div>
+  <div class="cbd cb4"><div class="bd"></div><div class="bd b2"></div><span class="win" style="left:6px;top:10px"></span></div>
+
+  <div class="cbd cb5"><div class="bd"></div><div class="scaff2"></div><span class="basedot" style="left:8px"></span><span class="basedot" style="left:22px;animation-delay:1s"></span></div>
+  <div class="cbd cb6"><div class="bd"></div><span class="scaff" style="left:30px"></span><div class="scaff2"></div><span class="basedot" style="left:40px"></span><span class="basedot" style="left:52px;animation-delay:1.2s"></span></div>
+  <div class="cbd cb7"><div class="bd"></div><span class="scaff" style="left:32px"></span><span class="win" style="left:8px;top:20px"></span></div>
+
+  <div class="cbd cb8"><div class="base"></div><div class="bd"></div><span class="basedot" style="left:6px"></span><span class="basedot" style="left:18px;animation-delay:.8s"></span><span class="basedot" style="left:30px;animation-delay:1.6s"></span><span class="basedot" style="left:42px;animation-delay:2.4s"></span></div>
+  <div class="cbd cb9"><div class="base"></div><div class="bd"></div><span class="scaff" style="left:40px"></span><span class="basedot" style="left:6px"></span><span class="basedot" style="left:18px;animation-delay:1s"></span></div>
+
+  <!-- 光塔吊 -->
+  <div class="crane crane1"><span class="cr-arm"></span><span class="cr-beam"></span><span class="cr-light"></span></div>
+  <div class="crane crane2"><span class="cr-arm"></span><span class="cr-beam"></span><span class="cr-light"></span></div>
+
+  <!-- 街道灯 -->
+  <div class="lamp" style="left:36%;bottom:38%"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="lamp" style="left:58%;bottom:42%;transform:scale(.85)"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="lamp" style="right:12%;bottom:46%;transform:scale(.7)"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+
+  <div class="gfl" style="left:20%;bottom:34%"></div>
+  <div class="gfl" style="left:50%;bottom:30%;animation-delay:1.2s"></div>
+  <div class="gfl" style="right:14%;bottom:28%;animation-delay:2s"></div>
+
+  <div class="spore" style="left:20%;top:52%"></div>
+  <div class="spore" style="left:42%;top:58%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:24%;top:50%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:52%;top:64%;animation-delay:1.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 南方 · 创造之地 ✦</div>
+    <h1>创造大陆</h1>
+    <div class="poem">
+      每一座建筑，都是一件作品<br>这座城市，正随着你的创造<br><b>一点点长高</b>
+    </div>
+  </div>
+  <div class="arrival">你的作品，正在长成一座城市</div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:80%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:86%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
