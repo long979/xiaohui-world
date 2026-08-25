@@ -210,6 +210,23 @@
   .starmap .sm-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:8.5px;color:rgba(255,244,224,.8);letter-spacing:2px;white-space:nowrap;text-shadow:0 1px 8px rgba(20,10,40,.7);font-family:KaiTi,STKaiti,'楷体',serif}
   @keyframes sm-pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
+
+  .arrive{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,6,24,.55);backdrop-filter:blur(6px)}
+  .arrive-card{width:100%;max-width:480px;background:rgba(22,14,48,.94);border:1px solid rgba(255,238,196,.22);border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));text-align:center}
+  .arrive-orb{width:50px;height:50px;margin:0 auto;border-radius:50%;display:grid;place-items:center;font-size:24px;background:radial-gradient(circle,#fff8ec,#ffe4b5);box-shadow:0 0 22px 8px rgba(255,220,140,.5);animation:gfloat 3s ease-in-out infinite}
+  @keyframes gfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .arrive-speech{font-family:var(--kai);font-size:13.5px;color:rgba(255,246,232,.95);line-height:2.1;margin-top:12px;letter-spacing:.5px}
+  .arrive-mem{font-size:10px;color:rgba(255,244,224,.6);letter-spacing:1px;margin-top:10px;line-height:1.8}
+  .arrive-btn{display:inline-block;margin-top:14px;padding:11px 34px;border-radius:24px;background:linear-gradient(135deg,#f4c86a,#e8a060);color:#3a2040;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;border:none;box-shadow:0 6px 20px rgba(244,200,106,.45);font-family:var(--font)}
+  .arrive-btn:active{transform:scale(.96)}
+  .dir{position:absolute;z-index:7;font-family:var(--kai);font-size:11px;color:rgba(255,244,224,.9);letter-spacing:2px;text-shadow:0 0 12px rgba(255,220,140,.7),0 1px 8px rgba(20,10,40,.7);animation:dirpulse 3.5s ease-in-out infinite;white-space:nowrap}
+  .dir::before{content:'✦';display:block;text-align:center;margin-bottom:3px}
+  @keyframes dirpulse{0%,100%{opacity:.5}50%{opacity:1}}
+  .dir-n{left:13%;top:24%}
+  .dir-s{right:9%;bottom:18%}
+  .dir-e{right:16%;top:30%}
+  .dir-up{left:36%;top:4%}
+
 </style>
 </head>
 <body>
@@ -334,5 +351,34 @@
 </div>
 
 <div class="starmap" onclick="location.href='map.html'">🗺️<span class="sm-label">✦ 星图 ✦</span></div>
+<script>try{var W=JSON.parse(localStorage.getItem('xh_visits')||'{}');var F=(location.pathname.split('/').pop()||'index.html').replace('.html','');if(!W[F])W[F]=new Date().toISOString().slice(0,10);localStorage.setItem('xh_visits',JSON.stringify(W));}catch(e){}</script>
+
+<div class="dir dir-n">北 · 森林</div>
+<div class="dir dir-s">南 · 居民村</div>
+<div class="dir dir-e">东 · 创造</div>
+<div class="dir dir-up">上 · 圆桌</div>
+<div class="arrive" id="arrive">
+  <div class="arrive-card">
+    <div class="arrive-orb">🌙</div>
+    <div class="arrive-speech" id="arriveSpeech"></div>
+    <div class="arrive-mem" id="arriveMem"></div>
+    <button class="arrive-btn" onclick="leaveArrive()">✦ 出发 ✦</button>
+  </div>
+</div>
+<script>
+function leaveArrive(){var a=document.getElementById('arrive');if(a)a.style.display='none';try{localStorage.setItem('xh_plaza_seen','1');}catch(e){}}
+window.addEventListener('load',function(){try{
+  var seen=localStorage.getItem('xh_plaza_seen');
+  var W=JSON.parse(localStorage.getItem('xh_visits')||'{}');
+  var places=Object.keys(W).filter(function(k){return k!=='planet'&&k!=='index';});
+  var mem='这个世界记得你 · 首次进入：'+(W['index']||'今天')+(places.length?' · 已探索 '+places.length+' 个地方':'');
+  if(!seen){
+    var sp=document.getElementById('arriveSpeech');
+    if(sp)sp.innerHTML='你降临到了<b>生命核心广场</b>。<br>看看四周——北方的记忆森林、南方的居民村、<br>东方的创造大陆、上空的星环圆桌。<br><b>你想先探索哪里？</b>';
+    var mm=document.getElementById('arriveMem');if(mm)mm.textContent=mem;
+  }
+}catch(e){}});
+</script>
+
 </body>
 </html>
