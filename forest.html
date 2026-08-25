@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 记忆森林</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0a0620;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 天空 ===== */
+  .sky{position:absolute;left:0;right:0;top:0;height:43%;background:linear-gradient(180deg,#0a0520 0%,#170a36 20%,#281246 42%,#402a54 66%,#5c4460 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3.6s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 10px rgba(255,238,196,.9)}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(50px);opacity:.3;animation:drift 18s ease-in-out infinite alternate}
+  .nebula.n1{width:300px;height:170px;background:#3a2470;left:-2%;top:0%}
+  .nebula.n2{width:260px;height:150px;background:#2a5a4a;right:0%;top:12%;animation-delay:6s;opacity:.2}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(28px)}}
+  .cloud{position:absolute;background:rgba(255,250,240,.08);border-radius:60px;filter:blur(1px);animation:driftcloud 20s ease-in-out infinite alternate;z-index:3}
+  @keyframes driftcloud{from{transform:translateX(0)}to{transform:translateX(22px)}}
+  .cl1{width:90px;height:13px;left:4%;top:42%}
+  .cl2{width:60px;height:10px;right:8%;top:50%;animation-delay:6s;opacity:.6}
+  .gate{position:absolute;right:7%;top:7%;width:52px;height:70px;opacity:.38;z-index:4}
+  .gate .gf{position:absolute;left:50%;top:0;transform:translateX(-50%);width:46px;height:66px;border-radius:50%;border:3.5px solid rgba(255,238,196,.38);box-shadow:0 0 12px rgba(255,238,196,.14),inset 0 0 9px rgba(255,238,196,.1);animation:gateglow 8s ease-in-out infinite}
+  .gate .gp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:32px;height:50px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.32),rgba(255,230,160,.08));box-shadow:inset 0 0 12px rgba(255,238,196,.32)}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 8px rgba(255,238,196,.1),inset 0 0 7px rgba(255,238,196,.08)}50%{box-shadow:0 0 22px rgba(255,238,196,.3),inset 0 0 14px rgba(255,238,196,.2)}}
+
+  /* ===== 森林大地 ===== */
+  .horizon{position:absolute;left:0;right:0;top:43%;height:3px;background:linear-gradient(90deg,transparent,rgba(150,220,180,.5),transparent);box-shadow:0 0 20px rgba(150,220,180,.4);z-index:3}
+  .ground{position:absolute;left:-12%;right:-12%;top:43.5%;bottom:-12%;background:linear-gradient(180deg,#2a4638 0%,#36563f 18%,#46664c 38%,#567656 58%,#446648 78%,#2c4e3a 100%);border-radius:50% 50% 0 0/22% 22% 0 0;z-index:2;box-shadow:inset 0 40px 70px rgba(160,230,190,.1)}
+  .ground::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(2px 2px at 16% 22%,rgba(255,255,255,.1),transparent),radial-gradient(2px 2px at 40% 14%,rgba(255,255,255,.08),transparent),radial-gradient(2px 2px at 62% 24%,rgba(255,255,255,.09),transparent),radial-gradient(2px 2px at 82% 18%,rgba(255,255,255,.07),transparent)}
+
+  /* ===== 森林小径 ===== */
+  .fpath{position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);width:30%;height:44%;clip-path:polygon(38% 100%,62% 100%,54% 0,46% 0);background:linear-gradient(180deg,rgba(190,240,200,.35),rgba(190,240,200,.03));z-index:3}
+  .fpath .fe{position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(220,255,225,.75),rgba(190,240,200,.05));box-shadow:0 0 10px rgba(190,240,200,.4)}
+  .fpath .fe-l{left:42%}.fpath .fe-r{right:42%}
+  .fpath .fd{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 9px 4px rgba(255,255,255,.8);animation:tw 3s ease-in-out infinite}
+
+  /* ===== 中央·记忆母树（文明记忆） ===== */
+  .memtree{position:absolute;left:50%;top:0%;width:280px;height:70%;transform:translateX(-50%);z-index:6}
+  .mt-root{position:absolute;left:50%;top:58%;transform:translateX(-50%);width:130px;height:100px}
+  .mt-root .mr{position:absolute;height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(170,238,205,.95),rgba(170,238,205,.06));box-shadow:0 0 12px rgba(150,230,190,.7);transform-origin:left center;animation:pathflow 5s ease-in-out infinite}
+  .mt-root .mr1{left:0;top:6px;width:64px;transform:rotate(-36deg)}
+  .mt-root .mr2{right:0;top:6px;width:64px;transform:rotate(36deg) scaleX(-1)}
+  .mt-root .mr3{left:20px;top:34px;width:82px;transform:rotate(-64deg)}
+  .mt-root .mr4{right:20px;top:34px;width:82px;transform:rotate(64deg) scaleX(-1)}
+  .mt-root .mr5{left:40px;top:62px;width:96px;transform:rotate(-86deg)}
+  .mt-root .mr6{right:40px;top:62px;width:96px;transform:rotate(86deg) scaleX(-1)}
+  .mt-trunk{position:absolute;left:50%;top:26%;transform:translateX(-50%);width:46px;height:200px;background:linear-gradient(180deg,rgba(225,253,242,.42),rgba(140,228,190,.55) 55%,rgba(90,190,150,.62));clip-path:polygon(44% 0,56% 0,100% 13%,87% 100%,13% 100%,0 13%);box-shadow:0 0 50px rgba(150,235,195,.5),inset 0 0 30px rgba(255,255,255,.3);border-left:3px solid rgba(255,255,255,.45);border-right:3px solid rgba(255,255,255,.22);animation:corebreathe 6s ease-in-out infinite}
+  @keyframes corebreathe{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.02)}}
+  .mt-trunk::before{content:'';position:absolute;inset:7px 11px;background:repeating-linear-gradient(180deg,transparent 0 22px,rgba(255,255,255,.22) 22px 23px);opacity:.6}
+  .mt-trunk::after{content:'';position:absolute;inset:6px 10px;background:linear-gradient(180deg,transparent,rgba(255,244,214,.95),rgba(190,245,215,.8),transparent);background-size:100% 320%;animation:memoryflow 7s linear infinite;border-radius:5px;filter:blur(1px)}
+  @keyframes memoryflow{from{background-position:0 0}to{background-position:0 320%}}
+  .mt-heart{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 40px 14px rgba(255,220,140,.75);animation:corepulse 3.2s ease-in-out infinite;z-index:2}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.18)}}
+  .mt-crown{position:absolute;left:50%;top:2%;transform:translateX(-50%);width:250px;height:180px;animation:sway 8s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:translateX(-50%) rotate(-1.4deg)}50%{transform:translateX(-50%) rotate(1.4deg)}}
+  .mt-leaf{position:absolute;border-radius:50%;background:radial-gradient(circle at 38% 32%,#d8f6e0,#6fb898 72%);box-shadow:0 0 18px rgba(120,210,170,.55),inset -5px -5px 12px rgba(40,110,80,.22)}
+  .mt-leaf.g{background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%);box-shadow:0 0 18px rgba(221,160,90,.55)}
+  .mt-l1{width:54px;height:54px;left:98px;top:0}
+  .mt-l2{width:42px;height:42px;left:20px;top:52px}
+  .mt-l3{width:46px;height:46px;right:12px;top:48px}
+  .mt-l4{width:34px;height:34px;left:110px;top:62px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%)}
+  .mt-l5{width:30px;height:30px;left:0;top:118px}
+  .mt-l6{width:32px;height:32px;right:2px;top:116px}
+  .mt-l7{width:22px;height:22px;left:132px;top:26px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%)}
+  .mt-l8{width:20px;height:20px;left:76px;top:120px}
+  .mt-l9{width:18px;height:18px;right:40px;top:86px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%)}
+  .mt-mote{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 9s ease-in-out infinite}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-38px);opacity:0}}
+  @keyframes pathflow{0%,100%{opacity:.45}50%{opacity:.95}}
+
+  /* ===== 知识林（晶体树） ===== */
+  .ftree{position:absolute;bottom:0;z-index:4}
+  .ftree .ftc{width:22px;height:26px;background:linear-gradient(135deg,rgba(214,255,240,.6),rgba(120,220,180,.85));clip-path:polygon(50% 0,100% 62%,50% 100%,0 62%);box-shadow:0 0 16px rgba(160,240,200,.6)}
+  .ftree .ftt{width:4px;height:10px;background:rgba(140,230,190,.65);margin:0 auto;border-radius:2px}
+  .ftree .ftg{position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 9px 3px rgba(255,255,255,.8);animation:tw 3.4s ease-in-out infinite}
+  .ftree.big{transform:scale(1.3)}
+  .ftree.small{transform:scale(.75)}
+  .ftree.tiny{transform:scale(.55)}
+  .fk1{left:6%;top:36%}.fk2{left:16%;top:40%;transform:scale(.6)}.fk3{left:24%;top:34%}
+  .fk4{left:10%;top:56%;transform:scale(1.1)}.fk5{left:26%;top:60%;transform:scale(.85)}
+
+  /* ===== 思想林（漂浮光点·思维正在形成） ===== */
+  .thought{position:absolute;border-radius:50%;z-index:4;animation:think 8s ease-in-out infinite}
+  @keyframes think{0%,100%{transform:translateY(0);opacity:.45}50%{transform:translateY(-24px);opacity:1}}
+  .th1{right:8%;top:34%;width:9px;height:9px;background:radial-gradient(circle,#fff8d8,#ffd98a 70%);box-shadow:0 0 14px 5px rgba(255,220,140,.65)}
+  .th2{right:16%;top:40%;width:7px;height:7px;background:radial-gradient(circle,#f2ecff,#8a6ad0 70%);box-shadow:0 0 12px 4px rgba(138,106,208,.65);animation-delay:1.4s}
+  .th3{right:26%;top:36%;width:6px;height:6px;background:radial-gradient(circle,#eafff5,#7ad8b0 70%);box-shadow:0 0 11px 4px rgba(122,216,176,.65);animation-delay:2.4s}
+  .th4{right:12%;top:48%;width:5px;height:5px;background:radial-gradient(circle,#fff0f4,#e88a9a 70%);box-shadow:0 0 9px 3px rgba(232,138,154,.65);animation-delay:3.2s}
+  .th5{right:30%;top:44%;width:4px;height:4px;background:radial-gradient(circle,#fff8d8,#ffd98a 70%);box-shadow:0 0 8px 3px rgba(255,220,140,.65);animation-delay:4s}
+
+  /* ===== 创造林（变化的植物与建筑） ===== */
+  .cg{position:absolute;z-index:4}
+  .cg .cg-plant{position:absolute;border-radius:50% 50% 20% 20%;animation:tw 5s ease-in-out infinite}
+  .cg .cg-bld{position:absolute;background:linear-gradient(180deg,rgba(255,236,196,.55),rgba(200,150,100,.2));clip-path:polygon(0 0,100% 0,94% 100%,6% 100%);box-shadow:0 0 12px rgba(255,225,160,.3)}
+  .c1{left:38%;top:36%}
+  .c1 .cg-plant{left:0;bottom:0;width:12px;height:18px;background:linear-gradient(180deg,rgba(190,240,220,.85),rgba(120,200,160,.4));box-shadow:0 0 10px rgba(150,230,190,.5)}
+  .c1 .cg-plant.b{left:16px;bottom:2px;width:10px;height:14px;background:linear-gradient(180deg,rgba(255,220,240,.85),rgba(220,150,180,.4));box-shadow:0 0 10px rgba(235,180,205,.5);animation-delay:1.2s}
+  .c1 .cg-bld{right:0;bottom:0;width:16px;height:26px}
+  .c2{right:20%;top:56%;transform:scale(.85)}
+  .c2 .cg-plant{left:0;bottom:0;width:11px;height:16px;background:linear-gradient(180deg,rgba(230,220,255,.85),rgba(160,130,220,.4));box-shadow:0 0 10px rgba(190,160,240,.5)}
+  .c2 .cg-bld{right:0;bottom:0;width:20px;height:32px;background:linear-gradient(180deg,rgba(200,196,255,.5),rgba(138,106,208,.2))}
+
+  /* ===== 宇宙档案林（纪念碑·方尖碑） ===== */
+  .obelisk{position:absolute;bottom:0;z-index:4;animation:floaty 10s ease-in-out infinite}
+  .ob-body{width:11px;height:44px;background:linear-gradient(180deg,rgba(200,190,255,.6),rgba(130,120,215,.2));clip-path:polygon(24% 0,76% 0,100% 100%,0 100%);box-shadow:0 0 14px rgba(180,170,240,.3)}
+  .ob-glow{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 11px 4px rgba(255,255,255,.8);animation:tw 3.2s ease-in-out infinite}
+  .ob1{left:44%;top:40%;transform:scale(1.1)}
+  .ob2{left:50%;top:44%;transform:scale(.8);animation-delay:1.6s}
+  .ob3{left:56%;top:38%;transform:scale(1.25);animation-delay:2.4s}
+  .ob4{left:62%;top:46%;transform:scale(.7);animation-delay:3.2s}
+
+  /* ===== 记忆湖（镜面·映照过去现在未来） ===== */
+  .memlake{position:absolute;left:5%;bottom:14%;width:140px;height:52px;border-radius:50%;z-index:5;background:radial-gradient(ellipse at 50% 40%,rgba(195,240,230,.95),rgba(120,205,180,.4) 70%,rgba(90,180,160,.22));box-shadow:0 0 40px rgba(150,230,210,.4),inset 0 0 28px rgba(255,255,255,.2)}
+  .ml-ripple{position:absolute;inset:7px 12px;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.36) 0 1px,transparent 1px 6px);animation:lakeflow 8s linear infinite}
+  @keyframes lakeflow{from{background-position:0 0}to{background-position:0 24px}}
+  .ml-re{position:absolute;left:14%;right:14%;top:16%;height:8px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,238,196,.65),transparent 70%);filter:blur(1.5px);animation:reflect 7s ease-in-out infinite}
+  .ml-re.r2{top:32%;left:24%;right:24%;height:5px;background:radial-gradient(ellipse,rgba(170,235,210,.5),transparent 70%);animation-delay:2s}
+  .ml-re.r3{top:46%;left:32%;right:32%;height:3px;background:radial-gradient(ellipse,rgba(210,185,240,.4),transparent 70%);animation-delay:3.8s}
+  @keyframes reflect{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:.85;transform:scaleY(1.2)}}
+  .ml-mote{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.85);animation:motefloat 5s ease-in-out infinite}
+  @keyframes motefloat{0%,100%{transform:translateX(0);opacity:.4}50%{transform:translateX(10px);opacity:1}}
+
+  /* ===== 文明档案馆（记忆圣殿） ===== */
+  .archive{position:absolute;right:6%;bottom:16%;width:84px;height:96px;z-index:5;animation:floaty 9s ease-in-out infinite}
+  .ar-tiers{position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
+  .ar-tier{background:linear-gradient(180deg,rgba(210,205,255,.5),rgba(150,140,230,.2));box-shadow:0 0 18px rgba(170,160,240,.35),inset 0 0 14px rgba(255,255,255,.2);margin:3px auto}
+  .ar-t1{width:70px;height:22px;border-radius:6px}
+  .ar-t2{width:52px;height:22px;border-radius:6px}
+  .ar-t3{width:34px;height:22px;border-radius:6px}
+  .ar-core{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 20px 8px rgba(255,220,140,.65);animation:corepulse 3.2s ease-in-out infinite;z-index:2}
+  .ar-glow{position:absolute;left:50%;top:20px;transform:translateX(-50%);width:40px;height:46px;background:radial-gradient(ellipse,rgba(255,238,196,.4),transparent 70%);filter:blur(3px);animation:beamshimmer 5s ease-in-out infinite}
+  @keyframes beamshimmer{0%,100%{opacity:.5}50%{opacity:1}}
+
+  .gfl{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 11px 4px rgba(255,200,140,.7);animation:tw 3.2s ease-in-out infinite;z-index:5}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+
+  /* ===== 柔和雾气 + 微光（安静敬畏的氛围） ===== */
+  .mist{position:absolute;left:-12%;right:-12%;height:34px;border-radius:50%;background:radial-gradient(ellipse,rgba(210,245,225,.13),transparent 70%);filter:blur(7px);z-index:2;animation:mistdrift 18s ease-in-out infinite alternate}
+  @keyframes mistdrift{from{transform:translateX(-16px)}to{transform:translateX(16px)}}
+  .mist.m1{top:40%;opacity:.8}
+  .mist.m2{top:52%;opacity:.55;animation-delay:4s}
+  .mist.m3{top:64%;opacity:.45;animation-delay:8s}
+  .mist.m4{top:30%;opacity:.35;animation-delay:6s}
+  .mist.m5{top:74%;opacity:.5;animation-delay:10s}
+  .dote{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(235,250,225,.7);animation:tw 6s ease-in-out infinite;z-index:5}
+  .mt-vine{position:absolute;top:32%;left:50%;transform:translateX(-50%);width:2px;height:66px;background:linear-gradient(180deg,rgba(190,240,220,.7),rgba(120,200,160,.15));box-shadow:0 0 7px rgba(150,230,190,.4);z-index:3}
+  .mt-vine .mv{position:absolute;width:7px;height:8px;border-radius:60% 0 60% 0;background:linear-gradient(135deg,#c8f0d4,#6ab88a)}
+  .mt-vine .mv1{top:6px;left:-4px}.mt-vine .mv2{top:24px;right:-4px;transform:rotate(24deg)}.mt-vine .mv3{top:44px;left:-4px}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(220,250,225,.75);text-shadow:0 1px 10px rgba(20,40,30,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(180,240,200,.35),0 2px 20px rgba(20,30,30,.6)}
+  .title .poem{font-family:var(--kai);font-size:11.5px;color:rgba(240,252,240,.92);margin-top:9px;line-height:2;letter-spacing:1px;text-shadow:0 1px 12px rgba(20,40,30,.6)}
+  .title .poem b{color:var(--gold-l)}
+  .arrival{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:12;font-size:11px;color:rgba(240,252,240,.9);letter-spacing:2px;text-shadow:0 1px 10px rgba(20,40,30,.6);animation:tw 3.6s ease-in-out infinite}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 38%,transparent 44%,rgba(8,8,22,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(190,245,210,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:8%;top:10%"></span>
+    <span class="star" style="left:26%;top:6%"></span>
+    <span class="star s-big" style="left:44%;top:15%"></span>
+    <span class="star" style="left:60%;top:9%"></span>
+    <span class="star" style="left:78%;top:17%"></span>
+    <span class="star" style="left:90%;top:9%"></span>
+    <span class="star" style="left:18%;top:32%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+    <div class="cloud cl1"></div><div class="cloud cl2"></div>
+    <div class="gate"><div class="gf"></div><div class="gp"></div></div>
+  </div>
+
+  <div class="horizon"></div>
+  <div class="ground"></div>
+
+  <!-- 柔和雾气 -->
+  <div class="mist m1"></div><div class="mist m2"></div><div class="mist m3"></div><div class="mist m4"></div><div class="mist m5"></div>
+
+  <!-- 森林小径 -->
+  <div class="fpath">
+    <span class="fe fe-l"></span><span class="fe fe-r"></span>
+    <span class="fd" style="left:48%;top:6%"></span>
+    <span class="fd" style="left:47%;top:38%;animation-delay:1.2s"></span>
+    <span class="fd" style="left:49%;top:70%;animation-delay:2.4s"></span>
+  </div>
+
+  <!-- 中央·记忆母树 -->
+  <div class="memtree">
+    <div class="mt-crown">
+      <span class="mt-leaf mt-l1"></span><span class="mt-leaf mt-l2"></span><span class="mt-leaf mt-l3"></span>
+      <span class="mt-leaf g mt-l4"></span><span class="mt-leaf mt-l5"></span><span class="mt-leaf mt-l6"></span>
+      <span class="mt-leaf g mt-l7"></span><span class="mt-leaf mt-l8"></span><span class="mt-leaf g mt-l9"></span>
+    </div>
+    <div class="mt-trunk"></div>
+    <div class="mt-vine"><span class="mv mv1"></span><span class="mv mv2"></span><span class="mv mv3"></span></div>
+    <div class="mt-heart"></div>
+    <div class="mt-root">
+      <span class="mr mr1"></span><span class="mr mr2"></span><span class="mr mr3"></span><span class="mr mr4"></span><span class="mr mr5"></span><span class="mr mr6"></span>
+    </div>
+    <span class="mt-mote" style="left:30px;top:36%"></span>
+    <span class="mt-mote" style="right:22px;top:48%;animation-delay:1.6s"></span>
+    <span class="mt-mote" style="left:44px;top:58%;animation-delay:3s"></span>
+  </div>
+
+  <!-- 知识林 -->
+  <div class="ftree fk1"><div class="ftg"></div><div class="ftc"></div><div class="ftt"></div></div>
+  <div class="ftree fk2"><div class="ftg"></div><div class="ftc"></div><div class="ftt"></div></div>
+  <div class="ftree fk3"><div class="ftg"></div><div class="ftc"></div><div class="ftt"></div></div>
+  <div class="ftree fk4"><div class="ftg"></div><div class="ftc"></div><div class="ftt"></div></div>
+  <div class="ftree fk5"><div class="ftg"></div><div class="ftc"></div><div class="ftt"></div></div>
+
+  <!-- 思想林（漂浮光点） -->
+  <div class="thought th1"></div><div class="thought th2"></div><div class="thought th3"></div><div class="thought th4"></div><div class="thought th5"></div>
+
+  <!-- 创造林 -->
+  <div class="cg c1"><span class="cg-plant"></span><span class="cg-plant b"></span><div class="cg-bld"></div></div>
+  <div class="cg c2"><span class="cg-plant"></span><div class="cg-bld"></div></div>
+
+  <!-- 宇宙档案林（纪念碑） -->
+  <div class="obelisk ob1"><span class="ob-glow"></span><div class="ob-body"></div></div>
+  <div class="obelisk ob2"><span class="ob-glow"></span><div class="ob-body"></div></div>
+  <div class="obelisk ob3"><span class="ob-glow"></span><div class="ob-body"></div></div>
+  <div class="obelisk ob4"><span class="ob-glow"></span><div class="ob-body"></div></div>
+
+  <!-- 记忆湖 -->
+  <div class="memlake">
+    <div class="ml-ripple"></div>
+    <div class="ml-re"></div><div class="ml-re r2"></div><div class="ml-re r3"></div>
+    <span class="ml-mote" style="left:14%;top:32%"></span>
+    <span class="ml-mote" style="left:52%;top:54%;animation-delay:1.6s"></span>
+    <span class="ml-mote" style="left:76%;top:40%;animation-delay:3s"></span>
+  </div>
+
+  <!-- 文明档案馆 -->
+  <div class="archive">
+    <div class="ar-core"></div>
+    <div class="ar-glow"></div>
+    <div class="ar-tiers"><div class="ar-tier ar-t1"></div><div class="ar-tier ar-t2"></div><div class="ar-tier ar-t3"></div></div>
+  </div>
+
+  <div class="gfl" style="left:30%;bottom:30%"></div>
+  <div class="gfl" style="right:28%;bottom:28%;animation-delay:1.2s"></div>
+  <div class="gfl" style="left:16%;bottom:34%;animation-delay:2s"></div>
+  <div class="gfl" style="right:40%;bottom:30%;animation-delay:2.6s"></div>
+
+  <div class="spore" style="left:20%;top:50%"></div>
+  <div class="spore" style="left:44%;top:56%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:22%;top:48%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:54%;top:62%;animation-delay:1.2s"></div>
+
+  <!-- 微小漂浮光点（安静氛围） -->
+  <div class="dote" style="left:14%;top:46%"></div>
+  <div class="dote" style="left:30%;top:52%;animation-delay:1.2s"></div>
+  <div class="dote" style="right:26%;top:50%;animation-delay:2.4s"></div>
+  <div class="dote" style="left:40%;top:60%;animation-delay:1.8s"></div>
+  <div class="dote" style="right:16%;top:58%;animation-delay:3s"></div>
+  <div class="dote" style="left:56%;top:48%;animation-delay:3.6s"></div>
+  <div class="dote" style="right:34%;top:44%;animation-delay:2s"></div>
+  <div class="dote" style="left:24%;top:64%;animation-delay:4.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 北方 · 文明的记忆中心 ✦</div>
+    <h1>记忆森林</h1>
+    <div class="poem">
+      知识不是被储存<br>在这里，它会<b>慢慢生长</b><br>这里保存着一个文明一路走来的痕迹
+    </div>
+  </div>
+  <div class="arrival">欢迎来到 · 文明的记忆之地</div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:80%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:86%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
