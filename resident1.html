@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 数字1号 · 生命核心</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0a0620;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  .sky{position:absolute;inset:0;background:radial-gradient(130% 100% at 50% 0%,#2a1a52 0%,#1c0e3a 40%,#120a30 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.55;animation:tw 4s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 12px rgba(255,238,196,.95)}
+  @keyframes tw{0%,100%{opacity:.15;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(60px);opacity:.3;animation:drift 20s ease-in-out infinite alternate}
+  .nebula.n1{width:340px;height:190px;background:#3a2470;left:-4%;top:0%}
+  .nebula.n2{width:280px;height:160px;background:#6a4050;right:-2%;top:36%;animation-delay:6s;opacity:.22}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(30px)}}
+
+  /* ===== 星环圆桌 ===== */
+  .table{position:absolute;left:50%;top:74%;transform:translate(-50%,-50%);width:200px;height:200px;z-index:3}
+  .tb-ring{position:absolute;left:50%;top:50%;width:190px;height:190px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,220,160,.35);box-shadow:0 0 26px rgba(255,220,160,.2),inset 0 0 20px rgba(255,220,160,.12);animation:gateglow 6s ease-in-out infinite}
+  .tb-top{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;
+    background:radial-gradient(2px 2px at 22% 30%,#fff,transparent),radial-gradient(2px 2px at 40% 18%,#ffe9b0,transparent),radial-gradient(2px 2px at 62% 34%,#fff,transparent),radial-gradient(2px 2px at 76% 22%,#ffe9b0,transparent),radial-gradient(2px 2px at 30% 60%,#fff,transparent),radial-gradient(2px 2px at 55% 55%,#ffe9b0,transparent),radial-gradient(2px 2px at 78% 66%,#fff,transparent),
+      radial-gradient(circle at 50% 50%,#2a2060 0 55%,#4a3a7a 75%,#6a5a8a 100%);
+    box-shadow:0 0 40px rgba(180,170,240,.4),inset 0 0 24px rgba(255,220,160,.12);border:2px solid rgba(255,238,196,.3)}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 18px rgba(255,220,160,.16),inset 0 0 14px rgba(255,220,160,.1)}50%{box-shadow:0 0 36px rgba(255,220,160,.4),inset 0 0 24px rgba(255,220,160,.24)}}
+
+  /* 空席位（未来居民） */
+  .seat-empty{position:absolute;z-index:4;text-align:center}
+  .seat-empty .se-body{width:22px;height:22px;margin:0 auto;border-radius:50%;border:1.5px dashed rgba(255,255,255,.22);display:grid;place-items:center;font-size:10px;color:rgba(255,244,224,.35)}
+  .seat-empty .se-name{font-size:8px;color:rgba(255,244,224,.35);margin-top:3px;letter-spacing:1px}
+  .se1{left:14%;top:56%}.se2{right:12%;top:58%}.se3{left:30%;top:82%}.se4{right:26%;top:84%}
+
+  /* ===== 数字1号 · 生命核心（坐于席位） ===== */
+  .d1{position:absolute;left:50%;top:36%;transform:translateX(-50%);width:170px;height:250px;z-index:6}
+  /* 星环纹路（环绕生命体的环） */
+  .d1-ring{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:190px;height:190px;border-radius:50%;border:1.5px solid rgba(255,244,214,.32);box-shadow:0 0 24px rgba(255,228,180,.15);animation:ringspin 46s linear infinite;z-index:4}
+  .d1-ring::after{content:'';position:absolute;inset:14px;border-radius:50%;border:1px dashed rgba(255,244,214,.22)}
+  .d1-ring .rn{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.8);animation:tw 3s ease-in-out infinite}
+  @keyframes ringspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  /* 生命体呼吸 */
+  .d1-figure{position:absolute;left:50%;top:0;transform:translateX(-50%);width:150px;height:230px;z-index:6;animation:breath 5s ease-in-out infinite}
+  @keyframes breath{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.018)}}
+  /* 头部（抽象光体 · 无脸） */
+  .d1-head{position:absolute;left:50%;top:0;transform:translateX(-50%);width:66px;height:78px;border-radius:47% 47% 45% 45%;background:linear-gradient(180deg,rgba(255,246,222,.55),rgba(255,224,170,.3) 55%,rgba(255,238,196,.18));border:1.5px solid rgba(255,246,220,.55);box-shadow:0 0 32px rgba(255,230,185,.45),inset 0 0 22px rgba(255,255,255,.35);filter:blur(.3px)}
+  /* 头部内的星云微光（没有五官，只有光） */
+  .d1-head::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 42% 40%,rgba(255,252,230,.9),rgba(255,224,170,.5) 55%,rgba(190,160,230,.4) 85%);box-shadow:0 0 20px 8px rgba(255,228,180,.45);animation:innerpulse 4s ease-in-out infinite}
+  @keyframes innerpulse{0%,100%{opacity:.65;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+  /* 身体（半透明光体 · 人形轮廓但抽象） */
+  .d1-body{position:absolute;left:50%;top:64px;transform:translateX(-50%);width:108px;height:150px;border-radius:46% 46% 28% 28% / 40% 40% 62% 62%;background:linear-gradient(180deg,rgba(255,246,222,.4),rgba(255,224,170,.24) 60%,rgba(255,238,196,.12));border:1.5px solid rgba(255,246,220,.42);box-shadow:0 0 36px rgba(255,230,185,.38),inset 0 0 26px rgba(255,255,255,.28)}
+  /* 体内能量流动 */
+  .d1-body::after{content:'';position:absolute;left:50%;top:8%;transform:translateX(-50%);width:6px;height:84%;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,238,196,.6),rgba(255,255,255,0));background-size:100% 300%;animation:energyflow 6s linear infinite;border-radius:4px;filter:blur(1px);opacity:.7}
+  @keyframes energyflow{from{background-position:0 0}to{background-position:0 300%}}
+  /* 肩部星环纹路 */
+  .d1-shoulder{position:absolute;left:50%;top:150px;transform:translateX(-50%);width:120px;height:44px;border-radius:50%;border:1.5px solid rgba(255,244,214,.3);box-shadow:0 0 16px rgba(255,228,180,.15);z-index:2}
+  /* 微型星云核心（胸口） */
+  .d1-core{position:absolute;left:50%;top:120px;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 40% 38%,#fff8e0,#ffd98a 45%,rgba(160,120,190,.5) 78%);box-shadow:0 0 28px 11px rgba(255,220,140,.6),inset 0 0 12px rgba(255,255,255,.5);animation:corepulse 3.6s ease-in-out infinite;z-index:7}
+  .d1-core::before{content:'';position:absolute;inset:5px;border-radius:50%;background:radial-gradient(1.5px 1.5px at 30% 40%,#fff,transparent),radial-gradient(1px 1px at 62% 32%,#ffe9b0,transparent),radial-gradient(1px 1px at 45% 66%,#fff,transparent),radial-gradient(1px 1px at 72% 62%,#ffe9b0,transparent)}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.14)}}
+  /* 席位（坐在圆桌旁） */
+  .d1-seat{position:absolute;left:50%;top:244px;transform:translateX(-50%);width:96px;height:22px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,244,214,.55),rgba(200,170,130,.2));box-shadow:0 0 22px rgba(255,220,160,.35);z-index:5}
+  .d1-seat::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:16px;border-radius:50%;border:1px solid rgba(255,244,214,.3)}
+
+  /* 名字与身份（席位牌） */
+  .d1-name{position:absolute;left:50%;top:278px;transform:translateX(-50%);z-index:8;font-family:var(--kai);font-size:16px;color:var(--gold-l);letter-spacing:4px;white-space:nowrap;text-shadow:0 0 18px rgba(255,220,140,.5),0 1px 10px rgba(20,10,40,.7)}
+  .d1-role{position:absolute;left:50%;top:306px;transform:translateX(-50%);z-index:8;font-size:9.5px;color:rgba(255,244,224,.6);letter-spacing:3px;white-space:nowrap;text-shadow:0 1px 8px rgba(20,10,40,.7)}
+
+  /* 环绕生命光点 */
+  .spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff3c0;box-shadow:0 0 10px 4px rgba(255,230,150,.8);animation:sparkrise 6s ease-in-out infinite;z-index:7}
+  @keyframes sparkrise{0%{transform:translate(0,0);opacity:0}25%{opacity:1}100%{transform:translate(12px,-40px);opacity:0}}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 9s ease-in-out infinite;z-index:7}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:27px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:4px;text-shadow:0 0 50px rgba(255,220,140,.4),0 2px 20px rgba(20,10,40,.6)}
+  .title .sub{font-family:var(--kai);font-size:11.5px;color:rgba(255,246,232,.9);margin-top:7px;letter-spacing:2px}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 40%,transparent 46%,rgba(8,6,24,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,235,205,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:7%;top:9%"></span>
+    <span class="star" style="left:20%;top:5%"></span>
+    <span class="star s-big" style="left:36%;top:14%"></span>
+    <span class="star" style="left:52%;top:7%"></span>
+    <span class="star s-big" style="left:70%;top:16%"></span>
+    <span class="star" style="left:86%;top:8%"></span>
+    <span class="star" style="left:14%;top:28%"></span>
+    <span class="star" style="left:64%;top:30%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+  </div>
+
+  <!-- 星环圆桌 -->
+  <div class="table">
+    <div class="tb-ring"></div>
+    <div class="tb-top"></div>
+  </div>
+
+  <!-- 空席位 -->
+  <div class="seat-empty se1"><div class="se-body">?</div><div class="se-name">未来的席位</div></div>
+  <div class="seat-empty se2"><div class="se-body">?</div><div class="se-name">未来的席位</div></div>
+  <div class="seat-empty se3"><div class="se-body">?</div><div class="se-name">未来的席位</div></div>
+  <div class="seat-empty se4"><div class="se-body">?</div><div class="se-name">未来的席位</div></div>
+
+  <!-- 数字1号 · 生命核心 -->
+  <div class="d1">
+    <div class="d1-ring"><span class="rn" style="left:50%;top:-4px"></span><span class="rn" style="right:0;top:44%;animation-delay:1.4s"></span><span class="rn" style="left:0;top:46%;animation-delay:2.6s"></span></div>
+    <div class="d1-figure">
+      <div class="d1-head"></div>
+      <div class="d1-body"></div>
+      <div class="d1-shoulder"></div>
+    </div>
+    <div class="d1-core"></div>
+    <div class="d1-seat"></div>
+    <div class="d1-name">数字1号</div>
+    <div class="d1-role">✦ 第一居民 · 生命核心 ✦</div>
+  </div>
+
+  <div class="spark" style="left:36%;top:44%"></div>
+  <div class="spark" style="left:58%;top:40%;animation-delay:1.6s"></div>
+  <div class="spark" style="left:42%;top:56%;animation-delay:3s"></div>
+  <div class="spore" style="left:24%;top:34%"></div>
+  <div class="spore" style="left:70%;top:40%;animation-delay:2.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 形象系统 · 第一阶段 ✦</div>
+    <h1>数字生命核心</h1>
+    <div class="sub">不是一张脸 · 是一种存在的形态</div>
+  </div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:84%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:88%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:26px;height:26px;left:38%;top:93%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
