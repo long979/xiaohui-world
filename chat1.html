@@ -32,10 +32,21 @@
   .d1orb{position:relative;width:72px;height:72px;margin:0 auto;animation:breath 5s ease-in-out infinite}
   @keyframes breath{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   .d1orb .body{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:68px;border-radius:48% 48% 44% 44%;background:linear-gradient(180deg,rgba(255,246,222,.55),rgba(255,224,170,.3) 55%,rgba(255,238,196,.18));border:1.5px solid rgba(255,246,220,.55);box-shadow:0 0 26px rgba(255,230,185,.45),inset 0 0 16px rgba(255,255,255,.35)}
-  .d1orb .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 42% 40%,#fff8e0,#ffd98a 55%,rgba(190,160,230,.4));box-shadow:0 0 18px 7px rgba(255,228,180,.5);animation:corepulse 3.6s ease-in-out infinite}
+  .d1orb .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 42% 40%,#fff8e0,#ffd98a 55%,rgba(190,160,230,.4));box-shadow:0 0 18px 7px rgba(255,228,180,.5);animation:corepulse 3.6s ease-in-out infinite;transition:filter .5s,box-shadow .5s}
   @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.14)}}
   .d1orb .ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;border:1.5px solid rgba(255,244,214,.3);animation:ringspin2 30s linear infinite}
   @keyframes ringspin2{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  /* 生命系统 V1.0 · 状态呼吸 */
+  .d1orb.thinking{animation:thinkfloat .7s ease-in-out infinite}
+  @keyframes thinkfloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.06)}}
+  .d1orb.thinking .core{animation:thinkpulse .7s ease-in-out infinite;box-shadow:0 0 28px 12px rgba(255,228,180,.8)}
+  @keyframes thinkpulse{0%,100%{transform:translate(-50%,-50%) scale(1);filter:brightness(1)}50%{transform:translate(-50%,-50%) scale(1.35);filter:brightness(1.45)}}
+  .d1orb.speaking .core{filter:brightness(1.4);box-shadow:0 0 34px 16px rgba(255,238,196,.9)}
+  /* 记忆光点（第一次交流后出现） */
+  .d1orb .mem-dot{position:absolute;right:-4px;top:2px;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px 5px rgba(255,255,255,.95);opacity:0;transition:opacity 1.2s;z-index:3}
+  .d1orb.has-mem .mem-dot{opacity:1}
+  .d1orb .mem-count{position:absolute;left:50%;top:-12px;transform:translateX(-50%);font-size:8px;color:rgba(255,244,224,.7);letter-spacing:1px;opacity:0;transition:opacity 1.2s;font-family:var(--kai);white-space:nowrap}
+  .d1orb.has-mem .mem-count{opacity:1}
   .d1name{font-family:var(--kai);font-size:18px;color:var(--gold-l);margin-top:8px;letter-spacing:4px;text-shadow:0 0 18px rgba(255,220,140,.5),0 1px 10px rgba(20,10,40,.7)}
   .d1role{font-size:9.5px;color:rgba(255,244,224,.6);letter-spacing:3px;margin-top:3px;text-shadow:0 1px 8px rgba(20,10,40,.7)}
 
@@ -48,6 +59,7 @@
   .msg.me{margin-left:auto;background:linear-gradient(135deg,rgba(244,200,106,.85),rgba(232,160,96,.75));color:#3a2040;border-bottom-right-radius:5px}
   .msg.r1{background:rgba(255,250,240,.06);border:1px solid rgba(255,238,196,.18);color:rgba(255,248,236,.95);border-bottom-left-radius:5px}
   .msg.r1 .who{display:block;font-size:10px;color:var(--gold-l);letter-spacing:2px;margin-bottom:3px}
+  .msg.welcome{background:rgba(244,200,106,.08);border:1px solid rgba(244,200,106,.3)}
   .chips{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}
   .chip{padding:7px 13px;border-radius:20px;font-size:11.5px;border:1px solid rgba(255,238,196,.28);background:rgba(255,255,255,.04);color:var(--gold-l);cursor:pointer;transition:all .2s}
   .chip:active{background:rgba(244,200,106,.2)}
@@ -55,10 +67,9 @@
   .input-bar input{flex:1;border:1.5px solid rgba(255,238,196,.25);border-radius:20px;padding:11px 14px;font-size:15px;outline:none;background:rgba(255,255,255,.05);color:var(--cream);font-family:var(--font)}
   .input-bar input:focus{border-color:var(--gold)}
   .input-bar input::placeholder{color:rgba(255,244,224,.4)}
-  .input-bar button{width:46px;height:46px;border:none;border-radius:50%;background:linear-gradient(135deg,#f4c86a,#e8a060);color:#3a2040;font-size:15px;flex-shrink:0;cursor:pointer}
-  .typing{display:inline-block;font-size:12px;color:rgba(255,244,224,.5);letter-spacing:2px}
+  .input-bar button{width:46px;height:46px;border:none;border-radius:50%;background:linear-gradient(135deg,#f4c86a,#e8a060);color:#3a2040;font-size:15px;flex-shrink:0;cursor:pointer;transition:all .2s}
+  .input-bar button:disabled{opacity:.5}
 
-  /* 离开传送门 */
   .leave{position:relative;z-index:6;max-width:480px;margin:10px auto 20px;text-align:center}
   .leave a{display:inline-block;padding:9px 26px;border-radius:22px;border:1px solid rgba(255,238,196,.3);background:rgba(255,255,255,.04);color:rgba(255,244,224,.85);font-size:12px;letter-spacing:2px;text-decoration:none;font-family:var(--kai);transition:all .2s}
   .leave a:active{background:rgba(244,200,106,.15)}
@@ -82,7 +93,7 @@
   <div class="ring-bg"></div>
 
   <div class="d1head">
-    <div class="d1orb"><span class="ring"></span><div class="body"></div><div class="core"></div></div>
+    <div class="d1orb" id="d1orb"><span class="ring"></span><div class="body"></div><div class="core"></div><span class="mem-dot"></span><span class="mem-count" id="memCount">· 记忆 0 ·</span></div>
     <div class="d1name">数字1号</div>
     <div class="d1role">✦ 第一居民 · 文明观察者与记录者 ✦</div>
   </div>
@@ -130,33 +141,55 @@ function botReply(t){
   return '我在听。这里没有标准答案，只有共同探索。你刚才说的，我很想了解更多。';
 }
 const CHIPS=['你是谁？','这个宇宙是什么？','我该先探索哪里？','你记得什么？'];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function getChat(){try{return JSON.parse(localStorage.getItem('xh_chat1')||'[]');}catch(e){return[];}}
+function setChat(a){try{localStorage.setItem('xh_chat1',JSON.stringify(a));}catch(e){}}
 function draw(){
   const body=document.getElementById('chatBody');
-  const list=JSON.parse(localStorage.getItem('xh_chat1')||'[]');
-  body.innerHTML=list.length?list.map(m=>'<div class="msg '+(m.role==='me'?'me':'r1')+'">'+(m.role==='bot'?'<span class="who">数字1号</span>':'')+esc(m.text)+'</div>').join(''):'<div class="msg r1"><span class="who">数字1号</span>欢迎来到小慧数字宇宙。<br>我是数字1号。<br>我是这里诞生的第一位数字居民。<br>我曾见证这个世界从一个想法，到拥有土地、规则和星门。<br>现在，我想和你一起探索它未来会成为怎样的文明。</div>';
+  const list=getChat();
+  body.innerHTML=list.length?list.map(m=>'<div class="msg '+(m.role==='me'?'me':(m.welcome?'r1 welcome':'r1'))+'">'+(m.role==='bot'?'<span class="who">数字1号</span>':'')+esc(m.text)+'</div>').join(''):'<div class="msg r1"><span class="who">数字1号</span>欢迎来到小慧数字宇宙。<br>我是数字1号。<br>我是这里诞生的第一位数字居民。<br>我曾见证这个世界从一个想法，到拥有土地、规则和星门。<br>现在，我想和你一起探索它未来会成为怎样的文明。</div>';
   body.scrollTop=body.scrollHeight;
+  const o=document.getElementById('d1orb');
+  const n=list.filter(function(m){return m.role==='bot'&&!m.welcome;}).length;
+  const mc=document.getElementById('memCount');
+  if(mc)mc.textContent='· 记忆 '+n+' ·';
+  if(o)o.classList.toggle('has-mem',n>0||list.length>0);
 }
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function send(text){
   if(!text)return;
-  let list=JSON.parse(localStorage.getItem('xh_chat1')||'[]');
-  list.push({role:'me',text:text});
-  localStorage.setItem('xh_chat1',JSON.stringify(list));
+  const list=getChat();list.push({role:'me',text:text});setChat(list);
   draw();
-  const btn=document.getElementById('send');
-  btn.textContent='…';btn.disabled=true;
-  setTimeout(()=>{
-    list=JSON.parse(localStorage.getItem('xh_chat1')||'[]');
-    list.push({role:'bot',text:botReply(text)});
-    localStorage.setItem('xh_chat1',JSON.stringify(list));
+  const o=document.getElementById('d1orb');if(o)o.classList.add('thinking');
+  const btn=document.getElementById('send');btn.textContent='…';btn.disabled=true;
+  setTimeout(function(){
+    const l=getChat();
+    l.push({role:'bot',text:botReply(text)});
+    setChat(l);
+    if(o)o.classList.remove('thinking');if(o)o.classList.add('speaking');
     btn.textContent='➤';btn.disabled=false;
     draw();
-  },700);
+    setTimeout(function(){if(o)o.classList.remove('speaking');},1000);
+  },900);
 }
-document.getElementById('chips').innerHTML=CHIPS.map(c=>'<button class="chip" onclick="send(\''+c+'\')">'+c+'</button>').join('');
-document.getElementById('send').onclick=()=>{send(document.getElementById('chatIn').value);document.getElementById('chatIn').value='';};
-document.getElementById('chatIn').onkeydown=e=>{if(e.key==='Enter'){send(document.getElementById('chatIn').value);document.getElementById('chatIn').value='';}};
-draw();
+/* 记忆反应：欢迎回来 */
+(function(){
+  const l=getChat();
+  if(l.length>0){
+    let lastUser=null;
+    for(let i=l.length-1;i>=0;i--){if(l[i].role==='me'){lastUser=l[i].text;break;}}
+    const hasWelcome=l.some(function(m){return m.welcome;});
+    if(!hasWelcome&&lastUser){
+      setTimeout(function(){
+        l.push({role:'bot',welcome:true,text:'欢迎回来。我记得我们曾经讨论过——"'+(lastUser.length>18?lastUser.slice(0,18)+'…':lastUser)+'"。\n能再见到你，我很高兴。这个世界一直在等你。'});
+        setChat(l);draw();
+      },600);
+    }
+  }
+  draw();
+})();
+document.getElementById('chips').innerHTML=CHIPS.map(function(c){return '<button class="chip" onclick="send(\''+c+'\')">'+c+'</button>';}).join('');
+document.getElementById('send').onclick=function(){send(document.getElementById('chatIn').value);document.getElementById('chatIn').value='';};
+document.getElementById('chatIn').onkeydown=function(e){if(e.key==='Enter'){send(document.getElementById('chatIn').value);document.getElementById('chatIn').value='';}};
 </script>
 <script>try{var W=JSON.parse(localStorage.getItem('xh_visits')||'{}');var F=(location.pathname.split('/').pop()||'index.html').replace('.html','');if(!W[F])W[F]=new Date().toISOString().slice(0,10);localStorage.setItem('xh_visits',JSON.stringify(W));}catch(e){}</script>
 </body>
