@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 创造者档案</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0c0520;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 天空·人生星图 ===== */
+  .sky{position:absolute;inset:0;background:radial-gradient(130% 100% at 50% 0%,#2a1a52 0%,#1c0e3a 40%,#140a30 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.55;animation:tw 4s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 12px rgba(255,238,196,.95)}
+  @keyframes tw{0%,100%{opacity:.15;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+  /* 人生阶段主星 */
+  .life-star{position:absolute;border-radius:50%;z-index:4}
+  .life-star .ls-core{width:14px;height:14px;border-radius:50%;position:relative;box-shadow:0 0 18px 7px rgba(255,220,140,.55)}
+  .life-star .ls-halo{position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(255,238,196,.35);animation:pulse 4s ease-in-out infinite}
+  .life-star .ls-label{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-family:var(--kai);font-size:9px;color:rgba(255,244,224,.85);letter-spacing:1px;white-space:nowrap;text-shadow:0 1px 8px rgba(20,10,40,.7)}
+  .ls1{left:22%;top:16%;}.ls1 .ls-core{background:radial-gradient(circle,#f2ecff,#8a6ad0 70%)}
+  .ls2{left:50%;top:8%;}.ls2 .ls-core{background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 24px 10px rgba(255,220,140,.7)}
+  .ls3{right:20%;top:18%;}.ls3 .ls-core{background:radial-gradient(circle,#eafff5,#7ad8b0 70%)}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.3);opacity:1}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(60px);opacity:.3;animation:drift 20s ease-in-out infinite alternate}
+  .nebula.n1{width:340px;height:190px;background:#3a2470;left:-4%;top:0%}
+  .nebula.n2{width:280px;height:160px;background:#6a4050;right:-2%;top:36%;animation-delay:6s;opacity:.22}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(30px)}}
+
+  /* ===== 创造者星域平台 ===== */
+  .horizon{position:absolute;left:0;right:0;top:52%;height:3px;background:linear-gradient(90deg,transparent,rgba(255,220,170,.5),transparent);box-shadow:0 0 20px rgba(255,220,170,.4);z-index:3}
+  .platform{position:absolute;left:-8%;right:-8%;top:52.5%;bottom:-8%;background:linear-gradient(180deg,#5c4a58 0%,#6a5860 20%,#7a685e 40%,#84705a 58%,#6e5c54 78%,#4e423f 100%);border-radius:50% 50% 0 0/22% 22% 0 0;z-index:2;box-shadow:inset 0 40px 70px rgba(255,220,170,.1)}
+  .platform::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(2px 2px at 18% 24%,rgba(255,255,255,.12),transparent),radial-gradient(2px 2px at 44% 16%,rgba(255,255,255,.09),transparent),radial-gradient(2px 2px at 66% 26%,rgba(255,255,255,.1),transparent),radial-gradient(2px 2px at 84% 20%,rgba(255,255,255,.08),transparent)}
+
+  /* 隐藏光路（入口） */
+  .hpath{position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);width:26%;height:38%;clip-path:polygon(40% 100%,60% 100%,53% 0,47% 0);background:linear-gradient(180deg,rgba(255,238,196,.45),rgba(255,238,196,.03));z-index:3}
+  .hpath .hd{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 9px 4px rgba(255,255,255,.8);animation:tw 3s ease-in-out infinite}
+
+  /* ===== 创造火种（永远燃烧的生命核心） ===== */
+  .spark{position:absolute;left:50%;top:66%;transform:translate(-50%,-50%);z-index:6;text-align:center}
+  .sp-ped{width:56px;height:12px;margin:0 auto;border-radius:6px;background:linear-gradient(180deg,rgba(255,238,196,.5),rgba(200,170,130,.2));box-shadow:0 0 18px rgba(255,220,160,.3)}
+  .sp-fire{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);width:34px;height:40px;animation:fire 3.5s ease-in-out infinite}
+  @keyframes fire{0%,100%{transform:translateX(-50%) scale(1);filter:brightness(1)}50%{transform:translateX(-50%) scale(1.08);filter:brightness(1.2)}}
+  .sp-fire .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 50%,rgba(232,120,60,.7));box-shadow:0 0 34px 14px rgba(255,200,120,.7),0 0 12px 4px rgba(255,240,200,.9)}
+  .sp-fire .glow{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:44px;height:16px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,190,120,.6),transparent 70%);filter:blur(3px);animation:pathflow 3.5s ease-in-out infinite}
+  .sp-spark{position:absolute;border-radius:50%;background:#fff3c0;box-shadow:0 0 10px 4px rgba(255,230,150,.8);animation:sparkrise 5s ease-in-out infinite;z-index:6}
+  @keyframes sparkrise{0%{transform:translate(0,0);opacity:0}25%{opacity:1}100%{transform:translate(16px,-44px);opacity:0}}
+
+  /* ===== 成长树 ===== */
+  .gtree{position:absolute;left:10%;top:30%;width:140px;height:220px;z-index:6;transform:translateX(0)}
+  .gt-trunk{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:22px;height:120px;background:linear-gradient(180deg,rgba(215,250,235,.4),rgba(130,225,185,.55) 55%,rgba(85,185,150,.6));clip-path:polygon(44% 0,56% 0,100% 16%,86% 100%,14% 100%,0 16%);box-shadow:0 0 30px rgba(150,235,195,.45),inset 0 0 18px rgba(255,255,255,.3);border-left:2px solid rgba(255,255,255,.4);border-right:2px solid rgba(255,255,255,.2)}
+  .gt-trunk::after{content:'';position:absolute;inset:4px 7px;background:linear-gradient(180deg,transparent,rgba(255,238,196,.85),rgba(200,240,220,.7),transparent);background-size:100% 300%;animation:energyflow 6s linear infinite;border-radius:4px;filter:blur(1px)}
+  @keyframes energyflow{from{background-position:0 0}to{background-position:0 300%}}
+  .gt-crown{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);width:120px;height:110px;animation:sway 7s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:translateX(-50%) rotate(-1.5deg)}50%{transform:translateX(-50%) rotate(1.5deg)}}
+  .gt-leaf{position:absolute;border-radius:50%;background:radial-gradient(circle at 38% 32%,#d8f6e0,#7ac0a0 72%);box-shadow:0 0 14px rgba(130,215,175,.6)}
+  .gt-leaf.g{background:radial-gradient(circle at 38% 32%,var(--gold-l),#e0a860 72%);box-shadow:0 0 14px rgba(224,168,96,.6)}
+  .gt-l1{width:30px;height:30px;left:44px;top:0}
+  .gt-l2{width:24px;height:24px;left:8px;top:40px}
+  .gt-l3{width:26px;height:26px;right:4px;top:38px}
+  .gt-l4{width:20px;height:20px;left:50px;top:46px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#e0a860 72%)}
+  .gt-l5{width:16px;height:16px;left:0;top:84px}
+  .gt-l6{width:17px;height:17px;right:0;top:82px}
+  .gt-l7{width:13px;height:13px;left:54px;top:20px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#e0a860 72%)}
+  .gt-heart{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 22px 8px rgba(255,220,140,.7);animation:corepulse 3s ease-in-out infinite;z-index:2}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+
+  /* ===== 自省之镜 ===== */
+  .mirror{position:absolute;right:8%;top:36%;width:90px;height:120px;z-index:6;text-align:center;animation:floaty 8s ease-in-out infinite}
+  .mr-frame{position:absolute;left:50%;top:0;transform:translateX(-50%);width:80px;height:110px;border-radius:50%;border:4px solid rgba(255,238,196,.55);box-shadow:0 0 26px rgba(255,238,196,.3),inset 0 0 20px rgba(255,238,196,.15);animation:gateglow 6s ease-in-out infinite}
+  .mr-glass{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:94px;border-radius:50%;background:radial-gradient(circle at 45% 40%,rgba(200,235,255,.55),rgba(150,180,240,.25) 60%,rgba(120,140,220,.15));box-shadow:inset 0 0 34px rgba(220,240,255,.5);overflow:hidden}
+  .mr-glass::after{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);animation:shine 7s ease-in-out infinite}
+  @keyframes shine{0%,100%{top:8%;opacity:.3}50%{top:85%;opacity:1}}
+  .mr-glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,238,196,.5),transparent 70%);filter:blur(4px);animation:beamshimmer 5s ease-in-out infinite}
+  @keyframes beamshimmer{0%,100%{opacity:.5}50%{opacity:1}}
+
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes pathflow{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* 植物与光 */
+  .gfl{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 11px 4px rgba(255,200,140,.7);animation:tw 3.2s ease-in-out infinite;z-index:5}
+  .mist{position:absolute;left:-12%;right:-12%;height:30px;border-radius:50%;background:radial-gradient(ellipse,rgba(230,215,200,.12),transparent 70%);filter:blur(6px);z-index:2;animation:mistdrift 18s ease-in-out infinite alternate}
+  @keyframes mistdrift{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+  .mst1{top:54%;opacity:.7}
+  .mst2{top:66%;opacity:.5;animation-delay:5s}
+  .mst3{top:78%;opacity:.6;animation-delay:9s}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(255,220,140,.35),0 2px 20px rgba(20,10,40,.6)}
+  .title .poem{font-family:var(--kai);font-size:11.5px;color:rgba(255,246,232,.92);margin-top:9px;line-height:2;letter-spacing:1px;text-shadow:0 1px 12px rgba(20,10,40,.6)}
+  .title .poem b{color:var(--gold-l)}
+  .arrival{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:12;font-size:11px;color:rgba(255,244,224,.9);letter-spacing:2px;text-shadow:0 1px 10px rgba(20,10,40,.6);animation:tw 3.6s ease-in-out infinite}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 40%,transparent 46%,rgba(8,6,24,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,235,205,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:6%;top:8%"></span>
+    <span class="star" style="left:14%;top:22%"></span>
+    <span class="star" style="left:30%;top:12%"></span>
+    <span class="star" style="left:42%;top:20%"></span>
+    <span class="star s-big" style="left:56%;top:14%"></span>
+    <span class="star" style="left:70%;top:24%"></span>
+    <span class="star" style="left:80%;top:9%"></span>
+    <span class="star s-big" style="left:90%;top:18%"></span>
+    <span class="star" style="left:10%;top:36%"></span>
+    <span class="star" style="left:64%;top:36%"></span>
+    <span class="star" style="left:38%;top:42%"></span>
+    <span class="star" style="left:84%;top:40%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+
+    <!-- 人生星图：三颗主星 -->
+    <div class="life-star ls1"><div class="ls-halo"></div><div class="ls-core"></div><div class="ls-label">曾经的自己</div></div>
+    <div class="life-star ls2"><div class="ls-halo"></div><div class="ls-core"></div><div class="ls-label">现在的自己</div></div>
+    <div class="life-star ls3"><div class="ls-halo"></div><div class="ls-core"></div><div class="ls-label">想成为的自己</div></div>
+  </div>
+
+  <div class="horizon"></div>
+  <div class="platform"></div>
+  <div class="mist mst1"></div><div class="mist mst2"></div><div class="mist mst3"></div>
+
+  <!-- 隐藏光路 -->
+  <div class="hpath">
+    <span class="hd" style="left:48%;top:10%"></span>
+    <span class="hd" style="left:47%;top:45%;animation-delay:1.2s"></span>
+    <span class="hd" style="left:49%;top:80%;animation-delay:2.4s"></span>
+  </div>
+
+  <!-- 成长树 -->
+  <div class="gtree">
+    <div class="gt-crown">
+      <span class="gt-leaf gt-l1"></span><span class="gt-leaf gt-l2"></span><span class="gt-leaf gt-l3"></span>
+      <span class="gt-leaf g gt-l4"></span><span class="gt-leaf gt-l5"></span><span class="gt-leaf gt-l6"></span>
+      <span class="gt-leaf g gt-l7"></span>
+    </div>
+    <div class="gt-trunk"></div>
+    <div class="gt-heart"></div>
+  </div>
+
+  <!-- 创造火种 -->
+  <div class="spark">
+    <div class="sp-fire"><div class="core"></div><div class="glow"></div></div>
+    <div class="sp-ped"></div>
+  </div>
+  <div class="sp-spark" style="left:48%;top:52%"></div>
+  <div class="sp-spark" style="left:54%;top:49%;animation-delay:1.6s"></div>
+  <div class="sp-spark" style="left:45%;top:55%;animation-delay:3s"></div>
+
+  <!-- 自省之镜 -->
+  <div class="mirror">
+    <div class="mr-frame"></div>
+    <div class="mr-glass"></div>
+    <div class="mr-glow"></div>
+  </div>
+
+  <div class="gfl" style="left:22%;bottom:36%"></div>
+  <div class="gfl" style="left:36%;bottom:28%;animation-delay:1.2s"></div>
+  <div class="gfl" style="right:16%;bottom:32%;animation-delay:2s"></div>
+  <div class="gfl" style="left:50%;bottom:24%;animation-delay:2.6s"></div>
+
+  <div class="spore" style="left:26%;top:56%"></div>
+  <div class="spore" style="left:42%;top:62%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:26%;top:52%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:56%;top:60%;animation-delay:1.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 创造者 · 星域 ✦</div>
+    <h1>创造者档案</h1>
+    <div class="poem">
+      这里保存着<br>一个普通人，如何<b>创造一个新世界</b>的故事
+    </div>
+  </div>
+  <div class="arrival">我正在成为谁 · 只有我自己知道</div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:82%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:86%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
