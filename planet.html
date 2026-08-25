@@ -240,6 +240,22 @@
   @keyframes bandglow{0%,100%{opacity:.45}50%{opacity:.95}}
   @keyframes bsflow{0%{top:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:110px;opacity:0}}
 
+
+  .garden::after,.village::after,.forest::after,.creation::after{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-size:12px;color:#ffeec4;background:rgba(244,200,106,.24);border:1px solid rgba(244,200,106,.65);border-radius:16px;padding:3px 12px;letter-spacing:1px;text-shadow:0 1px 6px rgba(20,10,40,.85);white-space:nowrap;z-index:9;animation:tw 2.8s ease-in-out infinite}
+  .garden::after{content:'🌱 花园 →'}
+  .village::after{content:'🏠 居民村 →'}
+  .forest::after{content:'🌲 森林 →'}
+  .creation::after{content:'🏗️ 创造大陆 →'}
+
+
+  .bigportal{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:84%;max-width:400px;z-index:30;text-align:center;cursor:pointer;font-family:KaiTi,STKaiti,'楷体',serif}
+  .bigportal .bp{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 12px;border-radius:30px;background:linear-gradient(180deg,rgba(244,200,106,.32),rgba(244,200,106,.1));border:2px solid rgba(244,200,106,.8);box-shadow:0 0 34px rgba(244,200,106,.45),inset 0 0 18px rgba(244,200,106,.16);animation:pbglow 3s ease-in-out infinite}
+  .bigportal .bp .bp-ico{font-size:22px}
+  .bigportal .bp .bp-txt{font-size:16px;color:#ffeec4;letter-spacing:2px;text-shadow:0 0 14px rgba(255,220,140,.95),0 1px 8px rgba(20,10,40,.8)}
+  .bigportal .bp .bp-arr{font-size:20px;color:#ffeec4;animation:pbpulse 2s ease-in-out infinite;text-shadow:0 0 12px rgba(255,220,140,.9)}
+  @keyframes pbglow{0%,100%{box-shadow:0 0 20px rgba(244,200,106,.3),inset 0 0 14px rgba(244,200,106,.12)}50%{box-shadow:0 0 48px rgba(244,200,106,.6),inset 0 0 22px rgba(244,200,106,.24)}}
+  @keyframes pbpulse{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
 </style>
 </head>
 <body>
@@ -395,5 +411,6 @@ window.addEventListener('load',function(){try{
 
 
 <div class="sband map-band"><span class="ribbon"></span><span class="bs"></span><span class="bs s2"></span><span class="bs s3"></span></div>
+<div class="bigportal" onclick="location.href='map.html'"><div class="bp"><span class="bp-ico">🗺️</span><span class="bp-txt">世界星图 · 前往各地</span><span class="bp-arr">→</span></div></div>
 </body>
 </html>
