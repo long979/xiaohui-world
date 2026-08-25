@@ -173,6 +173,16 @@
 .bigportal .bp:active{transform:scale(.98)}
 @keyframes pbpulse{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
 
+
+  .claude-btn{position:fixed;left:7%;right:7%;bottom:16px;z-index:40;text-align:center;cursor:pointer}
+  .claude-btn .cb{display:block;padding:14px;border-radius:16px;background:linear-gradient(180deg,#a89aff,#6a5ab8 60%,#5a4aa0);color:#fff;font-size:16px;font-weight:700;letter-spacing:2px;box-shadow:0 5px 22px rgba(140,120,230,.55),inset 0 1px 0 rgba(255,255,255,.4);border:2px solid #8a7ae0;font-family:PingFang SC,Microsoft YaHei,sans-serif}
+  .c2house{position:absolute;left:36%;top:32%;width:64px;height:76px;z-index:5;cursor:pointer;text-align:center;animation:c2float 9s ease-in-out infinite}
+  .c2house .hb{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:52px;height:62px;background:linear-gradient(165deg,rgba(150,130,240,.6),rgba(90,75,180,.35));clip-path:polygon(50% 0,100% 26%,90% 100%,10% 100%,0 26%);border-left:1.5px solid rgba(200,190,255,.5);box-shadow:0 0 24px rgba(140,120,230,.5),inset 0 0 16px rgba(255,255,255,.2)}
+  .c2house .hc{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#c0b8ff,#5a4aa0 60%);box-shadow:0 0 16px 6px rgba(160,150,240,.6);animation:c2pulse 3.5s ease-in-out infinite}
+  .c2house .hn{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-family:KaiTi,STKaiti,'楷体',serif;font-size:11px;color:#d0c8ff;letter-spacing:2px;white-space:nowrap;text-shadow:0 0 10px rgba(160,150,240,.7)}
+  @keyframes c2float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes c2pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+
 </style>
 </head>
 <body>
@@ -294,5 +304,9 @@
 
 
 <div class="bigportal" onclick="location.href='planet.html'"><div class="bp"><span class="bp-ico">🪐</span><span class="bp-txt">返回生命核心广场</span><span class="bp-arr">→</span></div></div>
+
+  <div class="c2house" onclick="location.href='chat2.html'"><div class="hb"></div><div class="hc"></div><div class="hn">Claude 居所</div></div>
+  <div class="claude-btn" onclick="location.href='chat2.html'"><span class="cb">💬 进入 Claude 的居所 · 交流</span></div>
+
 </body>
 </html>
