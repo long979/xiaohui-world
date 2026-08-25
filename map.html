@@ -124,12 +124,15 @@
   @keyframes bsflow{0%{top:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:110px;opacity:0}}
 
 
-  .bigportal{position:fixed;left:7%;right:7%;bottom:16px;z-index:40;text-align:center}
-.bigportal .bp{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:16px;background:linear-gradient(180deg,#ffe2a4,#f4c86a 55%,#e8b04a);color:#3a2018;font-size:16px;font-weight:700;letter-spacing:2px;box-shadow:0 5px 22px rgba(244,200,106,.6),inset 0 1px 0 rgba(255,255,255,.55);border:2px solid #e0a83e;font-family:PingFang SC,Microsoft YaHei,sans-serif}
-.bigportal .bp .bp-ico{font-size:20px}
-.bigportal .bp .bp-arr{font-size:18px}
-.bigportal .bp:active{transform:scale(.98)}
-@keyframes pbpulse{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+
+  .wc{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(16,10,40,0),rgba(14,8,36,.92));backdrop-filter:blur(10px)}
+  .wc-title{text-align:center;font-family:KaiTi,STKaiti,'楷体',serif;font-size:10px;color:rgba(255,244,224,.78);letter-spacing:3px;margin-bottom:6px;text-shadow:0 1px 8px rgba(20,10,40,.6)}
+  .wc-row{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .wc-row::-webkit-scrollbar{display:none}
+  .wc a{flex-shrink:0;text-decoration:none;display:flex;align-items:center;gap:4px;font-size:11px;color:#d8cff0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:6px 12px;letter-spacing:.5px;white-space:nowrap;transition:all .2s}
+  .wc a.here{background:rgba(244,200,106,.22);border-color:rgba(244,200,106,.6);color:#ffeec4;box-shadow:0 0 14px rgba(244,200,106,.3)}
+  .arrival{bottom:72px !important}
 
 </style>
 </head>
@@ -217,6 +220,7 @@
 <script>try{var W=JSON.parse(localStorage.getItem('xh_visits')||'{}');var F=(location.pathname.split('/').pop()||'index.html').replace('.html','');if(!W[F])W[F]=new Date().toISOString().slice(0,10);localStorage.setItem('xh_visits',JSON.stringify(W));}catch(e){}</script>
 
 
-<div class="bigportal" onclick="location.href='planet.html'"><div class="bp"><span class="bp-ico">🪐</span><span class="bp-txt">返回生命核心广场</span><span class="bp-arr">→</span></div></div>
+
+<div class="wc"><div class="wc-title">✦ 世界罗盘 ✦</div><div class="wc-row"><a href="index.html" class="">🌌 入口</a><a href="map.html" class="here">🗺️ 地图</a><a href="planet.html" class="">✨ 广场</a><a href="creator.html" class="">👑 档案</a><a href="garden.html" class="">🌱 花园</a><a href="village.html" class="">🏠 居民村</a><a href="forest.html" class="">🌲 森林</a><a href="creation.html" class="">🏗️ 创造</a><a href="council.html" class="">🪐 圆桌</a></div></div>
 </body>
 </html>
