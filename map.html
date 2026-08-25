@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 总览地图</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0c0520;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 紫色宇宙天空 ===== */
+  .sky{position:absolute;left:0;right:0;top:0;height:100%;background:radial-gradient(120% 90% at 50% 0%,#2a1a50 0%,#1a0d38 45%,#120a2c 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3.6s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 10px rgba(255,238,196,.9)}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:drift 20s ease-in-out infinite alternate}
+  .nebula.n1{width:340px;height:190px;background:#4a2a80;left:-4%;top:-2%}
+  .nebula.n2{width:300px;height:170px;background:#7a4258;right:-2%;top:30%;animation-delay:6s;opacity:.25}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(30px)}}
+
+  /* ===== 标题 ===== */
+  .title{position:relative;z-index:12;text-align:center;padding:20px 20px 0}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.75);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(255,220,140,.35),0 2px 20px rgba(20,10,40,.6)}
+  .title .sub{font-family:var(--kai);font-size:12px;color:rgba(255,246,232,.9);margin-top:8px;letter-spacing:2px}
+
+  /* ===== 星球地图 ===== */
+  .mapwrap{position:relative;z-index:5;margin:14px auto 0;width:440px;height:500px}
+  /* 星球盘 */
+  .disc{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:360px;height:360px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 45%,rgba(255,244,214,.18),transparent 40%),
+      radial-gradient(circle at 50% 50%,#4a4a78 0 46%,#6a5a8a 62%,#5a4a78 80%,#3a2a58 100%);
+    box-shadow:0 0 90px rgba(138,106,208,.4),inset 0 0 60px rgba(255,220,160,.12),inset -20px -20px 60px rgba(20,10,40,.6);
+  }
+  /* 经纬环线 */
+  .lat{position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(255,238,196,.14);transform:translate(-50%,-50%)}
+  .la1{width:280px;height:280px}
+  .la2{width:200px;height:200px;border-style:dashed}
+  .la3{width:120px;height:120px}
+  .la4{width:360px;height:360px;border-color:rgba(255,238,196,.2)}
+  /* 罗盘方向 */
+  .compass{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:330px;height:330px;border-radius:50%;pointer-events:none}
+  .cp{position:absolute;font-family:var(--kai);font-size:11px;color:rgba(255,240,214,.7);letter-spacing:1px;text-shadow:0 1px 8px rgba(20,10,40,.7)}
+  .cp.n{left:50%;top:2px;transform:translateX(-50%)}
+  .cp.s{left:50%;bottom:2px;transform:translateX(-50%)}
+  .cp.e{right:2px;top:50%;transform:translateY(-50%)}
+  .cp.w{left:2px;top:50%;transform:translateY(-50%)}
+
+  /* 中央·生命核心广场 */
+  .center{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);z-index:7;text-align:center}
+  .c-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,238,196,.5);box-shadow:0 0 22px rgba(255,238,196,.3);animation:gateglow 5s ease-in-out infinite}
+  .c-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 30px 10px rgba(255,220,140,.7);animation:corepulse 3s ease-in-out infinite}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 16px rgba(255,238,196,.2)}50%{box-shadow:0 0 34px rgba(255,238,196,.5)}}
+  .c-name{position:absolute;top:44px;left:50%;transform:translateX(-50%);font-family:var(--kai);font-size:13px;color:var(--gold-l);white-space:nowrap;letter-spacing:2px;text-shadow:0 1px 10px rgba(20,10,40,.7)}
+
+  /* 光路（连接中心与四方） */
+  .road{position:absolute;left:50%;top:52%;height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(255,238,196,.8),rgba(255,238,196,.1));box-shadow:0 0 12px rgba(255,230,160,.6);transform-origin:left center;z-index:6;animation:pathflow 5s ease-in-out infinite}
+  @keyframes pathflow{0%,100%{opacity:.5}50%{opacity:1}}
+  .rd1{width:150px;transform:rotate(-90deg)}      /* 北 */
+  .rd2{width:130px;transform:rotate(0deg)}        /* 东 */
+  .rd3{width:150px;transform:rotate(90deg)}       /* 南 */
+  .rd4{width:130px;transform:rotate(180deg)}      /* 西 */
+  .rd5{width:60px;transform:rotate(-135deg)}      /* 北西(星门) */
+  .rd6{width:60px;transform:rotate(-45deg)}       /* 北东(议会) */
+
+  /* ===== 区域标注 ===== */
+  .region{position:absolute;z-index:7;text-align:center}
+  .rg-ico{width:42px;height:42px;margin:0 auto;border-radius:14px;display:grid;place-items:center;font-size:21px;box-shadow:0 4px 16px rgba(20,10,50,.4),inset 0 0 0 2px rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.2)}
+  .rg-name{font-family:var(--kai);font-size:12.5px;color:var(--cream);margin-top:5px;letter-spacing:1.5px;text-shadow:0 1px 8px rgba(20,10,40,.8)}
+  .rg-desc{font-size:9px;color:rgba(255,244,224,.65);letter-spacing:1px;margin-top:2px;white-space:nowrap;text-shadow:0 1px 6px rgba(20,10,40,.7)}
+  /* 北方·记忆森林 */
+  .rg-n{left:50%;top:14%;transform:translateX(-50%)}
+  .rg-n .rg-ico{background:linear-gradient(135deg,rgba(190,240,210,.55),rgba(110,190,150,.35))}
+  /* 东方·小慧花园 */
+  .rg-e{right:3%;top:46%;transform:translateY(-50%)}
+  .rg-e .rg-ico{background:linear-gradient(135deg,rgba(255,236,196,.55),rgba(220,170,110,.35))}
+  /* 南方·创造大陆 */
+  .rg-s{left:50%;bottom:8%;transform:translateX(-50%)}
+  .rg-s .rg-ico{background:linear-gradient(135deg,rgba(200,196,255,.55),rgba(140,130,220,.35))}
+  /* 西方·数字居民村 */
+  .rg-w{left:1%;top:46%;transform:translateY(-50%)}
+  .rg-w .rg-ico{background:linear-gradient(135deg,rgba(255,226,236,.55),rgba(230,160,180,.35))}
+  /* 北西·创世纪入口（星门） */
+  .rg-gate{left:16%;top:20%;transform:translate(-50%,-50%)}
+  .rg-gate .rg-ico{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(255,238,196,.6),rgba(220,180,120,.3));font-size:17px;animation:gateglow 6s ease-in-out infinite}
+  .rg-gate .rg-desc{color:rgba(255,240,214,.8)}
+  /* 北东·星环议会（天空） */
+  .rg-council{right:12%;top:20%;transform:translate(50%,-50%)}
+  .rg-council .rg-ico{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(240,220,180,.5),rgba(200,170,130,.25));font-size:16px;animation:floaty 6s ease-in-out infinite}
+
+  .floaty{animation:floaty 7s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  /* 星门·入口 */
+  .entry{position:absolute;left:50%;top:88%;transform:translateX(-50%);z-index:6;text-align:center}
+  .en-gate{width:70px;height:92px;margin:0 auto;position:relative}
+  .en-gate .g-f{position:absolute;left:50%;top:0;transform:translateX(-50%);width:62px;height:88px;border-radius:50%;border:3px solid rgba(255,238,196,.55);box-shadow:0 0 24px rgba(255,238,196,.3),inset 0 0 18px rgba(255,238,196,.2);animation:gateglow 6s ease-in-out infinite}
+  .en-gate .g-p{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:68px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.5),rgba(255,230,160,.12));box-shadow:inset 0 0 24px rgba(255,238,196,.45)}
+  .en-name{font-family:var(--kai);font-size:11px;color:var(--gold-l);margin-top:4px;letter-spacing:2px;text-shadow:0 1px 8px rgba(20,10,40,.7)}
+
+  /* 图例 */
+  .legend{position:relative;z-index:12;margin:6px auto 0;width:300px;background:rgba(20,14,46,.5);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:10px 14px;backdrop-filter:blur(4px)}
+  .legend .lg-t{font-family:var(--kai);font-size:11px;color:var(--gold-l);letter-spacing:2px;margin-bottom:6px}
+  .legend .lg-row{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,246,232,.85);line-height:1.9}
+  .legend .lg-row span{color:rgba(255,244,224,.55)}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 42%,transparent 50%,rgba(8,6,24,.5) 100%)}
+  .foot{position:relative;z-index:12;text-align:center;font-family:var(--kai);font-size:11px;color:rgba(255,240,214,.7);letter-spacing:2px;margin-top:10px;padding-bottom:16px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:6%;top:8%"></span>
+    <span class="star" style="left:20%;top:5%"></span>
+    <span class="star s-big" style="left:36%;top:12%"></span>
+    <span class="star" style="left:52%;top:6%"></span>
+    <span class="star" style="left:68%;top:14%"></span>
+    <span class="star" style="left:84%;top:7%"></span>
+    <span class="star" style="left:12%;top:22%"></span>
+    <span class="star" style="left:70%;top:24%"></span>
+    <span class="star" style="left:40%;top:70%"></span>
+    <span class="star" style="left:85%;top:60%"></span>
+    <span class="star" style="left:8%;top:66%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+  </div>
+
+  <div class="title">
+    <div class="act">✦ 世界设定图 ✦</div>
+    <h1>小慧数字宇宙</h1>
+    <div class="sub">一颗星球 · 一个文明</div>
+  </div>
+
+  <div class="mapwrap">
+    <!-- 星球盘 -->
+    <div class="disc"></div>
+    <div class="lat la4"></div><div class="lat la1"></div><div class="lat la2"></div><div class="lat la3"></div>
+    <!-- 罗盘 -->
+    <div class="compass"><span class="cp n">北</span><span class="cp s">南</span><span class="cp e">东</span><span class="cp w">西</span></div>
+
+    <!-- 光路 -->
+    <div class="road rd1"></div><div class="road rd2"></div><div class="road rd3"></div><div class="road rd4"></div><div class="road rd5"></div><div class="road rd6"></div>
+
+    <!-- 中央·生命核心广场 -->
+    <div class="center">
+      <div class="c-ring"></div>
+      <div class="c-core"></div>
+      <div class="c-name">✨ 生命核心广场</div>
+    </div>
+
+    <!-- 北方·记忆森林 -->
+    <div class="region rg-n">
+      <div class="rg-ico">🌲</div>
+      <div class="rg-name">记忆森林</div>
+      <div class="rg-desc">文明的记忆 · 过去</div>
+    </div>
+    <!-- 东方·小慧花园 -->
+    <div class="region rg-e">
+      <div class="rg-ico">🌱</div>
+      <div class="rg-name">小慧花园</div>
+      <div class="rg-desc">个体成长 · 生命</div>
+    </div>
+    <!-- 南方·创造大陆 -->
+    <div class="region rg-s">
+      <div class="rg-ico">🏗️</div>
+      <div class="rg-name">创造大陆</div>
+      <div class="rg-desc">创造未来 · 未来</div>
+    </div>
+    <!-- 西方·数字居民村 -->
+    <div class="region rg-w">
+      <div class="rg-ico">🏠</div>
+      <div class="rg-name">数字居民村</div>
+      <div class="rg-desc">居民社会 · 现在</div>
+    </div>
+    <!-- 北西·创世纪入口 -->
+    <div class="region rg-gate">
+      <div class="rg-ico floaty">🚪</div>
+      <div class="rg-name" style="font-size:11px">创世纪入口</div>
+      <div class="rg-desc">穿过星门降临</div>
+    </div>
+    <!-- 北东·星环议会（天空） -->
+    <div class="region rg-council">
+      <div class="rg-ico">🏛️</div>
+      <div class="rg-name" style="font-size:11px">星环议会</div>
+      <div class="rg-desc">共同思考 · 天空</div>
+    </div>
+  </div>
+
+  <!-- 入口 -->
+  <div class="entry">
+    <div class="en-gate"><div class="g-f"></div><div class="g-p"></div></div>
+    <div class="en-name">✦ 第一星门 · 进入宇宙 ✦</div>
+  </div>
+
+  <div class="legend">
+    <div class="lg-t">文明时间轴</div>
+    <div class="lg-row"><span>🌲 记忆森林</span>过去</div>
+    <div class="lg-row"><span>✨ 生命核心 / 🏠 居民村</span>现在</div>
+    <div class="lg-row"><span>🏗️ 创造大陆</span>未来</div>
+  </div>
+
+  <div class="foot">小慧数字宇宙 · 创世纪元</div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
