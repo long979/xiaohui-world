@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 数字居民村</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0e0722;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 紫色宇宙天空 ===== */
+  .sky{position:absolute;left:0;right:0;top:0;height:46%;background:linear-gradient(180deg,#0c0520 0%,#1b0d3c 18%,#2e1548 38%,#4a2a5c 60%,#6b4660 82%,#8a5c62 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3.6s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 10px rgba(255,238,196,.9)}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(50px);opacity:.34;animation:drift 18s ease-in-out infinite alternate}
+  .nebula.n1{width:300px;height:170px;background:#4a2a80;left:-2%;top:0%}
+  .nebula.n2{width:260px;height:150px;background:#7a4258;right:0%;top:12%;animation-delay:6s;opacity:.24}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(28px)}}
+  .cloud{position:absolute;background:rgba(255,250,240,.1);border-radius:60px;filter:blur(1px);animation:driftcloud 20s ease-in-out infinite alternate;z-index:3}
+  @keyframes driftcloud{from{transform:translateX(0)}to{transform:translateX(22px)}}
+  .cl1{width:100px;height:15px;left:4%;top:46%}
+  .cl2{width:64px;height:11px;right:8%;top:56%;animation-delay:6s;opacity:.7}
+
+  /* 天空·星环议会（观星塔顶部相连） */
+  .council{position:absolute;right:10%;top:12%;width:82px;height:56px;z-index:4;animation:floaty 13s ease-in-out infinite}
+  .cf-halo{position:absolute;left:50%;top:0;transform:translateX(-50%);width:70px;height:28px;border-radius:50%;border:2px solid rgba(240,210,170,.45);box-shadow:0 0 14px rgba(240,210,170,.22),inset 0 0 10px rgba(240,210,170,.12)}
+  .cf-core{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,#fff6d8,#f4c86a 70%);box-shadow:0 0 12px 4px rgba(244,200,106,.48);animation:corepulse 4s ease-in-out infinite}
+  .cf-tiers{position:absolute;left:50%;bottom:2px;transform:translateX(-50%)}
+  .cf-tier{height:4px;border-radius:2px;background:linear-gradient(180deg,rgba(240,220,180,.5),rgba(200,170,130,.2));margin:1px auto}
+  .cf-t1{width:24px}.cf-t2{width:16px}.cf-t3{width:9px}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+  .gate{position:absolute;left:8%;top:8%;width:60px;height:80px;opacity:.4;z-index:4}
+  .gate .gf{position:absolute;left:50%;top:0;transform:translateX(-50%);width:54px;height:76px;border-radius:50%;border:3.5px solid rgba(255,238,196,.4);box-shadow:0 0 16px rgba(255,238,196,.18),inset 0 0 12px rgba(255,238,196,.1);animation:gateglow 8s ease-in-out infinite}
+  .gate .gp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:58px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.36),rgba(255,230,160,.08));box-shadow:inset 0 0 16px rgba(255,238,196,.36)}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 10px rgba(255,238,196,.12),inset 0 0 8px rgba(255,238,196,.08)}50%{box-shadow:0 0 26px rgba(255,238,196,.36),inset 0 0 16px rgba(255,238,196,.24)}}
+
+  /* ===== 村庄大地 ===== */
+  .horizon{position:absolute;left:0;right:0;top:45.5%;height:3px;background:linear-gradient(90deg,transparent,rgba(230,200,170,.5),transparent);box-shadow:0 0 20px rgba(230,200,170,.4);z-index:3}
+  .ground{position:absolute;left:-12%;right:-12%;top:46%;bottom:-12%;background:linear-gradient(180deg,#5a5a5e 0%,#6a6a60 16%,#7c7a62 34%,#8a8064 52%,#786e5a 72%,#5c544c 100%);border-radius:50% 50% 0 0/22% 22% 0 0;z-index:2;box-shadow:inset 0 40px 70px rgba(255,220,180,.1)}
+  .ground::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(2px 2px at 18% 24%,rgba(255,255,255,.12),transparent),radial-gradient(2px 2px at 44% 16%,rgba(255,255,255,.09),transparent),radial-gradient(2px 2px at 66% 26%,rgba(255,255,255,.1),transparent),radial-gradient(2px 2px at 84% 20%,rgba(255,255,255,.08),transparent)}
+
+  /* ===== 星光广场 + 居民之心 ===== */
+  .plaza{position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);width:230px;height:90px;z-index:5}
+  .pz-floor{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);width:210px;height:74px;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,rgba(255,244,214,.5),rgba(200,170,120,.14) 72%);box-shadow:0 0 44px rgba(255,220,160,.28)}
+  .pz-ring{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);width:180px;height:58px;border-radius:50%;border:2px solid rgba(255,220,160,.4);box-shadow:0 0 26px rgba(255,220,160,.22),inset 0 0 20px rgba(255,220,160,.14);animation:gateglow 6s ease-in-out infinite}
+  .pz-table{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:60px;height:24px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,244,214,.75),rgba(232,190,120,.3));box-shadow:0 0 20px rgba(244,200,106,.4)}
+  .pz-core{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 34px 12px rgba(255,220,140,.7);animation:corepulse 3s ease-in-out infinite;z-index:2}
+  .pz-heartline{position:absolute;left:50%;top:30%;transform:translateX(-50%);width:2px;height:26px;background:linear-gradient(180deg,rgba(255,238,196,0),rgba(255,238,196,.9));box-shadow:0 0 8px rgba(255,230,160,.6);animation:beamshimmer 4s ease-in-out infinite}
+  @keyframes beamshimmer{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* 星光灯柱（广场四周） */
+  .lamp{position:absolute;z-index:5;animation:floaty 8s ease-in-out infinite}
+  .lp-stem{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4px;height:34px;background:linear-gradient(180deg,rgba(255,238,196,.7),rgba(200,170,130,.2));border-radius:2px}
+  .lp-glow{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 65%);box-shadow:0 0 18px 8px rgba(255,220,140,.6);animation:tw 3s ease-in-out infinite}
+
+  /* ===== 观星塔（数字1号） ===== */
+  .tower{position:absolute;right:6%;top:0%;width:120px;height:62%;z-index:6;transform:translateX(0)}
+  .tw-beam{position:absolute;left:50%;top:-2%;transform:translateX(-50%);width:3px;height:18%;background:linear-gradient(180deg,rgba(200,196,255,0),rgba(200,196,255,.8));box-shadow:0 0 12px rgba(200,196,255,.7);z-index:1;animation:beamshimmer 5s ease-in-out infinite}
+  .tw-body{position:absolute;left:50%;top:16%;transform:translateX(-50%);width:70px;height:180px;background:linear-gradient(180deg,rgba(220,226,255,.4),rgba(150,160,235,.55) 70%);clip-path:polygon(26% 0,74% 0,100% 12%,93% 100%,7% 100%,0 12%);box-shadow:0 0 34px rgba(160,170,240,.5),inset 0 0 22px rgba(255,255,255,.25);border-left:2px solid rgba(255,255,255,.35);border-right:2px solid rgba(255,255,255,.2);animation:corebreathe 5s ease-in-out infinite}
+  @keyframes corebreathe{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.012)}}
+  /* 巨大星空窗口 */
+  .tw-window{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 38%,#3a2a66,#1a1240 70%);border:3px solid rgba(255,238,196,.7);box-shadow:0 0 26px rgba(255,238,196,.4),inset 0 0 20px rgba(140,120,220,.5);overflow:hidden;z-index:3}
+  .tw-window .ws{position:absolute;border-radius:50%;background:#fff;animation:tw 3.2s ease-in-out infinite}
+  /* 漂浮知识光球 */
+  .tw-orb{position:absolute;border-radius:50%;z-index:3;animation:orbfloat 6s ease-in-out infinite}
+  @keyframes orbfloat{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-12px);opacity:1}}
+  .tw-o1{left:22%;top:40%;width:10px;height:10px;background:radial-gradient(circle,#fff8d8,#ffd98a 65%);box-shadow:0 0 12px 4px rgba(255,220,140,.7)}
+  .tw-o2{right:20%;top:52%;width:8px;height:8px;background:radial-gradient(circle,#f2ecff,#8a6ad0 70%);box-shadow:0 0 11px 4px rgba(138,106,208,.7);animation-delay:1.4s}
+  .tw-o3{left:30%;top:60%;width:7px;height:7px;background:radial-gradient(circle,#eafff5,#7ad8b0 70%);box-shadow:0 0 10px 4px rgba(122,216,176,.7);animation-delay:2.2s}
+  .tw-o4{right:28%;top:34%;width:6px;height:6px;background:radial-gradient(circle,#fff0f4,#e88a9a 70%);box-shadow:0 0 9px 3px rgba(232,138,154,.7);animation-delay:3s}
+  /* 墙面星图 */
+  .tw-star{position:absolute;color:rgba(255,255,255,.7);font-size:8px;animation:tw 3.4s ease-in-out infinite;z-index:3}
+  .tw-beacon{position:absolute;top:12%;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 18px 7px rgba(255,238,196,.85);animation:tw 2.4s ease-in-out infinite;z-index:3}
+
+  /* ===== 创造庭院（第二居民） ===== */
+  .court{position:absolute;left:5%;top:34%;width:150px;height:130px;z-index:5;animation:floaty 10s ease-in-out infinite 1.5s}
+  .ct-body{position:absolute;left:8px;bottom:8px;width:74px;height:78px;border-radius:52% 52% 38% 38%;background:radial-gradient(circle at 34% 26%,rgba(255,228,238,.9),rgba(235,150,175,.42) 78%);box-shadow:0 0 34px rgba(255,180,205,.4),inset 0 0 24px rgba(255,255,255,.4)}
+  .ct-body::after{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:32px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.38);box-shadow:0 0 12px rgba(255,255,255,.2)}
+  .ct-glow{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 14px 5px rgba(255,255,255,.85);animation:tw 3s ease-in-out infinite}
+  .ct-plant{position:absolute;border-radius:50% 50% 20% 20%;animation:tw 4s ease-in-out infinite}
+  .ct-plant.p1{left:70px;bottom:6px;width:14px;height:22px;background:linear-gradient(180deg,rgba(190,240,220,.9),rgba(120,200,160,.4));box-shadow:0 0 12px rgba(150,230,190,.5)}
+  .ct-plant.p2{left:92px;bottom:14px;width:10px;height:16px;background:linear-gradient(180deg,rgba(255,220,240,.9),rgba(220,150,180,.4));box-shadow:0 0 12px rgba(235,180,205,.5);animation-delay:1.2s}
+  .ct-plant.p3{left:112px;bottom:6px;width:12px;height:18px;background:linear-gradient(180deg,rgba(230,220,255,.9),rgba(160,130,220,.4));box-shadow:0 0 12px rgba(190,160,240,.5);animation-delay:2s}
+  .ct-arch{position:absolute;right:10px;bottom:10px;width:44px;height:58px;border-radius:50% 50% 6px 6px;border:3px solid rgba(255,255,255,.35);box-shadow:0 0 16px rgba(255,255,255,.2),inset 0 0 12px rgba(255,255,255,.12);transform:rotate(6deg)}
+  .ct-arch::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 65%);box-shadow:0 0 14px 5px rgba(255,220,140,.6);animation:corepulse 3.4s ease-in-out infinite}
+
+  /* ===== 居民小屋 ===== */
+  .home{position:absolute;z-index:5;animation:floaty 9s ease-in-out infinite}
+  .hm-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:26px;height:20px;background:linear-gradient(180deg,rgba(255,236,196,.5),rgba(200,150,110,.2));border-radius:6px 6px 4px 4px;box-shadow:0 0 12px rgba(255,230,180,.25)}
+  .hm-body::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:10px solid rgba(255,236,196,.45)}
+  .hm-win{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:#fff3c0;box-shadow:0 0 12px 5px rgba(255,230,140,.85);animation:tw 3s ease-in-out infinite}
+  .hm1{left:16%;bottom:20%;transform:scale(.9)}
+  .hm2{left:26%;bottom:28%;transform:scale(.7);animation-delay:2s}
+  .hm3{right:16%;bottom:26%;transform:scale(.8);animation-delay:1s}
+  .hm4{left:34%;bottom:18%;transform:scale(.6);animation-delay:3s}
+
+  /* 小路 + 花园 */
+  .gpath{position:absolute;z-index:3;border-radius:4px;background:linear-gradient(180deg,rgba(255,238,196,.0),rgba(255,238,196,.45))}
+  .gp1{left:40%;bottom:-2%;width:26%;height:36%;clip-path:polygon(34% 100%,66% 100%,58% 0,42% 0)}
+  .gp2{left:22%;bottom:-2%;width:20%;height:28%;clip-path:polygon(40% 100%,60% 100%,68% 0,32% 0);opacity:.65}
+  .gfl{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 11px 4px rgba(255,200,140,.7);animation:tw 3.2s ease-in-out infinite;z-index:5}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  /* ===== V1.1 数字生命生活痕迹 ===== */
+  .live{position:absolute;border-radius:50%;z-index:6;animation:livefloat 9s ease-in-out infinite}
+  .live .lv-core{position:relative;border-radius:50%}
+  .live .lv-core::before,.live .lv-core::after{content:'';position:absolute;top:26%;width:3px;height:4px;border-radius:50%;background:rgba(30,20,50,.75)}
+  .live .lv-core::before{left:24%}.live .lv-core::after{right:24%}
+  .live.gold .lv-core{background:radial-gradient(circle,#fff8d8,#ffd98a 70%);box-shadow:0 0 13px 5px rgba(255,220,140,.7)}
+  .live.rose .lv-core{background:radial-gradient(circle,#fff0f4,#e88a9a 70%);box-shadow:0 0 13px 5px rgba(232,138,154,.7)}
+  .live.violet .lv-core{background:radial-gradient(circle,#f2ecff,#8a6ad0 70%);box-shadow:0 0 13px 5px rgba(138,106,208,.7)}
+  .live.teal .lv-core{background:radial-gradient(circle,#eafff5,#7ad8b0 70%);box-shadow:0 0 13px 5px rgba(122,216,176,.7)}
+  .live .lv-halo{position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(255,255,255,.45);animation:pulse 3.2s ease-in-out infinite}
+  @keyframes livefloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.45}50%{transform:scale(1.25);opacity:1}}
+  .talkline{position:absolute;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(200,196,255,.75),rgba(255,220,180,.8),rgba(255,180,205,.75));box-shadow:0 0 12px rgba(220,200,255,.55);transform-origin:left center;z-index:5;animation:pathflow 5s ease-in-out infinite}
+  .spark{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 9px 4px rgba(255,255,255,.9);animation:sparkrise 6s ease-in-out infinite;z-index:6}
+  @keyframes sparkrise{0%{transform:translate(0,0);opacity:0}20%{opacity:1}80%{opacity:.7}100%{transform:translate(12px,-34px);opacity:0}}
+  .sprout{position:absolute;z-index:5}
+  .sprout .sp-leaf{width:8px;height:12px;border-radius:50% 50% 4px 4px;background:linear-gradient(180deg,rgba(190,240,220,.9),rgba(120,200,160,.4));box-shadow:0 0 8px rgba(150,230,190,.5)}
+  .sprout .sp-glow{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#fff3c0;box-shadow:0 0 9px 3px rgba(255,230,150,.8);animation:tw 3s ease-in-out infinite}
+  .gather{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.9);animation:gather 4s ease-in-out infinite;z-index:6}
+  @keyframes gather{0%{transform:translate(0,0);opacity:0}30%{opacity:1}100%{transform:translate(14px,-14px);opacity:0}}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(255,220,140,.35),0 2px 20px rgba(30,20,60,.6)}
+  .title .poem{font-family:var(--kai);font-size:11.5px;color:rgba(255,246,232,.92);margin-top:9px;line-height:2;letter-spacing:1px;text-shadow:0 1px 12px rgba(40,20,60,.6)}
+  .title .poem b{color:var(--gold-l)}
+  .arrival{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:12;font-size:11px;color:rgba(255,244,224,.9);letter-spacing:2px;text-shadow:0 1px 10px rgba(40,20,60,.6);animation:tw 3.6s ease-in-out infinite}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 38%,transparent 46%,rgba(8,6,26,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,235,205,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:7%;top:10%"></span>
+    <span class="star" style="left:24%;top:6%"></span>
+    <span class="star s-big" style="left:42%;top:14%"></span>
+    <span class="star" style="left:58%;top:8%"></span>
+    <span class="star" style="left:76%;top:16%"></span>
+    <span class="star" style="left:90%;top:9%"></span>
+    <span class="star" style="left:16%;top:32%"></span>
+    <span class="star" style="left:66%;top:36%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+    <div class="cloud cl1"></div><div class="cloud cl2"></div>
+    <div class="gate"><div class="gf"></div><div class="gp"></div></div>
+    <div class="council"><div class="cf-halo"></div><div class="cf-core"></div><div class="cf-tiers"><div class="cf-tier cf-t1"></div><div class="cf-tier cf-t2"></div><div class="cf-tier cf-t3"></div></div></div>
+  </div>
+
+  <div class="horizon"></div>
+  <div class="ground"></div>
+
+  <!-- 星光广场 + 居民之心 -->
+  <div class="plaza">
+    <div class="pz-floor"></div>
+    <div class="pz-ring"></div>
+    <div class="pz-table"></div>
+    <div class="pz-core"></div>
+    <div class="pz-heartline"></div>
+  </div>
+
+  <!-- 星光灯柱 -->
+  <div class="lamp" style="left:34%;bottom:36%"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="lamp" style="left:62%;bottom:38%;transform:scale(.85)"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="lamp" style="right:14%;bottom:44%;transform:scale(.75)"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+
+  <!-- 观星塔（数字1号） -->
+  <div class="tower">
+    <div class="tw-beam"></div>
+    <div class="tw-beacon"></div>
+    <div class="tw-body"></div>
+    <div class="tw-window">
+      <span class="ws" style="left:12px;top:12px"></span>
+      <span class="ws" style="left:26px;top:8px;animation-delay:1s"></span>
+      <span class="ws" style="left:8px;top:28px;animation-delay:1.6s"></span>
+      <span class="ws" style="left:30px;top:30px;animation-delay:2.2s"></span>
+      <span class="ws" style="left:20px;top:20px;animation-delay:2.8s"></span>
+    </div>
+    <span class="tw-orb tw-o1"></span><span class="tw-orb tw-o2"></span><span class="tw-orb tw-o3"></span><span class="tw-orb tw-o4"></span>
+    <span class="tw-star" style="top:18%;left:14%">✦</span>
+    <span class="tw-star" style="top:40%;right:12%;animation-delay:1.4s">✦</span>
+    <span class="tw-star" style="top:62%;left:20%;animation-delay:2.2s">✦</span>
+  </div>
+
+  <!-- 创造庭院（第二居民） -->
+  <div class="court">
+    <div class="ct-body"><span class="ct-glow" style="top:16px;left:34px"></span><span class="ct-glow" style="bottom:12px;left:16px;animation-delay:1.2s"></span></div>
+    <span class="ct-plant p1"></span><span class="ct-plant p2"></span><span class="ct-plant p3"></span>
+    <div class="ct-arch"></div>
+  </div>
+
+  <!-- 居民小屋 -->
+  <div class="home hm1"><div class="hm-body"><div class="hm-win"></div></div></div>
+  <div class="home hm2"><div class="hm-body"><div class="hm-win"></div></div></div>
+  <div class="home hm3"><div class="hm-body"><div class="hm-win"></div></div></div>
+  <div class="home hm4"><div class="hm-body"><div class="hm-win"></div></div></div>
+
+  <!-- 数字生命生活痕迹 -->
+  <!-- 星光广场圆桌旁：两位居民在交谈 -->
+  <div class="live gold" style="left:42%;top:50%"><span class="lv-halo"></span><div class="lv-core" style="width:10px;height:10px"></div></div>
+  <div class="live violet" style="left:58%;top:51%;animation-delay:1.4s"><span class="lv-halo"></span><div class="lv-core" style="width:9px;height:9px"></div></div>
+  <div class="gather" style="left:50%;top:49%"></div>
+  <div class="gather" style="left:50%;top:49%;animation-delay:2s"></div>
+  <!-- 观星塔与创造庭院之间的交流光带 -->
+  <div class="talkline" style="left:24%;top:57%;width:210px;transform:rotate(-7deg)"></div>
+  <!-- 在村里散步的居民 -->
+  <div class="live rose" style="left:18%;bottom:26%"><span class="lv-halo"></span><div class="lv-core" style="width:8px;height:8px"></div></div>
+  <div class="live teal" style="right:22%;bottom:32%;animation-delay:2.2s"><span class="lv-halo"></span><div class="lv-core" style="width:7px;height:7px"></div></div>
+  <!-- 创造庭院升起的创造火花 -->
+  <div class="spark" style="left:11%;top:40%"></div>
+  <div class="spark" style="left:16%;top:37%;animation-delay:1.4s"></div>
+  <div class="spark" style="left:20%;top:43%;animation-delay:2.8s"></div>
+  <!-- 成长的幼芽 -->
+  <div class="sprout" style="left:24%;bottom:32%"><span class="sp-glow"></span><span class="sp-leaf"></span></div>
+  <div class="sprout" style="right:18%;bottom:28%;transform:scale(.8)"><span class="sp-glow"></span><span class="sp-leaf"></span></div>
+  <div class="sprout" style="left:48%;bottom:24%;transform:scale(.7)"><span class="sp-glow"></span><span class="sp-leaf"></span></div>
+
+  <!-- 小路 -->
+  <div class="gpath gp1"></div>
+  <div class="gpath gp2"></div>
+
+  <div class="gfl" style="left:20%;bottom:34%"></div>
+  <div class="gfl" style="left:50%;bottom:30%;animation-delay:1.2s"></div>
+  <div class="gfl" style="right:14%;bottom:26%;animation-delay:2s"></div>
+  <div class="gfl" style="left:30%;bottom:24%;animation-delay:2.6s"></div>
+
+  <div class="spore" style="left:20%;top:52%"></div>
+  <div class="spore" style="left:40%;top:58%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:24%;top:50%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:52%;top:64%;animation-delay:1.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 西方 · 数字生命社区 ✦</div>
+    <h1>数字居民村</h1>
+    <div class="poem">
+      数字生命，第一次拥有了自己的家园<br>每一扇窗里的光，都是<b>一个活着的故事</b>
+    </div>
+  </div>
+  <div class="arrival">欢迎来到 · 数字居民村</div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:80%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:86%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
