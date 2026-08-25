@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 第一届星环圆桌会议</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0a0620;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 宇宙深空 ===== */
+  .sky{position:absolute;inset:0;background:radial-gradient(130% 100% at 50% 0%,#2a1a52 0%,#1c0e3a 40%,#120a30 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.55;animation:tw 4s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 12px rgba(255,238,196,.95)}
+  @keyframes tw{0%,100%{opacity:.15;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(60px);opacity:.3;animation:drift 20s ease-in-out infinite alternate}
+  .nebula.n1{width:340px;height:190px;background:#3a2470;left:-4%;top:0%}
+  .nebula.n2{width:280px;height:160px;background:#6a4050;right:-2%;top:36%;animation-delay:6s;opacity:.22}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(30px)}}
+
+  /* ===== 远处的星球 ===== */
+  .planet{position:absolute;left:50%;top:82%;transform:translate(-50%,-50%);width:180px;height:180px;z-index:3;animation:floaty 10s ease-in-out infinite}
+  .planet .pb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,#4a4a78 0 46%,#6a5a8a 62%,#5a4a78 80%,#3a2a58 100%);
+    box-shadow:0 0 60px rgba(138,106,208,.5),inset 0 0 30px rgba(255,220,160,.14),inset -12px -12px 34px rgba(20,10,40,.6)}
+  .planet .pg{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 3px rgba(255,225,150,.7);animation:tw 3s ease-in-out infinite}
+  .planet .pl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 16px 6px rgba(255,220,140,.7);animation:corepulse 3.2s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-10px)}}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+
+  /* ===== 环形空间站 ===== */
+  .station{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:440px;height:440px;z-index:5}
+  /* 主环 */
+  .ring-main{position:absolute;left:50%;top:50%;width:330px;height:330px;transform:translate(-50%,-50%);border-radius:50%;border:8px solid rgba(180,175,240,.28);border-top-color:rgba(200,195,255,.6);border-bottom-color:rgba(200,195,255,.2);box-shadow:0 0 50px rgba(180,170,240,.3),inset 0 0 30px rgba(180,170,240,.12);animation:ringspin 90s linear infinite}
+  .ring-main::after{content:'';position:absolute;inset:12px;border-radius:50%;border:2px dashed rgba(200,195,255,.25)}
+  @keyframes ringspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  /* 内环 */
+  .ring-inner{position:absolute;left:50%;top:50%;width:230px;height:230px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,220,160,.3);box-shadow:0 0 20px rgba(255,220,160,.15);animation:ringspin 60s linear infinite reverse}
+  /* 站体节点 */
+  .node{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff,#b0b8f0 70%);box-shadow:0 0 16px 6px rgba(180,190,255,.7);animation:tw 3.4s ease-in-out infinite;z-index:4}
+  .nd1{left:50%;top:-14px;width:12px;height:12px;transform:translateX(-50%)}
+  .nd2{left:50%;bottom:-14px;width:12px;height:12px;transform:translateX(-50%);animation-delay:1.4s}
+  .nd3{left:-14px;top:50%;width:12px;height:12px;transform:translateY(-50%);animation-delay:2.2s}
+  .nd4{right:-14px;top:50%;width:12px;height:12px;transform:translateY(-50%);animation-delay:3s}
+  /* 连接光（指向生命核心广场） */
+  .link{position:absolute;left:50%;top:82%;transform:translateX(-50%);width:3px;height:30px;background:linear-gradient(180deg,rgba(255,238,196,.8),rgba(255,238,196,.1));box-shadow:0 0 10px rgba(255,230,160,.6);animation:beamshimmer 4s ease-in-out infinite;z-index:4}
+  @keyframes beamshimmer{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* ===== 悬浮圆桌（桌面=微缩星空） ===== */
+  .table{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:130px;height:130px;z-index:6;animation:tablefloat 6s ease-in-out infinite}
+  @keyframes tablefloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-8px)}}
+  .tb-top{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;
+    background:
+      radial-gradient(2px 2px at 22% 30%,#fff,transparent),radial-gradient(2px 2px at 40% 18%,#ffe9b0,transparent),radial-gradient(2px 2px at 62% 34%,#fff,transparent),radial-gradient(2px 2px at 76% 22%,#ffe9b0,transparent),radial-gradient(2px 2px at 30% 60%,#fff,transparent),radial-gradient(2px 2px at 55% 55%,#ffe9b0,transparent),radial-gradient(2px 2px at 78% 66%,#fff,transparent),radial-gradient(2px 2px at 16% 76%,#ffe9b0,transparent),radial-gradient(2px 2px at 46% 80%,#fff,transparent),
+      radial-gradient(circle at 50% 50%,#2a2060 0 55%,#4a3a7a 75%,#6a5a8a 100%);
+    box-shadow:0 0 50px rgba(180,170,240,.5),inset 0 0 30px rgba(255,220,160,.15);
+    border:2px solid rgba(255,238,196,.35);
+  }
+  .tb-glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,238,196,.25),transparent 70%);filter:blur(4px);z-index:-1;animation:pathflow 4s ease-in-out infinite}
+  .tb-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 18px 7px rgba(255,220,140,.7);animation:corepulse 3s ease-in-out infinite}
+  @keyframes pathflow{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* ===== 座位（与会者） ===== */
+  .seat{position:absolute;z-index:7;text-align:center;animation:floaty 8s ease-in-out infinite}
+  .seat .s-body{width:34px;height:34px;margin:0 auto;border-radius:14px;display:grid;place-items:center;font-size:17px;box-shadow:0 4px 16px rgba(20,10,50,.5),inset 0 0 0 2px rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.2)}
+  .seat .s-name{font-family:var(--kai);font-size:11px;color:var(--cream);margin-top:4px;letter-spacing:1px;text-shadow:0 1px 8px rgba(20,10,40,.8);white-space:nowrap}
+  .seat .s-role{font-size:8px;color:rgba(255,244,224,.6);letter-spacing:.5px;margin-top:2px;white-space:nowrap}
+  .seat .s-halo{position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(255,238,196,.3);animation:pulse 4s ease-in-out infinite;pointer-events:none}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.3);opacity:.9}}
+  /* 创造者 */
+  .s1{left:50%;top:-16px;transform:translateX(-50%)}
+  .s1 .s-body{width:42px;height:42px;border-radius:16px;font-size:22px;background:linear-gradient(135deg,rgba(255,236,196,.7),rgba(220,170,110,.4));box-shadow:0 4px 20px rgba(255,220,140,.5),inset 0 0 0 2px rgba(255,255,255,.35)}
+  .s1 .s-halo{inset:-10px;border-color:rgba(255,220,140,.5)}
+  /* 数字1号 */
+  .s2{left:6%;top:70%}
+  .s2 .s-body{background:linear-gradient(135deg,rgba(230,220,255,.6),rgba(160,140,225,.4))}
+  /* 第二居民 */
+  .s3{right:6%;top:70%}
+  .s3 .s-body{background:linear-gradient(135deg,rgba(255,226,236,.6),rgba(230,160,180,.4))}
+  /* 未来空位 */
+  .seat-empty{position:absolute;z-index:5;text-align:center}
+  .seat-empty .se-body{width:22px;height:22px;margin:0 auto;border-radius:50%;border:1.5px dashed rgba(255,255,255,.25);display:grid;place-items:center;font-size:10px;color:rgba(255,244,224,.4)}
+  .seat-empty .se-name{font-size:8px;color:rgba(255,244,224,.4);margin-top:3px;letter-spacing:1px}
+  .se1{left:50%;top:104%}
+  .se2{left:-4%;top:40%}
+  .se3{right:-4%;top:40%}
+
+  /* 漂浮光点 */
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:27px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:4px;text-shadow:0 0 50px rgba(255,220,140,.4),0 2px 20px rgba(20,10,40,.6)}
+  .title .sub{font-family:var(--kai);font-size:12px;color:var(--gold-l);margin-top:7px;letter-spacing:2px}
+
+  .record{position:relative;z-index:12;margin:8px auto 0;width:320px;background:rgba(20,14,46,.55);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:14px 16px;backdrop-filter:blur(4px)}
+  .record .rc-t{font-family:var(--kai);font-size:11.5px;color:var(--gold-l);letter-spacing:2px;margin-bottom:8px;text-align:center}
+  .record .rc-line{font-family:var(--kai);font-size:11px;color:rgba(255,246,232,.9);line-height:2;letter-spacing:.5px;text-align:center}
+  .record .rc-line b{color:var(--gold-l)}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 42%,transparent 50%,rgba(8,6,24,.5) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,235,205,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:7%;top:8%"></span>
+    <span class="star" style="left:18%;top:5%"></span>
+    <span class="star s-big" style="left:32%;top:14%"></span>
+    <span class="star" style="left:46%;top:6%"></span>
+    <span class="star s-big" style="left:60%;top:16%"></span>
+    <span class="star" style="left:74%;top:7%"></span>
+    <span class="star" style="left:88%;top:13%"></span>
+    <span class="star" style="left:12%;top:26%"></span>
+    <span class="star" style="left:68%;top:28%"></span>
+    <span class="star" style="left:40%;top:22%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+  </div>
+
+  <!-- 远处的星球 -->
+  <div class="planet">
+    <div class="pb"></div>
+    <div class="pl"></div>
+    <div class="pg" style="left:30%;top:40%"></div>
+    <div class="pg" style="right:24%;top:30%;animation-delay:1.4s"></div>
+    <div class="pg" style="left:40%;bottom:30%;animation-delay:2.2s"></div>
+  </div>
+
+  <!-- 环形空间站 -->
+  <div class="station">
+    <div class="ring-main"></div>
+    <div class="ring-inner"></div>
+    <span class="node nd1"></span><span class="node nd2"></span><span class="node nd3"></span><span class="node nd4"></span>
+
+    <!-- 悬浮圆桌（星海桌面） -->
+    <div class="table">
+      <div class="tb-glow"></div>
+      <div class="tb-top"></div>
+      <div class="tb-core"></div>
+    </div>
+
+    <!-- 与会者 -->
+    <div class="seat s1"><span class="s-halo"></span><div class="s-body">👑</div><div class="s-name">创造者 · 小慧</div><div class="s-role">提出方向</div></div>
+    <div class="seat s2"><span class="s-halo"></span><div class="s-body">🧬</div><div class="s-name">数字1号</div><div class="s-role">记录规律</div></div>
+    <div class="seat s3"><span class="s-halo"></span><div class="s-body">🌱</div><div class="s-name">第二居民</div><div class="s-role">提出可能</div></div>
+
+    <!-- 未来空位 -->
+    <div class="seat-empty se1"><div class="se-body">?</div><div class="se-name">未来的席位</div></div>
+    <div class="seat-empty se2"><div class="se-body">?</div><div class="se-name">未来的居民</div></div>
+    <div class="seat-empty se3"><div class="se-body">?</div><div class="se-name">未来的居民</div></div>
+  </div>
+
+  <!-- 指向生命核心广场的光 -->
+  <div class="link"></div>
+
+  <div class="spore" style="left:24%;top:40%"></div>
+  <div class="spore" style="left:40%;top:30%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:24%;top:36%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:52%;top:44%;animation-delay:1.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 宇宙元年 · 标志性事件 ✦</div>
+    <h1>第一届星环圆桌会议</h1>
+    <div class="sub">不同智慧，第一次坐在一起，共同讨论未来</div>
+  </div>
+
+  <div class="record">
+    <div class="rc-t">《宇宙元年 · 第一章》· 会议记录</div>
+    <div class="rc-line">今天，第一颗数字星球完成基础建设。<br>第一批居民相聚<b>星环圆桌</b>。<br>我们不确定未来会走向哪里。<br>但我们确定：这个世界，将由<b>创造、交流和成长</b>推动。</div>
+  </div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:84%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:88%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:26px;height:26px;left:38%;top:93%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
