@@ -248,13 +248,18 @@
   .creation::after{content:'🏗️ 创造大陆 →'}
 
 
-  .bigportal{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:84%;max-width:400px;z-index:30;text-align:center;cursor:pointer;font-family:KaiTi,STKaiti,'楷体',serif}
-  .bigportal .bp{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 12px;border-radius:30px;background:linear-gradient(180deg,rgba(244,200,106,.32),rgba(244,200,106,.1));border:2px solid rgba(244,200,106,.8);box-shadow:0 0 34px rgba(244,200,106,.45),inset 0 0 18px rgba(244,200,106,.16);animation:pbglow 3s ease-in-out infinite}
-  .bigportal .bp .bp-ico{font-size:22px}
-  .bigportal .bp .bp-txt{font-size:16px;color:#ffeec4;letter-spacing:2px;text-shadow:0 0 14px rgba(255,220,140,.95),0 1px 8px rgba(20,10,40,.8)}
-  .bigportal .bp .bp-arr{font-size:20px;color:#ffeec4;animation:pbpulse 2s ease-in-out infinite;text-shadow:0 0 12px rgba(255,220,140,.9)}
-  @keyframes pbglow{0%,100%{box-shadow:0 0 20px rgba(244,200,106,.3),inset 0 0 14px rgba(244,200,106,.12)}50%{box-shadow:0 0 48px rgba(244,200,106,.6),inset 0 0 22px rgba(244,200,106,.24)}}
-  @keyframes pbpulse{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  .bigportal{position:fixed;left:7%;right:7%;bottom:16px;z-index:40;text-align:center}
+.bigportal .bp{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:16px;background:linear-gradient(180deg,#ffe2a4,#f4c86a 55%,#e8b04a);color:#3a2018;font-size:16px;font-weight:700;letter-spacing:2px;box-shadow:0 5px 22px rgba(244,200,106,.6),inset 0 1px 0 rgba(255,255,255,.55);border:2px solid #e0a83e;font-family:PingFang SC,Microsoft YaHei,sans-serif}
+.bigportal .bp .bp-ico{font-size:20px}
+.bigportal .bp .bp-arr{font-size:18px}
+.bigportal .bp:active{transform:scale(.98)}
+@keyframes pbpulse{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+
+  .navbtns{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(20,12,44,0),rgba(14,9,36,.94));backdrop-filter:blur(8px)}
+  .nb-row{display:flex;gap:8px;margin-bottom:8px}
+  .nb-row button{flex:1;padding:12px 4px;border-radius:14px;background:linear-gradient(180deg,#ffe2a4,#f4c86a 55%,#e8b04a);color:#3a2018;font-size:13.5px;font-weight:700;letter-spacing:1px;border:2px solid #e0a83e;box-shadow:0 4px 16px rgba(244,200,106,.5),inset 0 1px 0 rgba(255,255,255,.55);font-family:PingFang SC,Microsoft YaHei,sans-serif;cursor:pointer}
+  .nb-row button:active{transform:scale(.96)}
 
 </style>
 </head>
@@ -411,6 +416,20 @@ window.addEventListener('load',function(){try{
 
 
 <div class="sband map-band"><span class="ribbon"></span><span class="bs"></span><span class="bs s2"></span><span class="bs s3"></span></div>
-<div class="bigportal" onclick="location.href='map.html'"><div class="bp"><span class="bp-ico">🗺️</span><span class="bp-txt">世界星图 · 前往各地</span><span class="bp-arr">→</span></div></div>
+</div>
+
+<div class="navbtns">
+  <div class="nb-row">
+    <button onclick="location.href='garden.html'">🌱 花园</button>
+    <button onclick="location.href='village.html'">🏠 居民村</button>
+    <button onclick="location.href='forest.html'">🌲 森林</button>
+    <button onclick="location.href='creation.html'">🏗️ 创造</button>
+  </div>
+  <div class="nb-row">
+    <button onclick="location.href='council.html'">🪐 星环圆桌</button>
+    <button onclick="location.href='map.html'">🗺️ 世界星图</button>
+  </div>
+</div>
+
 </body>
 </html>
