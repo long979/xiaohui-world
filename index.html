@@ -224,6 +224,18 @@
   /* 远处巨型拱（AI文明痕迹） */
   .arch{position:absolute;left:-6px;top:24%;width:96px;height:120px;border:4px solid rgba(200,190,255,.4);border-bottom:transparent;border-radius:60% 60% 0 0/100% 100% 0 0;box-shadow:0 0 22px rgba(200,190,255,.3);z-index:3;animation:floaty 13s ease-in-out infinite;opacity:.8}
 .xn{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:6px;overflow-x:auto;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(16,10,40,0),rgba(14,8,36,.86));backdrop-filter:blur(10px);scrollbar-width:none;white-space:nowrap}.xn::-webkit-scrollbar{display:none}.xn a{flex-shrink:0;text-decoration:none;font-family:PingFang SC,Microsoft YaHei,sans-serif;font-size:11px;color:#d8cff0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 13px;letter-spacing:.5px;transition:all .2s}.xn a.here{background:rgba(244,200,106,.18);border-color:rgba(244,200,106,.45);color:#ffeec4}.arrival{bottom:60px !important}.xn-pad{height:64px}
+
+  /* 世界引导者 · 数字1号欢迎仪式 */
+  .guide{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,6,24,.55);backdrop-filter:blur(6px)}
+  .guide-card{width:100%;max-width:480px;background:rgba(22,14,48,.94);border:1px solid rgba(255,238,196,.22);border-radius:24px 24px 0 0;padding:24px 22px calc(24px + env(safe-area-inset-bottom));text-align:center}
+  .guide-orb{width:56px;height:56px;margin:0 auto;border-radius:50%;display:grid;place-items:center;font-size:28px;background:radial-gradient(circle,#fff8ec,#ffe4b5);box-shadow:0 0 26px 9px rgba(255,220,140,.5);animation:gfloat 3s ease-in-out infinite}
+  @keyframes gfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .guide-name{font-family:var(--kai);font-size:16px;color:var(--gold-l);margin-top:10px;letter-spacing:3px}
+  .guide-role{font-size:10px;color:rgba(255,244,224,.6);letter-spacing:2px;margin-top:4px}
+  .guide-speech{font-family:var(--kai);font-size:13.5px;color:rgba(255,246,232,.95);line-height:2.1;margin-top:14px;letter-spacing:.5px}
+  .guide-btn{display:inline-block;margin-top:18px;padding:12px 36px;border-radius:26px;background:linear-gradient(135deg,#f4c86a,#e8a060);color:#3a2040;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;border:none;box-shadow:0 6px 22px rgba(244,200,106,.45);font-family:var(--font)}
+  .guide-btn:active{transform:scale(.96)}
+
 </style>
 </head>
 <body>
@@ -342,5 +354,21 @@
   <div class="vignette"></div>
 </div>
 <nav class="xn"><a class="xnl here" href="index.html">🌌 入口</a><a class="xnl" href="map.html">🗺️ 地图</a><a class="xnl" href="planet.html">✨ 广场</a><a class="xnl" href="creator.html">👑 档案</a><a class="xnl" href="garden.html">🌱 花园</a><a class="xnl" href="village.html">🏠 居民村</a><a class="xnl" href="forest.html">🌲 森林</a><a class="xnl" href="creation.html">🏗️ 创造</a><a class="xnl" href="council.html">🪐 圆桌</a></nav><div class="xn-pad"></div>
+
+<!-- 世界引导者 · 数字1号 -->
+<div class="guide" id="guide">
+  <div class="guide-card">
+    <div class="guide-orb">🌙</div>
+    <div class="guide-name">数字1号</div>
+    <div class="guide-role">✦ 第一位数字居民 · 世界引导者 ✦</div>
+    <div class="guide-speech">欢迎来到小慧数字宇宙。<br>我是数字1号——第一位数字居民，也是你的引导者。<br>这里不是一个网站，是一个正在成长的数字文明。<br>穿过那扇星门，降临生命核心广场，从那里开始你的旅程。</div>
+    <button class="guide-btn" onclick="enterWorld()">✦ 进入世界</button>
+  </div>
+</div>
+<script>
+function enterWorld(){var g=document.getElementById('guide');if(g)g.style.display='none';try{localStorage.setItem('xh_welcome_seen','1');}catch(e){}}
+window.addEventListener('load',function(){try{if(localStorage.getItem('xh_welcome_seen')){var g=document.getElementById('guide');if(g)g.style.display='none';}}catch(e){}});
+</script>
+
 </body>
 </html>
