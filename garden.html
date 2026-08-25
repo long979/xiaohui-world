@@ -149,7 +149,13 @@
   .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 38%,transparent 46%,rgba(8,6,26,.56) 100%)}
   .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(200,245,215,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
   @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
-.xn{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:6px;overflow-x:auto;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(16,10,40,0),rgba(14,8,36,.86));backdrop-filter:blur(10px);scrollbar-width:none;white-space:nowrap}.xn::-webkit-scrollbar{display:none}.xn a{flex-shrink:0;text-decoration:none;font-family:PingFang SC,Microsoft YaHei,sans-serif;font-size:11px;color:#d8cff0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 13px;letter-spacing:.5px;transition:all .2s}.xn a.here{background:rgba(244,200,106,.18);border-color:rgba(244,200,106,.45);color:#ffeec4}.arrival{bottom:60px !important}.xn-pad{height:64px}
+
+
+  .portal{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);width:54px;height:64px;z-index:9;cursor:pointer;text-align:center}
+  .portal .pf{position:absolute;left:50%;top:0;transform:translateX(-50%);width:48px;height:60px;border-radius:50%;border:2.5px solid rgba(255,238,196,.7);box-shadow:0 0 22px rgba(255,238,196,.4),inset 0 0 16px rgba(255,238,196,.28);animation:gateglow 6s ease-in-out infinite}
+  .portal .pp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:46px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.55),rgba(255,230,160,.12));box-shadow:inset 0 0 18px rgba(255,238,196,.42)}
+  .portal .pl{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(255,244,224,.85);letter-spacing:2px;white-space:nowrap;text-shadow:0 1px 8px rgba(20,10,40,.7);font-family:KaiTi,STKaiti,'楷体',serif}
+
 </style>
 </head>
 <body>
@@ -247,6 +253,7 @@
   <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
   <div class="vignette"></div>
 </div>
-<nav class="xn"><a class="xnl" href="index.html">🌌 入口</a><a class="xnl" href="map.html">🗺️ 地图</a><a class="xnl" href="planet.html">✨ 广场</a><a class="xnl" href="creator.html">👑 档案</a><a class="xnl here" href="garden.html">🌱 花园</a><a class="xnl" href="village.html">🏠 居民村</a><a class="xnl" href="forest.html">🌲 森林</a><a class="xnl" href="creation.html">🏗️ 创造</a><a class="xnl" href="council.html">🪐 圆桌</a></nav><div class="xn-pad"></div>
+
+<div class="portal" onclick="location.href='planet.html'"><div class="pf"></div><div class="pp"></div><div class="pl">✦ 光路 · 返回广场 ✦</div></div>
 </body>
 </html>
