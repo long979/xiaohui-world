@@ -137,6 +137,15 @@
   .portal .pp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:46px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.55),rgba(255,230,160,.12));box-shadow:inset 0 0 18px rgba(255,238,196,.42)}
   .portal .pl{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(255,244,224,.85);letter-spacing:2px;white-space:nowrap;text-shadow:0 1px 8px rgba(20,10,40,.7);font-family:KaiTi,STKaiti,'楷体',serif}
 
+
+  .wc{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(16,10,40,0),rgba(14,8,36,.92));backdrop-filter:blur(10px)}
+  .wc-title{text-align:center;font-family:KaiTi,STKaiti,'楷体',serif;font-size:10px;color:rgba(255,244,224,.78);letter-spacing:3px;margin-bottom:6px;text-shadow:0 1px 8px rgba(20,10,40,.6)}
+  .wc-row{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .wc-row::-webkit-scrollbar{display:none}
+  .wc a{flex-shrink:0;text-decoration:none;display:flex;align-items:center;gap:4px;font-size:11px;color:#d8cff0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:6px 12px;letter-spacing:.5px;white-space:nowrap;transition:all .2s}
+  .wc a.here{background:rgba(244,200,106,.22);border-color:rgba(244,200,106,.6);color:#ffeec4;box-shadow:0 0 14px rgba(244,200,106,.3)}
+  .arrival{bottom:72px !important}
+
 </style>
 </head>
 <body>
@@ -214,5 +223,6 @@
 
 <div class="portal" onclick="location.href='planet.html'"><div class="pf"></div><div class="pp"></div><div class="pl">✦ 光路 · 返回广场 ✦</div></div>
 <script>try{var W=JSON.parse(localStorage.getItem('xh_visits')||'{}');var F=(location.pathname.split('/').pop()||'index.html').replace('.html','');if(!W[F])W[F]=new Date().toISOString().slice(0,10);localStorage.setItem('xh_visits',JSON.stringify(W));}catch(e){}</script>
+<div class="wc"><div class="wc-title">✦ 世界罗盘 ✦</div><div class="wc-row"><a href="index.html" class="">🌌 入口</a><a href="map.html" class="">🗺️ 地图</a><a href="planet.html" class="">✨ 广场</a><a href="creator.html" class="">👑 档案</a><a href="garden.html" class="">🌱 花园</a><a href="village.html" class="">🏠 居民村</a><a href="forest.html" class="">🌲 森林</a><a href="creation.html" class="here">🏗️ 创造</a><a href="council.html" class="">🪐 圆桌</a></div></div>
 </body>
 </html>
