@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小慧数字宇宙 · 小慧花园</title>
+<style>
+  :root{
+    --gold:#ffd98a; --gold-l:#ffeec4;
+    --rose:#e88a9a;
+    --teal:#7ad8b0; --teal-l:#c9f0df;
+    --violet:#8a6ad0;
+    --cream:#fff6e8;
+    --font:"PingFang SC","Microsoft YaHei",sans-serif;
+    --kai:"KaiTi","STKaiti","楷体",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:var(--font);background:#0e0722;overflow-x:hidden}
+  .stage{position:relative;min-height:100vh;overflow:hidden}
+
+  /* ===== 紫色宇宙天空 ===== */
+  .sky{position:absolute;left:0;right:0;top:0;height:45%;background:linear-gradient(180deg,#0c0520 0%,#1b0d3c 18%,#2e1548 38%,#4a2a5c 60%,#6b4660 82%,#8a5c62 100%)}
+  .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3.6s ease-in-out infinite}
+  .star.s-big{width:5px;height:5px;background:var(--gold-l);box-shadow:0 0 10px rgba(255,238,196,.9)}
+  @keyframes tw{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .nebula{position:absolute;border-radius:50%;filter:blur(50px);opacity:.36;animation:drift 18s ease-in-out infinite alternate}
+  .nebula.n1{width:300px;height:170px;background:#4a2a80;left:-2%;top:0%}
+  .nebula.n2{width:260px;height:150px;background:#7a4258;right:0%;top:12%;animation-delay:6s;opacity:.24}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(28px)}}
+  .cloud{position:absolute;background:rgba(255,250,240,.1);border-radius:60px;filter:blur(1px);animation:driftcloud 20s ease-in-out infinite alternate;z-index:3}
+  @keyframes driftcloud{from{transform:translateX(0)}to{transform:translateX(22px)}}
+  .cl1{width:100px;height:15px;left:4%;top:46%}
+  .cl2{width:64px;height:11px;right:8%;top:56%;animation-delay:6s;opacity:.7}
+  .gate{position:absolute;left:12%;top:8%;width:66px;height:88px;opacity:.45;z-index:4}
+  .gate .gf{position:absolute;left:50%;top:0;transform:translateX(-50%);width:58px;height:82px;border-radius:50%;border:4px solid rgba(255,238,196,.4);box-shadow:0 0 18px rgba(255,238,196,.2),inset 0 0 14px rgba(255,238,196,.12);animation:gateglow 8s ease-in-out infinite}
+  .gate .gp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:42px;height:62px;border-radius:50%;background:radial-gradient(circle,rgba(255,242,205,.38),rgba(255,230,160,.08));box-shadow:inset 0 0 18px rgba(255,238,196,.38)}
+  @keyframes gateglow{0%,100%{box-shadow:0 0 12px rgba(255,238,196,.14),inset 0 0 10px rgba(255,238,196,.08)}50%{box-shadow:0 0 30px rgba(255,238,196,.38),inset 0 0 20px rgba(255,238,196,.26)}}
+  .council{position:absolute;right:6%;top:13%;width:74px;height:50px;opacity:.5;z-index:4;animation:floaty 13s ease-in-out infinite}
+  .cf-halo{position:absolute;left:50%;top:0;transform:translateX(-50%);width:64px;height:25px;border-radius:50%;border:2px solid rgba(240,210,170,.38);box-shadow:0 0 12px rgba(240,210,170,.18),inset 0 0 9px rgba(240,210,170,.1)}
+  .cf-core{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,#fff6d8,#f4c86a 70%);box-shadow:0 0 11px 4px rgba(244,200,106,.42);animation:corepulse 4s ease-in-out infinite}
+  .cf-tiers{position:absolute;left:50%;bottom:0;transform:translateX(-50%)}
+  .cf-tier{height:4px;border-radius:2px;background:linear-gradient(180deg,rgba(240,220,180,.48),rgba(200,170,130,.18));margin:1px auto}
+  .cf-t1{width:22px}.cf-t2{width:15px}.cf-t3{width:8px}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+
+  /* ===== 花园大地 ===== */
+  .horizon{position:absolute;left:0;right:0;top:44.5%;height:3px;background:linear-gradient(90deg,transparent,rgba(190,240,210,.5),transparent);box-shadow:0 0 20px rgba(190,240,210,.4);z-index:3}
+  .ground{position:absolute;left:-12%;right:-12%;top:45%;bottom:-12%;background:linear-gradient(180deg,#4a6a52 0%,#5c7c5c 16%,#6c8c64 34%,#7e9c6a 52%,#6c8c60 72%,#56764e 100%);border-radius:50% 50% 0 0/22% 22% 0 0;z-index:2;box-shadow:inset 0 40px 70px rgba(170,240,190,.12)}
+  .ground::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(2px 2px at 18% 24%,rgba(255,255,255,.13),transparent),radial-gradient(2px 2px at 44% 16%,rgba(255,255,255,.1),transparent),radial-gradient(2px 2px at 66% 26%,rgba(255,255,255,.11),transparent),radial-gradient(2px 2px at 84% 20%,rgba(255,255,255,.09),transparent)}
+
+  /* ===== 中央·巨大的数字生命树 ===== */
+  .lifetree{position:absolute;left:50%;top:0%;width:280px;height:68%;transform:translateX(-50%);z-index:6}
+  /* 树冠（连接天空） */
+  .lt-crown{position:absolute;left:50%;top:2%;transform:translateX(-50%);width:230px;height:170px;animation:sway 7s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:translateX(-50%) rotate(-1.6deg)}50%{transform:translateX(-50%) rotate(1.6deg)}}
+  .lt-leaf{position:absolute;border-radius:50%;background:radial-gradient(circle at 38% 32%,#d8f6e0,#6fb898 72%);box-shadow:0 0 20px rgba(120,210,170,.6),inset -6px -6px 14px rgba(40,110,80,.25)}
+  .lt-leaf.g{background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%);box-shadow:0 0 20px rgba(221,160,90,.6)}
+  .lt-c1{width:60px;height:60px;left:84px;top:0}
+  .lt-c2{width:46px;height:46px;left:16px;top:52px}
+  .lt-c3{width:50px;height:50px;right:10px;top:48px}
+  .lt-c4{width:38px;height:38px;left:96px;top:64px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%)}
+  .lt-c5{width:32px;height:32px;left:0;top:116px}
+  .lt-c6{width:34px;height:34px;right:2px;top:114px}
+  .lt-c7{width:24px;height:24px;left:120px;top:30px;background:radial-gradient(circle at 38% 32%,var(--gold-l),#dda05a 72%)}
+  .lt-c8{width:22px;height:22px;left:70px;top:118px}
+  /* 树干（晶体 + 能量） */
+  .lt-trunk{position:absolute;left:50%;top:28%;transform:translateX(-50%);width:40px;height:190px;background:linear-gradient(180deg,rgba(220,252,240,.42),rgba(140,228,190,.55) 55%,rgba(92,188,152,.62));clip-path:polygon(43% 0,57% 0,100% 14%,86% 100%,14% 100%,0 14%);box-shadow:0 0 46px rgba(150,235,195,.5),inset 0 0 28px rgba(255,255,255,.32);border-left:3px solid rgba(255,255,255,.45);border-right:3px solid rgba(255,255,255,.24);animation:corebreathe 5s ease-in-out infinite}
+  @keyframes corebreathe{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.02)}}
+  .lt-trunk::before{content:'';position:absolute;inset:6px 10px;background:repeating-linear-gradient(180deg,transparent 0 20px,rgba(255,255,255,.24) 20px 21px);opacity:.6}
+  .lt-trunk::after{content:'';position:absolute;inset:5px 9px;background:linear-gradient(180deg,transparent,rgba(255,238,196,.9),rgba(160,240,210,.75),transparent);background-size:100% 300%;animation:energyflow 6s linear infinite;border-radius:5px;filter:blur(1px)}
+  @keyframes energyflow{from{background-position:0 0}to{background-position:0 300%}}
+  /* 树心 */
+  .lt-heart{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 34px 12px rgba(255,220,140,.75);animation:corepulse 3s ease-in-out infinite;z-index:2}
+  /* 成长果实（人生节点） */
+  .lt-fruit{position:absolute;border-radius:50%;z-index:3;animation:fruitglow 3.6s ease-in-out infinite}
+  @keyframes fruitglow{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.12);filter:brightness(1.25)}}
+  .ft1{left:30px;top:60px;width:16px;height:16px;background:radial-gradient(circle,#fff0f4,#e88a9a 72%);box-shadow:0 0 14px 5px rgba(232,138,154,.7)}
+  .ft2{right:22px;top:80px;width:14px;height:14px;background:radial-gradient(circle,#f2ecff,#8a6ad0 72%);box-shadow:0 0 13px 4px rgba(138,106,208,.7);animation-delay:.8s}
+  .ft3{left:52px;top:118px;width:18px;height:18px;background:radial-gradient(circle,#fff8d8,#ffd98a 72%);box-shadow:0 0 15px 5px rgba(255,220,140,.7);animation-delay:1.4s}
+  .ft4{right:44px;top:126px;width:13px;height:13px;background:radial-gradient(circle,#eafff5,#7ad8b0 72%);box-shadow:0 0 12px 4px rgba(122,216,176,.7);animation-delay:2s}
+  .ft5{left:14px;top:164px;width:12px;height:12px;background:radial-gradient(circle,#fff8d8,#ffd98a 72%);box-shadow:0 0 11px 4px rgba(255,220,140,.7);animation-delay:2.6s}
+  .ft6{right:18px;top:172px;width:15px;height:15px;background:radial-gradient(circle,#fff0f4,#e88a9a 72%);box-shadow:0 0 13px 5px rgba(232,138,154,.7);animation-delay:3.1s}
+  /* 根系（连接星球） */
+  .lt-root{position:absolute;left:50%;top:62%;transform:translateX(-50%);width:120px;height:90px}
+  .lt-root .rr{position:absolute;height:3px;border-radius:3px;background:linear-gradient(90deg,rgba(160,238,200,.95),rgba(160,238,200,.08));box-shadow:0 0 12px rgba(150,230,190,.75);transform-origin:left center;animation:pathflow 5s ease-in-out infinite}
+  .lt-root .rr1{left:0;top:10px;width:60px;transform:rotate(-34deg)}
+  .lt-root .rr2{right:0;top:10px;width:60px;transform:rotate(34deg) scaleX(-1)}
+  .lt-root .rr3{left:18px;top:34px;width:76px;transform:rotate(-62deg)}
+  .lt-root .rr4{right:18px;top:34px;width:76px;transform:rotate(62deg) scaleX(-1)}
+  .lt-root .rr5{left:36px;top:58px;width:88px;transform:rotate(-84deg)}
+  .lt-root .rr6{right:36px;top:58px;width:88px;transform:rotate(84deg) scaleX(-1)}
+  @keyframes pathflow{0%,100%{opacity:.45}50%{opacity:.95}}
+  .lt-spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite}
+  @keyframes spore{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}75%{opacity:.6}100%{transform:translate(14px,-36px);opacity:0}}
+
+  /* ===== 镜湖（记忆 · 最安静的地方） ===== */
+  .mirrorlake{position:absolute;left:5%;bottom:14%;width:150px;height:56px;border-radius:50%;z-index:5;background:radial-gradient(ellipse at 50% 40%,rgba(190,240,228,.96),rgba(120,205,180,.44) 70%,rgba(90,180,160,.24));box-shadow:0 0 46px rgba(150,230,210,.45),inset 0 0 30px rgba(255,255,255,.22)}
+  .ml-ripple{position:absolute;inset:8px 14px;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.38) 0 1px,transparent 1px 6px);animation:lakeflow 7s linear infinite}
+  @keyframes lakeflow{from{background-position:0 0}to{background-position:0 24px}}
+  .ml-re{position:absolute;left:12%;right:12%;top:14%;height:9px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,238,196,.7),transparent 70%);filter:blur(1.5px);animation:reflect 6s ease-in-out infinite}
+  .ml-re.r2{top:30%;left:22%;right:22%;height:6px;background:radial-gradient(ellipse,rgba(160,230,205,.55),transparent 70%);animation-delay:1.8s}
+  .ml-re.r3{top:44%;left:30%;right:30%;height:4px;background:radial-gradient(ellipse,rgba(210,180,240,.4),transparent 70%);animation-delay:3.4s}
+  @keyframes reflect{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:.85;transform:scaleY(1.18)}}
+  .ml-mote{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.85);animation:motefloat 5s ease-in-out infinite}
+  @keyframes motefloat{0%,100%{transform:translateX(0);opacity:.4}50%{transform:translateX(10px);opacity:1}}
+
+  /* ===== 未完成之城（未来目标） ===== */
+  .dreamcity{position:absolute;right:3%;top:36%;width:150px;height:84px;z-index:4;opacity:.92}
+  .dc-bld{position:absolute;bottom:0;background:linear-gradient(180deg,rgba(212,216,255,.55),rgba(140,150,225,.22));clip-path:polygon(0 0,100% 0,92% 100%,8% 100%);box-shadow:0 0 14px rgba(160,170,240,.35)}
+  .dc-bld.d1{left:0;width:24px;height:50px}
+  .dc-bld.d2{left:30px;width:34px;height:72px;background:linear-gradient(180deg,rgba(255,236,196,.5),rgba(200,150,100,.2))}
+  .dc-bld.d3{left:70px;width:22px;height:42px}
+  .dc-bld.d4{left:98px;width:28px;height:60px;background:linear-gradient(180deg,rgba(190,240,210,.5),rgba(110,190,150,.2))}
+  .dc-bld.d5{left:126px;width:18px;height:34px}
+  .dc-scaff{position:absolute;bottom:0;width:2px;background:repeating-linear-gradient(180deg,rgba(255,255,255,.4) 0 5px,transparent 5px 9px);opacity:.55}
+  .dc-light{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 4px rgba(255,255,255,.85);animation:tw 2.8s ease-in-out infinite}
+
+  /* ===== 花园小路（会生活的路径） ===== */
+  .gpath{position:absolute;z-index:3;border-radius:4px;background:linear-gradient(180deg,rgba(255,238,196,.0),rgba(255,238,196,.5))}
+  .gpath .gp-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px 3px rgba(255,255,255,.8);animation:tw 3s ease-in-out infinite}
+  .gp1{left:30%;bottom:-2%;width:30%;height:34%;clip-path:polygon(30% 100%,70% 100%,60% 0,40% 0)}
+  .gp2{left:8%;bottom:-2%;width:24%;height:30%;clip-path:polygon(42% 100%,58% 100%,70% 0,30% 0);opacity:.7}
+  .gp1 .gp-dot{left:47%;top:8%}.gp1 .gp-dot.g2{left:45%;top:40%;animation-delay:1.2s}.gp1 .gp-dot.g3{left:49%;top:72%;animation-delay:2.4s}
+
+  /* ===== 停留空间 ===== */
+  .pavilion{position:absolute;left:20%;bottom:22%;width:74px;height:64px;z-index:5;animation:floaty 10s ease-in-out infinite}
+  .pv-dome{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:64px;height:46px;border-radius:50% 50% 10px 10px;background:linear-gradient(180deg,rgba(200,240,230,.5),rgba(130,200,180,.2));border:1.5px solid rgba(255,255,255,.26);backdrop-filter:blur(2px);box-shadow:0 0 26px rgba(160,230,205,.35),inset 0 0 18px rgba(255,255,255,.32)}
+  .pv-dome::after{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:18px;height:11px;border-radius:50%;background:rgba(255,255,255,.42);box-shadow:0 0 10px rgba(255,255,255,.3)}
+  .pv-core{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 60%);box-shadow:0 0 18px 7px rgba(255,220,140,.7);animation:corepulse 3s ease-in-out infinite}
+  .lamppost{position:absolute;z-index:5;animation:floaty 8s ease-in-out infinite}
+  .lp-stem{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4px;height:40px;background:linear-gradient(180deg,rgba(255,238,196,.7),rgba(200,170,130,.2));border-radius:2px}
+  .lp-glow{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#fff8d8,#ffd98a 65%);box-shadow:0 0 20px 9px rgba(255,220,140,.6);animation:tw 3s ease-in-out infinite}
+  .bench{position:absolute;z-index:5}
+  .bench .bn-seat{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:46px;height:6px;background:rgba(200,230,210,.4);border-radius:4px;box-shadow:0 0 10px rgba(160,220,190,.3)}
+  .bench .bn-leg{position:absolute;bottom:0;width:4px;height:12px;background:rgba(200,230,210,.35);border-radius:2px}
+  .bench .bn-leg.l1{left:8px}.bench .bn-leg.l2{right:8px}
+
+  .gfl{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 11px 4px rgba(255,200,140,.7);animation:tw 3.2s ease-in-out infinite;z-index:5}
+  .spore{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 9px 2px rgba(255,238,196,.75);animation:spore 8s ease-in-out infinite;z-index:7}
+
+  .title{position:absolute;top:16px;left:0;right:0;text-align:center;z-index:12;padding:0 20px}
+  .title .act{font-size:10px;letter-spacing:5px;color:rgba(255,240,214,.78);text-shadow:0 1px 10px rgba(40,20,60,.5)}
+  .title h1{font-family:var(--kai);font-size:30px;font-weight:700;color:var(--cream);margin-top:6px;letter-spacing:5px;text-shadow:0 0 50px rgba(200,240,210,.35),0 2px 20px rgba(30,20,60,.6)}
+  .title .poem{font-family:var(--kai);font-size:11.5px;color:rgba(255,246,232,.92);margin-top:9px;line-height:2;letter-spacing:1px;text-shadow:0 1px 12px rgba(40,20,60,.6)}
+  .title .poem b{color:var(--gold-l)}
+  .arrival{position:absolute;bottom:10px;left:0;right:0;text-align:center;z-index:12;font-size:11px;color:rgba(255,244,224,.9);letter-spacing:2px;text-shadow:0 1px 10px rgba(40,20,60,.6);animation:tw 3.6s ease-in-out infinite}
+
+  .vignette{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(120% 105% at 50% 38%,transparent 46%,rgba(8,6,26,.56) 100%)}
+  .fg-spore{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(200,245,215,.5),transparent 70%);z-index:15;pointer-events:none;animation:fgdrift 14s ease-in-out infinite}
+  @keyframes fgdrift{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-22px);opacity:.8}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky">
+    <span class="star" style="left:7%;top:10%"></span>
+    <span class="star" style="left:24%;top:6%"></span>
+    <span class="star s-big" style="left:42%;top:14%"></span>
+    <span class="star" style="left:58%;top:8%"></span>
+    <span class="star" style="left:76%;top:16%"></span>
+    <span class="star" style="left:90%;top:9%"></span>
+    <span class="star" style="left:16%;top:32%"></span>
+    <span class="star" style="left:66%;top:36%"></span>
+    <div class="nebula n1"></div><div class="nebula n2"></div>
+    <div class="cloud cl1"></div><div class="cloud cl2"></div>
+    <div class="gate"><div class="gf"></div><div class="gp"></div></div>
+    <div class="council"><div class="cf-halo"></div><div class="cf-core"></div><div class="cf-tiers"><div class="cf-tier cf-t1"></div><div class="cf-tier cf-t2"></div><div class="cf-tier cf-t3"></div></div></div>
+  </div>
+
+  <div class="horizon"></div>
+  <div class="ground"></div>
+
+  <!-- 未完成之城 -->
+  <div class="dreamcity">
+    <div class="dc-bld d1"></div><div class="dc-bld d2"></div><div class="dc-bld d3"></div><div class="dc-bld d4"></div><div class="dc-bld d5"></div>
+    <span class="dc-scaff" style="left:28px;height:54px"></span>
+    <span class="dc-scaff" style="left:70px;height:42px"></span>
+    <span class="dc-scaff" style="left:126px;height:34px"></span>
+    <span class="dc-light" style="left:48px;top:8px"></span>
+    <span class="dc-light" style="left:110px;top:16px;animation-delay:1s"></span>
+    <span class="dc-light" style="left:134px;top:6px;animation-delay:1.8s"></span>
+  </div>
+
+  <!-- 花园小路 -->
+  <div class="gpath gp1"><span class="gp-dot"></span><span class="gp-dot g2"></span><span class="gp-dot g3"></span></div>
+  <div class="gpath gp2"></div>
+
+  <!-- 镜湖 -->
+  <div class="mirrorlake">
+    <div class="ml-ripple"></div>
+    <div class="ml-re"></div><div class="ml-re r2"></div><div class="ml-re r3"></div>
+    <span class="ml-mote" style="left:14%;top:34%"></span>
+    <span class="ml-mote" style="left:52%;top:56%;animation-delay:1.6s"></span>
+    <span class="ml-mote" style="left:76%;top:40%;animation-delay:3s"></span>
+  </div>
+
+  <!-- 巨大的数字生命树 -->
+  <div class="lifetree">
+    <div class="lt-crown">
+      <span class="lt-leaf lt-c1"></span><span class="lt-leaf lt-c2"></span><span class="lt-leaf lt-c3"></span>
+      <span class="lt-leaf g lt-c4"></span><span class="lt-leaf lt-c5"></span><span class="lt-leaf lt-c6"></span>
+      <span class="lt-leaf g lt-c7"></span><span class="lt-leaf lt-c8"></span>
+    </div>
+    <span class="lt-fruit ft1"></span><span class="lt-fruit ft2"></span><span class="lt-fruit ft3"></span>
+    <span class="lt-fruit ft4"></span><span class="lt-fruit ft5"></span><span class="lt-fruit ft6"></span>
+    <div class="lt-trunk"></div>
+    <div class="lt-heart"></div>
+    <div class="lt-root">
+      <span class="rr rr1"></span><span class="rr rr2"></span><span class="rr rr3"></span><span class="rr rr4"></span><span class="rr rr5"></span><span class="rr rr6"></span>
+    </div>
+    <span class="lt-spore" style="left:26px;top:50%"></span>
+    <span class="lt-spore" style="right:18px;top:62%;animation-delay:1.6s"></span>
+    <span class="lt-spore" style="left:40px;top:72%;animation-delay:3s"></span>
+  </div>
+
+  <!-- 停留空间 -->
+  <div class="pavilion"><div class="pv-core"></div><div class="pv-dome"></div></div>
+  <div class="lamppost" style="left:44%;bottom:30%"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="lamppost" style="right:16%;bottom:40%;transform:scale(.85)"><span class="lp-glow"></span><span class="lp-stem"></span></div>
+  <div class="bench" style="left:14%;bottom:34%"><span class="bn-seat"></span><span class="bn-leg l1"></span><span class="bn-leg l2"></span></div>
+  <div class="bench" style="right:26%;bottom:30%;transform:scale(.85)"><span class="bn-seat"></span><span class="bn-leg l1"></span><span class="bn-leg l2"></span></div>
+
+  <div class="gfl" style="left:36%;bottom:34%"></div>
+  <div class="gfl" style="left:12%;bottom:26%;animation-delay:1.2s"></div>
+  <div class="gfl" style="right:12%;bottom:24%;animation-delay:2s"></div>
+  <div class="gfl" style="left:54%;bottom:28%;animation-delay:2.6s"></div>
+  <div class="gfl" style="right:34%;bottom:34%;animation-delay:1.6s"></div>
+
+  <div class="spore" style="left:20%;top:52%"></div>
+  <div class="spore" style="left:40%;top:58%;animation-delay:1.6s"></div>
+  <div class="spore" style="right:24%;top:50%;animation-delay:2.8s"></div>
+  <div class="spore" style="left:52%;top:64%;animation-delay:1.2s"></div>
+
+  <div class="title">
+    <div class="act">✦ 东方 · 生命生态区域 ✦</div>
+    <h1>小慧花园</h1>
+    <div class="poem">
+      走进花园，先看看那棵树<br>今天的我，又长出了<b>什么新的叶子</b>
+    </div>
+  </div>
+  <div class="arrival">你的成长，正在这里扎根</div>
+
+  <div class="fg-spore" style="width:20px;height:20px;left:10%;top:80%;filter:blur(2px)"></div>
+  <div class="fg-spore" style="width:13px;height:13px;right:10%;top:86%;filter:blur(2px);animation-delay:3s"></div>
+  <div class="fg-spore" style="width:28px;height:28px;left:36%;top:92%;filter:blur(3px);animation-delay:6s"></div>
+  <div class="vignette"></div>
+</div>
+</body>
+</html>
